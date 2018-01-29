@@ -19,8 +19,8 @@ do
     echo $j
 
     docker pull arborhuang/$i
-    docker tag arborhuang/$i k8s.gcr.io/$i 
-    docker save k8s.gcr.io/$i -o $i.tar
+    docker tag arborhuang/$i gcr.io/google_containers/$i 
+    docker save gcr.io/google_containers/$i -o $i.tar
     docker rmi arborhuang/$i
 
     let j+=1
@@ -28,8 +28,8 @@ done
 
 # dashboard: if pull dashboard error
 # docker pull arborhuang/dashboard:v1.8.2
-# docker tag arborhuang/dashboard:v1.8.2 k8s.gcr.io/kubenetes-dashboard-amd64:v1.8.2
-# docker save k8s.gcr.io/kubenetes-dashboard-amd64:v1.8.2 -o kubenetes-dashboard-amd64:v1.8.2.tar
+# docker tag arborhuang/dashboard:v1.8.2 gcr.io/google_containers/kubenetes-dashboard-amd64:v1.8.2
+# docker save gcr.io/google_containers/kubenetes-dashboard-amd64:v1.8.2 -o kubenetes-dashboard-amd64:v1.8.2.tar
 # docker rmi arborhuang/dashboard:v1.8.2
 
 set +x
