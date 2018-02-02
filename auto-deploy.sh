@@ -6,7 +6,6 @@ HTTP_SERVER=172.30.80.88:8000
 KUBE_HA=true
  
 KUBE_REPO_PREFIX=gcr.io/google_containers
-KUBE_ETCD_IMAGE=quay.io/coreos/etcd:v3.1.11
  
 root=$(id -u)
 if [ "$root" -ne 0 ] ;then
@@ -63,22 +62,20 @@ kube::load_images()
     mkdir -p /tmp/k8s
  
     images=(
-        kube-apiserver-amd64_v1.5.1
-        kube-controller-manager-amd64_v1.5.1
-        kube-scheduler-amd64_v1.5.1
-        kube-proxy-amd64_v1.5.1
-        pause-amd64_3.0
-        kube-discovery-amd64_1.0
-        kubedns-amd64_1.9
-        exechealthz-amd64_1.2
-        kube-dnsmasq-amd64_1.4
-        dnsmasq-metrics-amd64_1.0
-        etcd_v3.0.15
-        flannel-amd64_v0.7.0
+        kube-apiserver-amd64:v1.9.2
+        kube-controller-manager-amd64:v1.9.2
+        kube-scheduler-amd64:v1.9.2
+        kube-proxy-amd64:v1.9.2
+        etcd-amd64:3.1.11
+        pause-amd64:3.0
+        k8s-dns-sidecar-amd64:1.14.7
+        k8s-dns-kube-dns-amd64:1.14.7
+        k8s-dns-dnsmasq-nanny-amd64:1.14.7
+        kubenetes-dashboard-amd64:v1.8.2
     )
  
     for i in "${!images[@]}"; do
-        ret=$(docker images | awk 'NR!=1{print $1"_"$2}'| grep $KUBE_REPO_PREFIX/${images[$i]} | wc -l)
+        ret=$(docker images | awk 'NR!=1{print $1":"$2}'| grep $KUBE_REPO_PREFIX/${images[$i]} | wc -l)
         if [ $ret -lt 1 ];then
             curl -L http://$HTTP_SERVER/images/${images[$i]}.tar o /tmp/k8s/${images[$i]}.tar
             docker load -i /tmp/k8s/${images[$i]}.tar
@@ -95,10 +92,10 @@ kube::install_bin()
     i=$?
     set -e
     if [ $i -ne 0 ]; then
-        curl -L http://$HTTP_SERVER/rpms/k8s.tar.gz > /tmp/k8s.tar.gz
-        tar zxf /tmp/k8s.tar.gz -C /tmp
-        yum localinstall -y  /tmp/k8s/*.rpm
-        rm -rf /tmp/k8s*
+        curl -L http://$HTTP_SERVER/debs/debs.tar.gz > /tmp/debs.tar.gz
+        tar zxf /tmp/debs.tar.gz -C /tmp
+        dpkg -i /tmp/debs/*.deb
+        rm -rf /tmp/debs*
         systemctl enable kubelet.service && systemctl start kubelet.service && rm -rf /etc/kubernetes
     fi
 }
