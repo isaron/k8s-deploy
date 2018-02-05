@@ -135,11 +135,8 @@ kube::install_keepalived()
     i=$?
     set -e
     if [ $i -ne 0 ]; then
-        ip addr add ${KUBE_VIP}/32 dev ${VIP_INTERFACE}
-        curl -L http://$HTTP_SERVER/rpms/keepalived.tar.gz > /tmp/keepalived.tar.gz
-        tar zxf /tmp/keepalived.tar.gz -C /tmp
-        yum localinstall -y  /tmp/keepalived/*.rpm
-        rm -rf /tmp/keepalived*
+        ip addr add ${KUBE_VIP}/16 dev ${VIP_INTERFACE}
+        apt install keepalived -y
         systemctl enable keepalived.service && systemctl start keepalived.service
         kube::config_keepalived
     fi
@@ -154,7 +151,7 @@ global_defs {
 }
  
 vrrp_script CheckK8sMaster {
-    script "curl http://127.0.0.1:8080"
+    script "curl -k http://172.30.80.30:6443"
     interval 3
     timeout 9
     fall 2
@@ -208,7 +205,7 @@ kube::copy_master_config()
 kube::set_label()
 {
   until kubectl get no | grep `hostname`; do sleep 1; done
-  kubectl label node `hostname` kubeadm.alpha.kubernetes.io/role=master
+  kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=master
 }
  
 kube::master_up()
@@ -227,15 +224,15 @@ kube::master_up()
     kube::save_master_ip
  
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
-    kubeadm init --use-kubernetes-version=v1.5.1 --pod-network-cidr=10.244.0.0/16 $@
+    kubeadm init --kubernetes-version=v1.9.2 --pod-network-cidr=10.244.0.0/16 $@
  
     # 使master节点可以被调度
-    # kubectl taint nodes --all dedicated-
+    kubectl taint nodes --all node-role.kubernetes.io/master-
  
     echo -e "\033[32m 注意记录下token信息，node加入集群时需要使用！\033[0m"
  
     # install flannel network
-    kubectl apply -f http://$HTTP_SERVER/network/kube-flannel.yaml --namespace=kube-system
+    kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
  
     # show pods
     kubectl get pod --all-namespaces
@@ -279,10 +276,10 @@ kube::tear_down()
     docker ps -aq|xargs -I '{}' docker rm {}
     df |grep /var/lib/kubelet|awk '{ print $6 }'|xargs -I '{}' umount {}
     rm -rf /var/lib/kubelet && rm -rf /etc/kubernetes/ && rm -rf /var/lib/etcd
-    yum remove -y kubectl kubeadm kubelet kubernetes-cni
+    apt remove -y kubectl kubeadm kubelet kubernetes-cni
     if [ ${KUBE_HA} == true ]
     then
-      yum remove -y keepalived
+      apt remove -y keepalived
       rm -rf /etc/keepalived/keepalived.conf
     fi
     rm -rf /var/lib/cni
