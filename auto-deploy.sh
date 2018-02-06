@@ -6,13 +6,21 @@ HTTP_SERVER=172.30.80.88:8000
 KUBE_HA=true
  
 KUBE_REPO_PREFIX=gcr.io/google_containers
+ETCD_VERSION=3.1.11
  
 root=$(id -u)
 if [ "$root" -ne 0 ] ;then
     echo must run as root
     exit 1
 fi
- 
+
+kube::config_env()
+{
+    apt install ssh vim htop curl ntp ntpdate -y && ntpdate pool.ntp.org
+    echo "Asia/Chongqing" > /etc/timezone
+    swapoff -a && sed -i 's/.*swap.*/#&/' /etc/fstab
+}
+
 kube::install_docker()
 {
     set +e
@@ -20,24 +28,11 @@ kube::install_docker()
     i=$?
     set -e
     if [ $i -ne 0 ]; then
-        # step 1: 安装必要的一些系统工具
-        apt-get update
-        apt-get -y install apt-transport-https ca-certificates curl software-properties-common
-        # step 2: 安装GPG证书
-        curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
-        # Step 3: 写入软件源信息
-        sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
-        # Step 4(1): 更新并安装 Docker-CE
-        #apt-get -y update
-        #apt-get -y install docker-ce
-        # Step 4(2)：安装指定版本的Docker-CE:
-        # Step 4.1: 查找Docker-CE的版本:
-        #apt-cache madison docker-ce
-        #   docker-ce | 17.03.1~ce-0~ubuntu-xenial | http://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages
-        #   docker-ce | 17.03.0~ce-0~ubuntu-xenial | http://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages
-        # Step 4.2: 安装指定版本的Docker-CE: (VERSION 例如上面的 17.03.1~ce-0~ubuntu-xenial)
-        #apt-get -y install docker-ce=[VERSION]
-        apt-get update && sudo apt-get install -y docker-ce=$(apt-cache madison docker-ce | grep 17.03 | head -1 | awk '{print $3}')
+        apt update
+        apt -y install apt-transport-https ca-certificates curl software-properties-common
+        curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add -
+        add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+        apt update && apt install -y docker-ce=$(apt-cache madison docker-ce | grep 17.03 | head -1 | awk '{print $3}')
         kube::config_docker
     fi
     echo docker has been installed
@@ -54,6 +49,9 @@ cat <<EOF >>/etc/sysctl.conf
     net.bridge.bridge-nf-call-iptables = 1
 EOF
 
+    apt-mark hold docker-ce
+    usermod -aG docker $USER
+    curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://e24ee5b3.m.daocloud.io
     systemctl daemon-reload && systemctl restart docker.service
 }
  
@@ -92,6 +90,7 @@ kube::install_bin()
     i=$?
     set -e
     if [ $i -ne 0 ]; then
+        apt install socat ebtables ethtool -y
         curl -L http://$HTTP_SERVER/debs/debs.tar.gz > /tmp/debs.tar.gz
         tar zxf /tmp/debs.tar.gz -C /tmp
         dpkg -i /tmp/debs/*.deb
@@ -102,7 +101,7 @@ kube::install_bin()
  
 kube::wait_apiserver()
 {
-    until curl http://127.0.0.1:8080; do sleep 1; done
+    until curl https://172.30.80.31:6443; do sleep 1; done
 }
  
 kube::disable_static_pod()
@@ -114,17 +113,19 @@ kube::disable_static_pod()
  
 kube::get_env()
 {
-  HA_STATE=$1
-  [ $HA_STATE == "MASTER" ] && HA_PRIORITY=200 || HA_PRIORITY=`expr 200 - ${RANDOM} / 1000 + 1`
-  KUBE_VIP=$(echo $2 |awk -F= '{print $2}')
-  VIP_PREFIX=$(echo ${KUBE_VIP} | cut -d . -f 1,2,3)
-  #dhcp和static地址的不同取法
-  VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'dynamic' '{print $2}' | head -1)
-  [ -z ${VIP_INTERFACE} ] && VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'global' '{print $2}' | head -1)
-  ###
-  LOCAL_IP=$(ip addr show | grep ${VIP_PREFIX} | awk -F / '{print $1}' | awk -F ' ' '{print $2}' | head -1)
-  MASTER_NODES=$(echo $3 | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}')
-  MASTER_NODES_NO_LOCAL_IP=$(echo "${MASTER_NODES}" | sed -e 's/'${LOCAL_IP}'//g')
+    HA_STATE=$1
+    [ $HA_STATE == "MASTER" ] && HA_PRIORITY=200 || HA_PRIORITY=`expr 200 - ${RANDOM} / 1000 + 1`
+    KUBE_VIP=$(echo $2 |awk -F= '{print $2}')
+    VIP_PREFIX=$(echo ${KUBE_VIP} | cut -d . -f 1,2,3)
+    #dhcp和static地址的不同取法
+    VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'dynamic' '{print $2}' | head -1)
+    [ -z ${VIP_INTERFACE} ] && VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'global' '{print $2}' | head -1)
+    ###
+    PEER_NAME=$(hostname)
+    LOCAL_IP=$(ip addr show | grep ${VIP_PREFIX} | awk -F / '{print $1}' | awk -F ' ' '{print $2}' | head -1)
+    MASTER_NODES=$(echo $3 | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}')
+    MASTER_NODES_NO_LOCAL_IP=$(echo "${MASTER_NODES}" | sed -e 's/'${LOCAL_IP}'//g')
+    MASTER_IP=${MASTER_NODES[0]}
 }
  
 kube::install_keepalived()
@@ -151,7 +152,7 @@ global_defs {
 }
  
 vrrp_script CheckK8sMaster {
-    script "curl -k http://172.30.80.30:6443"
+    script "curl -k https://172.30.80.31:6443"
     interval 3
     timeout 9
     fall 2
@@ -168,7 +169,7 @@ vrrp_instance VI_1 {
     nopreempt
     authentication {
         auth_type PASS
-        auth_pass 378378
+        auth_pass rdprdp
     }
     unicast_peer {
         ${MASTER_NODES_NO_LOCAL_IP}
@@ -185,7 +186,95 @@ EOF
   modprobe ip_vs
   systemctl daemon-reload && systemctl restart keepalived.service
 }
- 
+
+kube::install_etcd_cert()
+{
+    curl -o /usr/local/bin/cfssl http://$HTTP_SERVER/cert/cfssl
+    curl -o /usr/local/bin/cfssljson http://$HTTP_SERVER/cert/cfssljson
+    chmod +x /usr/local/bin/cfssl*
+
+    mkdir -p /etc/kubernetes/pki/etcd && cd /etc/kubernetes/pki/etcd
+cat >ca-config.json <<EOL
+{
+    "signing": {
+        "default": {
+            "expiry": "43800h"
+        },
+        "profiles": {
+            "server": {
+                "expiry": "43800h",
+                "usages": [
+                    "signing",
+                    "key encipherment",
+                    "server auth",
+                    "client auth"
+                ]
+            },
+            "client": {
+                "expiry": "43800h",
+                "usages": [
+                    "signing",
+                    "key encipherment",
+                    "client auth"
+                ]
+            },
+            "peer": {
+                "expiry": "43800h",
+                "usages": [
+                    "signing",
+                    "key encipherment",
+                    "server auth",
+                    "client auth"
+                ]
+            }
+        }
+    }
+}
+EOL
+
+cat >ca-csr.json <<EOL
+{
+    "CN": "etcd",
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+    	{
+            "C": "CN",
+            "ST": "ChengDu",
+            "L": "ChengDu",
+            "O": "k8s",
+            "OU": "System"
+    	}
+    ]
+}
+EOL
+
+    cfssl gencert -initca ca-csr.json | cfssljson -bare ca -
+
+cat >client.json <<EOL
+{
+    "CN": "client",
+    "key": {
+        "algo": "ecdsa",
+        "size": 256
+    },
+    "names": [
+    	{
+            "C": "CN",
+            "ST": "ChengDu",
+            "L": "ChengDu",
+            "O": "k8s",
+            "OU": "System"
+    	}
+    ]
+}
+EOL
+
+    cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client client.json | cfssljson -bare client
+}
+
 kube::save_master_ip()
 {
     set +e
@@ -196,12 +285,107 @@ kube::save_master_ip()
  
 kube::copy_master_config()
 {
-    local master_ip=$(etcdctl get ha_master)
-    mkdir -p /etc/kubernetes
-    scp -r root@${master_ip}:/etc/kubernetes/* /etc/kubernetes/
-    systemctl start kubelet
+    kube::get_env $@
+
+    #local master_ip=$(etcdctl get ha_master)
+    mkdir -p /etc/kubernetes/pki/etcd && cd /etc/kubernetes/pki/etcd
+    scp -r root@${MASTER_IP}:/etc/kubernetes/* /etc/kubernetes/
+
+    cfssl print-defaults csr > config.json
+    sed -i '0,/CN/{s/example\.net/'"$PEER_NAME"'/}' config.json
+    sed -i 's/www\.example\.net/'"$LOCAL_IP"'/' config.json
+    sed -i 's/example\.net/'"$PEER_NAME"'/' config.json
+
+    cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server config.json | cfssljson -bare server
+    cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=peer config.json | cfssljson -bare peer
+}
+
+kube::config_etcd()
+{
+    kube::get_env $@
+
+cat >/etc/kubernetes/manifests/etcd.yaml <<EOL
+apiVersion: v1
+kind: Pod
+metadata:
+labels:
+    component: etcd
+    tier: control-plane
+name: <podname>
+namespace: kube-system
+spec:
+containers:
+- command:
+    - etcd --name ${PEER_NAME} \
+    - --data-dir /var/lib/etcd \
+    - --listen-client-urls https://${LOCAL_IP}:2379 \
+    - --advertise-client-urls https://${LOCAL_IP}:2379 \
+    - --listen-peer-urls https://${LOCAL_IP}:2380 \
+    - --initial-advertise-peer-urls https://${LOCAL_IP}:2380 \
+    - --cert-file=/certs/server.pem \
+    - --key-file=/certs/server-key.pem \
+    - --client-cert-auth \
+    - --trusted-ca-file=/certs/ca.pem \
+    - --peer-cert-file=/certs/peer.pem \
+    - --peer-key-file=/certs/peer-key.pem \
+    - --peer-client-cert-auth \
+    - --peer-trusted-ca-file=/certs/ca.pem \
+    - --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380 \
+    - --initial-cluster-token my-etcd-token \
+    - --initial-cluster-state new
+    image: gcr.io/google_containers/etcd-amd64:3.1.11
+    livenessProbe:
+    httpGet:
+        path: /health
+        port: 2379
+        scheme: HTTP
+    initialDelaySeconds: 15
+    timeoutSeconds: 15
+    name: etcd
+    env:
+    - name: PUBLIC_IP
+    valueFrom:
+        fieldRef:
+        fieldPath: status.hostIP
+    - name: PRIVATE_IP
+    valueFrom:
+        fieldRef:
+        fieldPath: status.podIP
+    - name: PEER_NAME
+    valueFrom:
+        fieldRef:
+        fieldPath: metadata.name
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+    name: etcd
+    - mountPath: /certs
+    name: certs
+hostNetwork: true
+volumes:
+- hostPath:
+    path: /var/lib/etcd
+    type: DirectoryOrCreate
+    name: etcd
+- hostPath:
+    path: /etc/kubernetes/pki/etcd
+    name: certs
+EOL
+
 }
  
+kube::config_node()
+{
+    kube::get_env $@
+
+    kubectl get configmap -n kube-system kube-proxy -o yaml > kube-proxy.yaml
+    sed -i 's#server:.*#server: https://${KUBE_VIP}:6443#g' kube-proxy.cm
+    kubectl apply -f kube-proxy.cm --force
+    # restart all kube-proxy pods to ensure that they load the new configmap
+    kubectl delete pod -n kube-system -l k8s-app=kube-proxy
+    sed -i 's#server:.*#server: https://${KUBE_VIP}:6443#g' /etc/kubernetes/kubelet.conf
+    systemctl restart kubelet
+}
+
 kube::set_label()
 {
   until kubectl get no | grep `hostname`; do sleep 1; done
@@ -212,16 +396,22 @@ kube::master_up()
 {
     shift
  
+    kube::config_env
+    
     kube::install_docker
  
     kube::load_images
  
     kube::install_bin
+
+    kube::install_etcd_cert
+
+    kube::config_etcd
  
     [ ${KUBE_HA} == true ] && kube::install_keepalived "MASTER" $@
  
     # 存储master_ip，master02和master03需要用这个信息来copy配置
-    kube::save_master_ip
+    #kube::save_master_ip
  
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
     kubeadm init --kubernetes-version=v1.9.2 --pod-network-cidr=10.244.0.0/16 $@
@@ -242,6 +432,8 @@ kube::replica_up()
 {
     shift
  
+    kube::config_env
+    
     kube::install_docker
  
     kube::load_images
@@ -249,6 +441,8 @@ kube::replica_up()
     kube::install_bin
  
     kube::install_keepalived "BACKUP" $@
+
+    kube::config_etcd
  
     kube::copy_master_config
  
@@ -258,6 +452,8 @@ kube::replica_up()
  
 kube::node_up()
 {
+    kube::config_env
+    
     kube::install_docker
  
     kube::load_images
@@ -267,6 +463,9 @@ kube::node_up()
     kube::disable_static_pod
  
     kubeadm join $@
+
+    # 如果加入集群时没有指向VIP，则需要配置，否则不需要
+    #kube::config_node
 }
  
 kube::tear_down()
@@ -276,6 +475,7 @@ kube::tear_down()
     docker ps -aq|xargs -I '{}' docker rm {}
     df |grep /var/lib/kubelet|awk '{ print $6 }'|xargs -I '{}' umount {}
     rm -rf /var/lib/kubelet && rm -rf /etc/kubernetes/ && rm -rf /var/lib/etcd
+    kubeadm reset
     apt remove -y kubectl kubeadm kubelet kubernetes-cni
     if [ ${KUBE_HA} == true ]
     then
