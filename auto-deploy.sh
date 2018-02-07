@@ -292,6 +292,7 @@ kube::copy_master_config()
     #local master_ip=$(etcdctl get ha_master)
     mkdir -p /etc/kubernetes/pki/etcd && cd /etc/kubernetes/pki/etcd
     scp -r root@${MASTER_IP}:/etc/kubernetes/pki/* /etc/kubernetes/pki
+    #rm apiserver.crt
 
     cfssl print-defaults csr > config.json
     sed -i '0,/CN/{s/example\.net/'"$PEER_NAME"'/}' config.json
@@ -451,7 +452,7 @@ kube::master_up()
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
     #kubeadm init --kubernetes-version=v1.9.2 --pod-network-cidr=10.244.0.0/16 $@
 
-    kube::init_master
+    kube::init_master $@
  
     # 使master节点可以被调度
     kubectl taint nodes --all node-role.kubernetes.io/master-
@@ -481,10 +482,10 @@ kube::replica_up()
  
     kube::copy_master_config
 
-    kube::init_master
+    kube::init_master $@
  
     kube::install_keepalived "BACKUP" $@
-    
+
     kube::set_label
  
 }
@@ -503,7 +504,7 @@ kube::node_up()
  
     kubeadm join $@
 
-    # 如果加入集群时没有指向VIP，则需要配置，否则不需要
+    # 如果加入集群时没有指向VIP则需要配置，否则不需要
     #kube::config_node
 }
  
