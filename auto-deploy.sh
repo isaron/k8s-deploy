@@ -17,9 +17,13 @@ fi
 
 kube::config_env()
 {
-    apt install ssh vim htop curl ntp ntpdate -y && ntpdate pool.ntp.org
     echo "Asia/Chongqing" > /etc/timezone
     swapoff -a && sed -i 's/.*swap.*/#&/' /etc/fstab
+    
+    sed -i s/"deb cdrom"/"#deb cdrom"/g /etc/apt/sources.list
+    sed -i 's/us.archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
+    apt update && sudo apt full-upgrade -yy
+    apt install ssh vim htop curl ntp ntpdate -y && ntpdate pool.ntp.org
 }
 
 kube::install_docker()
