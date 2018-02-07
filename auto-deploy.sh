@@ -432,8 +432,6 @@ kube::master_up()
 {
     shift
  
-    kube::config_env
-    
     kube::install_docker
  
     kube::load_images
@@ -470,8 +468,6 @@ kube::replica_up()
 {
     shift
  
-    kube::config_env
-    
     kube::install_docker
  
     kube::load_images
@@ -486,14 +482,12 @@ kube::replica_up()
  
     kube::install_keepalived "BACKUP" $@
 
-    kube::set_label
+    #kube::set_label
  
 }
  
 kube::node_up()
 {
-    kube::config_env
-    
     kube::install_docker
  
     kube::load_images
@@ -542,12 +536,16 @@ main()
     "d" | "down" )
         kube::tear_down
         ;;
+    "e" | "env" )
+        kube::config_env
+        ;;
     *)
         echo "usage: $0 m[master] | r[replica] | j[join] token | d[down] "
         echo "       $0 master to setup master "
         echo "       $0 replica to setup replica master "
         echo "       $0 join   to join master with token "
         echo "       $0 down   to tear all down ,inlude all data! so becarefull"
+        echo "       $0 env   to config environment"
         echo "       unkown command $0 $@"
         ;;
     esac
