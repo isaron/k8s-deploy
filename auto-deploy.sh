@@ -19,7 +19,7 @@ kube::config_env()
 {
     echo "Asia/Chongqing" > /etc/timezone
     swapoff -a && sed -i 's/.*swap.*/#&/' /etc/fstab
-    
+
     sed -i s/"deb cdrom"/"#deb cdrom"/g /etc/apt/sources.list
     sed -i 's/us.archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
     apt update && sudo apt full-upgrade -yy
@@ -65,20 +65,19 @@ kube::load_images()
     mkdir -p /tmp/k8s
  
     images=(
-        kube-apiserver-amd64:v1.9.2
-        kube-controller-manager-amd64:v1.9.2
-        kube-scheduler-amd64:v1.9.2
-        kube-proxy-amd64:v1.9.2
-        etcd-amd64:3.1.11
-        pause-amd64:3.0
-        k8s-dns-sidecar-amd64:1.14.7
-        k8s-dns-kube-dns-amd64:1.14.7
-        k8s-dns-dnsmasq-nanny-amd64:1.14.7
-        kubenetes-dashboard-amd64:v1.8.2
+        kube-apiserver-amd64_v1.9.2
+        kube-controller-manager-amd64_v1.9.2
+        kube-scheduler-amd64_v1.9.2
+        kube-proxy-amd64_v1.9.2
+        etcd-amd64_3.1.11
+        pause-amd64_3.0
+        k8s-dns-sidecar-amd64_1.14.7
+        k8s-dns-kube-dns-amd64_1.14.7
+        k8s-dns-dnsmasq-nanny-amd64_1.14.7
     )
  
     for i in "${!images[@]}"; do
-        ret=$(docker images | awk 'NR!=1{print $1":"$2}'| grep $KUBE_REPO_PREFIX/${images[$i]} | wc -l)
+        ret=$(docker images | awk 'NR!=1{print $1"_"$2}'| grep $KUBE_REPO_PREFIX/${images[$i]} | wc -l)
         if [ $ret -lt 1 ];then
             curl -L http://$HTTP_SERVER/images/${images[$i]}.tar o /tmp/k8s/${images[$i]}.tar
             docker load -i /tmp/k8s/${images[$i]}.tar
