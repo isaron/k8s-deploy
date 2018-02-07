@@ -443,7 +443,7 @@ kube::master_up()
 
     kube::install_etcd_cert
 
-    kube::config_etcd
+    kube::config_etcd $@
  
     [ ${KUBE_HA} == true ] && kube::install_keepalived "MASTER" $@
  
@@ -477,9 +477,9 @@ kube::replica_up()
  
     kube::install_bin
  
-    kube::config_etcd
+    kube::config_etcd $@
  
-    kube::copy_master_config
+    kube::copy_master_config $@
 
     kube::init_master $@
  
@@ -491,6 +491,8 @@ kube::replica_up()
  
 kube::node_up()
 {
+    shift
+
     kube::install_docker
  
     kube::load_images
@@ -502,7 +504,7 @@ kube::node_up()
     kubeadm join $@
 
     # 如果加入集群时没有指向VIP则需要配置，否则不需要
-    #kube::config_node
+    #kube::config_node $@
 }
  
 kube::tear_down()
@@ -533,7 +535,6 @@ main()
         kube::replica_up $@
         ;;
     "j" | "join" )
-        shift
         kube::node_up $@
         ;;
     "d" | "down" )
@@ -541,6 +542,9 @@ main()
         ;;
     "e" | "env" )
         kube::config_env
+        ;;
+    "c" | "config_node" )
+        kube::config_node
         ;;
     *)
         echo "usage: $0 m[master] | r[replica] | j[join] token | d[down] "
