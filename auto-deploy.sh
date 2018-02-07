@@ -6,6 +6,7 @@ HTTP_SERVER=172.30.80.88:8000
 KUBE_HA=true
  
 KUBE_REPO_PREFIX=gcr.io/google_containers
+KUBE_VERSION=v1.9.2
 ETCD_VERSION=3.1.11
  
 root=$(id -u)
@@ -189,11 +190,12 @@ EOF
 
 kube::install_etcd_cert()
 {
-    curl -o /usr/local/bin/cfssl http://$HTTP_SERVER/cert/cfssl
-    curl -o /usr/local/bin/cfssljson http://$HTTP_SERVER/cert/cfssljson
+    curl -o /usr/local/bin/cfssl http://$HTTP_SERVER/certs/cfssl
+    curl -o /usr/local/bin/cfssljson http://$HTTP_SERVER/certs/cfssljson
     chmod +x /usr/local/bin/cfssl*
 
     mkdir -p /etc/kubernetes/pki/etcd && cd /etc/kubernetes/pki/etcd
+
 cat >ca-config.json <<EOL
 {
     "signing": {
@@ -289,12 +291,12 @@ kube::copy_master_config()
 
     #local master_ip=$(etcdctl get ha_master)
     mkdir -p /etc/kubernetes/pki/etcd && cd /etc/kubernetes/pki/etcd
-    scp -r root@${MASTER_IP}:/etc/kubernetes/* /etc/kubernetes/
+    scp -r root@${MASTER_IP}:/etc/kubernetes/pki/* /etc/kubernetes/pki
 
     cfssl print-defaults csr > config.json
     sed -i '0,/CN/{s/example\.net/'"$PEER_NAME"'/}' config.json
     sed -i 's/www\.example\.net/'"$LOCAL_IP"'/' config.json
-    sed -i 's/example\.net/'"$PEER_NAME"'/' config.json
+    sed -i 's/example\.net/'"$LOCAL_IP"'/' config.json
 
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server config.json | cfssljson -bare server
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=peer config.json | cfssljson -bare peer
@@ -333,7 +335,7 @@ containers:
     - --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380 \
     - --initial-cluster-token my-etcd-token \
     - --initial-cluster-state new
-    image: gcr.io/google_containers/etcd-amd64:3.1.11
+    image: gcr.io/google_containers/etcd-amd64:${ETCD_VERSION}
     livenessProbe:
     httpGet:
         path: /health
@@ -392,6 +394,39 @@ kube::set_label()
   kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=master
 }
  
+kube::init_master()
+{
+    kube::get_env $@
+
+    cd ~ && mkdir -p $(hostname)-deploy && cd $(hostname)-deploy
+
+cat >config.yaml <<EOL
+apiVersion: kubeadm.k8s.io/v1alpha1
+kind: MasterConfiguration
+api:
+  advertiseAddress: ${LOCAL_IP}
+etcd:
+  endpoints:
+  - https://${MASTER_NODES[0]}:2379
+  - https://${MASTER_NODES[1]}:2379
+  - https://${MASTER_NODES[2]}:2379
+  caFile: /etc/kubernetes/pki/etcd/ca.pem
+  certFile: /etc/kubernetes/pki/etcd/client.pem
+  keyFile: /etc/kubernetes/pki/etcd/client-key.pem
+networking:
+  podSubnet: 10.244.0.0/16
+apiServerCertSANs:
+- ${KUBE_VIP}
+kubernetesVersion: ${KUBE_VERSION}
+apiServerExtraArgs:
+  endpoint-reconciler-type: lease
+
+EOL
+
+    kubeadm init --config=config.yaml
+    mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+}
+
 kube::master_up()
 {
     shift
@@ -414,7 +449,9 @@ kube::master_up()
     #kube::save_master_ip
  
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
-    kubeadm init --kubernetes-version=v1.9.2 --pod-network-cidr=10.244.0.0/16 $@
+    #kubeadm init --kubernetes-version=v1.9.2 --pod-network-cidr=10.244.0.0/16 $@
+
+    kube::init_master
  
     # 使master节点可以被调度
     kubectl taint nodes --all node-role.kubernetes.io/master-
@@ -440,12 +477,14 @@ kube::replica_up()
  
     kube::install_bin
  
-    kube::install_keepalived "BACKUP" $@
-
     kube::config_etcd
  
     kube::copy_master_config
+
+    kube::init_master
  
+    kube::install_keepalived "BACKUP" $@
+    
     kube::set_label
  
 }
