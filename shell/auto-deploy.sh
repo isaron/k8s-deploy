@@ -546,6 +546,9 @@ main()
     "c" | "config_node" )
         kube::config_node
         ;;
+    "g" | "get_env" )
+        kube::get_env $@
+        ;;
     *)
         echo "usage: $0 m[master] | r[replica] | j[join] token | d[down] "
         echo "       $0 master to setup master "
