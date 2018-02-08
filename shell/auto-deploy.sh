@@ -123,13 +123,13 @@ kube::get_env()
     KUBE_VIP=$(echo $2 |awk -F= '{print $2}')
     VIP_PREFIX=$(echo ${KUBE_VIP} | cut -d . -f 1,2,3)
     #dhcp和static地址的不同取法
-    VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'dynamic' '{print $2}' | head -1)
-    [ -z ${VIP_INTERFACE} ] && VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'global' '{print $2}' | head -1)
+    VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'dynamic ' '{print $2}' | head -1)
+    [ -z ${VIP_INTERFACE} ] && VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'global ' '{print $2}' | head -1)
     ###
     PEER_NAME=$(hostname)
     LOCAL_IP=$(ip addr show | grep ${VIP_PREFIX} | awk -F / '{print $1}' | awk -F ' ' '{print $2}' | head -1)
     MASTER_NODES=($(echo $3 | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}'))
-    MASTER_NODES_NO_LOCAL_IP=$(echo "${MASTER_NODES}" | sed -e 's/'${LOCAL_IP}'//g')
+    MASTER_NODES_NO_LOCAL_IP=$(echo $3 | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | sed -e 's/'${LOCAL_IP}'//g')
     MASTER_IP=${MASTER_NODES[0]}
 }
  
@@ -310,6 +310,8 @@ kube::copy_master_config()
 kube::config_etcd()
 {
     kube::get_env $@
+
+    mkdir -p /etc/kubernetes/manifests
 
 cat >/etc/kubernetes/manifests/etcd.yaml <<EOL
 apiVersion: v1
