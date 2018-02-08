@@ -123,8 +123,8 @@ kube::get_env()
     KUBE_VIP=$(echo $2 |awk -F= '{print $2}')
     VIP_PREFIX=$(echo ${KUBE_VIP} | cut -d . -f 1,2,3)
     #dhcp和static地址的不同取法
-    VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'dynamic ' '{print $2}' | head -1)
-    [ -z ${VIP_INTERFACE} ] && VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'global ' '{print $2}' | head -1)
+    VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'dynamic\ ' '{print $2}' | head -1)
+    [ -z ${VIP_INTERFACE} ] && VIP_INTERFACE=$(ip addr show | grep ${VIP_PREFIX} | awk -F 'global' '{print $2}' | head -1)
     ###
     PEER_NAME=$(hostname)
     LOCAL_IP=$(ip addr show | grep ${VIP_PREFIX} | awk -F / '{print $1}' | awk -F ' ' '{print $2}' | head -1)
