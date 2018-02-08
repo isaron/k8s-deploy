@@ -2,7 +2,7 @@
 
 k8s version: v1.9.2
 
-Be deployed components:
+Components to be deployed:
 
 - k8s suite
   - kube-apiserver-amd64:v1.9.2
@@ -25,3 +25,4 @@ Be deployed components:
 - habor
 - nexus
 - jenkins
+- gitlab
