@@ -128,9 +128,9 @@ kube::get_env()
     ###
     PEER_NAME=$(hostname)
     LOCAL_IP=$(ip addr show | grep ${VIP_PREFIX} | awk -F / '{print $1}' | awk -F ' ' '{print $2}' | head -1)
-    MASTER_NODES=$(echo $3 | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}')
+    MASTER_NODES=($(echo $3 | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}'))
     MASTER_NODES_NO_LOCAL_IP=$(echo "${MASTER_NODES}" | sed -e 's/'${LOCAL_IP}'//g')
-    # MASTER_IP=${MASTER_NODES[0]}
+    MASTER_IP=${MASTER_NODES[0]}
 }
  
 kube::install_keepalived()
