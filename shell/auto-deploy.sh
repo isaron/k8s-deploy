@@ -436,7 +436,7 @@ EOL
 
 kube::master_up()
 {
-    shift
+    # shift
  
     kube::install_docker
  
@@ -472,7 +472,7 @@ kube::master_up()
  
 kube::replica_up()
 {
-    shift
+    # shift
  
     kube::install_docker
  
@@ -494,7 +494,7 @@ kube::replica_up()
  
 kube::node_up()
 {
-    shift
+    # shift
 
     kube::install_docker
  
