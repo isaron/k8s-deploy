@@ -343,7 +343,7 @@ containers:
     - --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380 \
     - --initial-cluster-token my-etcd-token \
     - --initial-cluster-state new
-    image: gcr.io/google_containers/etcd-amd64:${ETCD_VERSION}
+    image: gcr.io/google_containers/etcd-amd64:3.1.11
     livenessProbe:
     httpGet:
         path: /health
