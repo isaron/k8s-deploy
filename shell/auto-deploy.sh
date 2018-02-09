@@ -132,6 +132,15 @@ kube::get_env()
     MASTER_NODES_NO_LOCAL_IP=$(echo ${MASTER_NODES} | sed -e 's/'${LOCAL_IP}'//g')
     MASTER_NODES=(${MASTER_NODES})
     MASTER_IP=${MASTER_NODES[0]}
+
+    j=0
+    for i in ${MASTER_NODES[@]}; do
+        if [ $i == $LOCAL_IP ]; then
+            ETCD_PODNAME=etcd$j
+            break
+        fi
+        let j+=1
+    done
 }
  
 kube::install_keepalived()
@@ -321,7 +330,7 @@ metadata:
 labels:
     component: etcd
     tier: control-plane
-name: <podname>
+name: ETCD_PODNAME
 namespace: kube-system
 spec:
 containers:
@@ -343,7 +352,7 @@ containers:
     - --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380 \
     - --initial-cluster-token my-etcd-token \
     - --initial-cluster-state new
-    image: gcr.io/google_containers/etcd-amd64:3.1.11
+    image: gcr.io/google_containers/etcd-amd64:${ETCD_VERSION}
     livenessProbe:
     httpGet:
         path: /health
@@ -431,6 +440,7 @@ apiServerExtraArgs:
 
 EOL
 
+    systemctl daemon-reload && systemctl start kubelet.service
     kubeadm init --config=config.yaml
     mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 }
