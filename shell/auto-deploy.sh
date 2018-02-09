@@ -136,7 +136,7 @@ kube::get_env()
  
 kube::install_keepalived()
 {
-    kube::get_env $@
+    # kube::get_env $@
     set +e
     which keepalived > /dev/null 2>&1
     i=$?
@@ -404,7 +404,7 @@ kube::set_label()
  
 kube::init_master()
 {
-    kube::get_env $@
+    # kube::get_env $@
 
     cd ~ && mkdir -p $(hostname)-deploy && cd $(hostname)-deploy
 
@@ -449,7 +449,7 @@ kube::master_up()
 
     kube::config_etcd $@
  
-    [ ${KUBE_HA} == true ] && kube::install_keepalived "MASTER" $@
+    [ ${KUBE_HA} == true ] && kube::install_keepalived "MASTER"
  
     # 存储master_ip，master02和master03需要用这个信息来copy配置
     #kube::save_master_ip
@@ -457,7 +457,7 @@ kube::master_up()
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
     #kubeadm init --kubernetes-version=v1.9.2 --pod-network-cidr=10.244.0.0/16 $@
 
-    kube::init_master $@
+    kube::init_master
  
     # 使master节点可以被调度
     kubectl taint nodes --all node-role.kubernetes.io/master-
@@ -483,11 +483,11 @@ kube::replica_up()
  
     kube::config_etcd $@
  
-    kube::copy_master_config $@
+    kube::copy_master_config
 
-    kube::init_master $@
+    kube::init_master
  
-    kube::install_keepalived "BACKUP" $@
+    kube::install_keepalived "BACKUP"
 
     #kube::set_label
  
@@ -508,7 +508,7 @@ kube::node_up()
     kubeadm join $@
 
     # 如果加入集群时没有指向VIP则需要配置，否则不需要
-    #kube::config_node $@
+    #kube::config_node
 }
  
 kube::tear_down()
