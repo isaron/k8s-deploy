@@ -8,7 +8,7 @@ KUBE_HA=true
  
 KUBE_REPO_PREFIX=gcr.io/google_containers
 KUBE_VERSION=v1.9.3
-ETCD_VERSION=3.1.11
+ETCD_VERSION=v3.1.11
  
 root=$(id -u)
 if [ "$root" -ne 0 ] ;then
@@ -352,7 +352,7 @@ containers:
     - --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380
     - --initial-cluster-token my-etcd-token
     - --initial-cluster-state new
-    image: gcr.io/google_containers/etcd-amd64:3.1.11
+    image: gcr.io/google_containers/etcd-amd64:${ETCD_VERSION}
     livenessProbe:
     httpGet:
         path: /health
