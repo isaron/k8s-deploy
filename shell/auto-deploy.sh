@@ -352,7 +352,7 @@ containers:
     - --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380 \
     - --initial-cluster-token my-etcd-token \
     - --initial-cluster-state new
-    image: gcr.io/google_containers/etcd-amd64:${ETCD_VERSION}
+    image: gcr.io/google_containers/etcd-amd64:3.1.11
     livenessProbe:
     httpGet:
         path: /health
@@ -414,7 +414,7 @@ kube::set_label()
  
 kube::init_master()
 {
-    # kube::get_env $@
+    kube::get_env $@
 
     cd ~ && mkdir -p $(hostname)-deploy && cd $(hostname)-deploy
 
@@ -468,7 +468,7 @@ kube::master_up()
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
     #kubeadm init --kubernetes-version=v1.9.2 --pod-network-cidr=10.244.0.0/16 $@
 
-    kube::init_master
+    kube::init_master $@
  
     # 使master节点可以被调度
     kubectl taint nodes --all node-role.kubernetes.io/master-
@@ -496,7 +496,7 @@ kube::replica_up()
  
     kube::copy_master_config
 
-    kube::init_master
+    kube::init_master $@
  
     kube::install_keepalived "BACKUP"
 
