@@ -394,7 +394,8 @@ EOL
  
 kube::config_node()
 {
-    kube::get_env $@
+    # kube::get_env $@
+    KUBE_VIP=172.30.80.30
 
     kubectl get configmap -n kube-system kube-proxy -o yaml > kube-proxy.yaml
     sed -i 's#server:.*#server: https://${KUBE_VIP}:6443#g' kube-proxy.cm
