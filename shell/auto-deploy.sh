@@ -210,7 +210,7 @@ kube::install_etcd_cert()
 
     mkdir -p /etc/kubernetes/pki/etcd && cd /etc/kubernetes/pki/etcd
 
-cat >ca-config.json <<EOL
+cat <<EOF >ca-config.json
 {
     "signing": {
         "default": {
@@ -246,9 +246,9 @@ cat >ca-config.json <<EOL
         }
     }
 }
-EOL
+EOF
 
-cat >ca-csr.json <<EOL
+cat <<EOF >ca-csr.json
 {
     "CN": "etcd",
     "key": {
@@ -265,11 +265,11 @@ cat >ca-csr.json <<EOL
     	}
     ]
 }
-EOL
+EOF
 
     cfssl gencert -initca ca-csr.json | cfssljson -bare ca -
 
-cat >client.json <<EOL
+cat <<EOF >client.json
 {
     "CN": "client",
     "key": {
@@ -286,7 +286,7 @@ cat >client.json <<EOL
     	}
     ]
 }
-EOL
+EOF
 
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client client.json | cfssljson -bare client
 }
@@ -323,7 +323,7 @@ kube::config_etcd()
 
     mkdir -p /etc/kubernetes/manifests
 
-cat >/etc/kubernetes/manifests/etcd.yaml <<EOL
+cat <<EOF >/etc/kubernetes/manifests/etcd.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -335,22 +335,22 @@ namespace: kube-system
 spec:
 containers:
 - command:
-    - etcd --name ${PEER_NAME} \
-    - --data-dir /var/lib/etcd \
-    - --listen-client-urls https://${LOCAL_IP}:2379 \
-    - --advertise-client-urls https://${LOCAL_IP}:2379 \
-    - --listen-peer-urls https://${LOCAL_IP}:2380 \
-    - --initial-advertise-peer-urls https://${LOCAL_IP}:2380 \
-    - --cert-file=/certs/server.pem \
-    - --key-file=/certs/server-key.pem \
-    - --client-cert-auth \
-    - --trusted-ca-file=/certs/ca.pem \
-    - --peer-cert-file=/certs/peer.pem \
-    - --peer-key-file=/certs/peer-key.pem \
-    - --peer-client-cert-auth \
-    - --peer-trusted-ca-file=/certs/ca.pem \
-    - --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380 \
-    - --initial-cluster-token my-etcd-token \
+    - etcd --name ${PEER_NAME}
+    - --data-dir /var/lib/etcd
+    - --listen-client-urls https://${LOCAL_IP}:2379
+    - --advertise-client-urls https://${LOCAL_IP}:2379
+    - --listen-peer-urls https://${LOCAL_IP}:2380
+    - --initial-advertise-peer-urls https://${LOCAL_IP}:2380
+    - --cert-file=/certs/server.pem
+    - --key-file=/certs/server-key.pem
+    - --client-cert-auth
+    - --trusted-ca-file=/certs/ca.pem
+    - --peer-cert-file=/certs/peer.pem
+    - --peer-key-file=/certs/peer-key.pem
+    - --peer-client-cert-auth
+    - --peer-trusted-ca-file=/certs/ca.pem
+    - --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380
+    - --initial-cluster-token my-etcd-token
     - --initial-cluster-state new
     image: gcr.io/google_containers/etcd-amd64:3.1.11
     livenessProbe:
@@ -388,7 +388,7 @@ volumes:
 - hostPath:
     path: /etc/kubernetes/pki/etcd
     name: certs
-EOL
+EOF
 
 }
  
@@ -418,7 +418,7 @@ kube::init_master()
 
     cd ~ && mkdir -p $(hostname)-deploy && cd $(hostname)-deploy
 
-cat >config.yaml <<EOL
+cat >config.yaml <<EOF
 apiVersion: kubeadm.k8s.io/v1alpha1
 kind: MasterConfiguration
 api:
@@ -439,7 +439,7 @@ kubernetesVersion: ${KUBE_VERSION}
 apiServerExtraArgs:
   endpoint-reconciler-type: lease
 
-EOL
+EOF
 
     systemctl daemon-reload && systemctl start kubelet.service
     kubeadm init --config=config.yaml
