@@ -8,7 +8,7 @@ KUBE_HA=true
  
 KUBE_REPO_PREFIX=gcr.io/google_containers
 KUBE_VERSION=v1.9.3
-ETCD_VERSION=v3.1.11
+ETCD_VERSION=3.1.11
  
 root=$(id -u)
 if [ "$root" -ne 0 ] ;then
@@ -330,7 +330,7 @@ metadata:
 labels:
     component: etcd
     tier: control-plane
-name: ETCD_PODNAME
+name: ${ETCD_PODNAME}
 namespace: kube-system
 spec:
 containers:
