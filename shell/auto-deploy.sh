@@ -537,7 +537,7 @@ kube::tear_down()
       rm -rf /etc/keepalived/keepalived.conf
     fi
     rm -rf /var/lib/cni
-    ip link del cni0
+    # ip link del cni0
 }
  
 main()
