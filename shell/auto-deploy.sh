@@ -7,7 +7,7 @@ MASTER_IP=172.30.80.31
 KUBE_HA=true
  
 KUBE_REPO_PREFIX=gcr.io/google_containers
-KUBE_VERSION=v1.9.2
+KUBE_VERSION=v1.9.3
 ETCD_VERSION=3.1.11
  
 root=$(id -u)
@@ -66,10 +66,10 @@ kube::load_images()
     mkdir -p /tmp/k8s
  
     images=(
-        kube-apiserver-amd64_v1.9.2
-        kube-controller-manager-amd64_v1.9.2
-        kube-scheduler-amd64_v1.9.2
-        kube-proxy-amd64_v1.9.2
+        kube-apiserver-amd64_v1.9.3
+        kube-controller-manager-amd64_v1.9.3
+        kube-scheduler-amd64_v1.9.3
+        kube-proxy-amd64_v1.9.3
         etcd-amd64_3.1.11
         pause-amd64_3.0
         k8s-dns-sidecar-amd64_1.14.7
@@ -466,7 +466,7 @@ kube::master_up()
     #kube::save_master_ip
  
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
-    #kubeadm init --kubernetes-version=v1.9.2 --pod-network-cidr=10.244.0.0/16 $@
+    #kubeadm init --kubernetes-version=v1.9.3 --pod-network-cidr=10.244.0.0/16 $@
 
     kube::init_master $@
  
