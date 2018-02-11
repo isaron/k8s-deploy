@@ -335,22 +335,22 @@ namespace: kube-system
 spec:
 containers:
 - command:
-    - etcd --name ${PEER_NAME}
-    - --data-dir /var/lib/etcd
-    - --listen-client-urls https://${LOCAL_IP}:2379
-    - --advertise-client-urls https://${LOCAL_IP}:2379
-    - --listen-peer-urls https://${LOCAL_IP}:2380
-    - --initial-advertise-peer-urls https://${LOCAL_IP}:2380
-    - --cert-file=/certs/server.pem
-    - --key-file=/certs/server-key.pem
-    - --client-cert-auth
-    - --trusted-ca-file=/certs/ca.pem
-    - --peer-cert-file=/certs/peer.pem
-    - --peer-key-file=/certs/peer-key.pem
-    - --peer-client-cert-auth
-    - --peer-trusted-ca-file=/certs/ca.pem
-    - --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380
-    - --initial-cluster-token my-etcd-token
+    - etcd --name ${PEER_NAME} \
+    - --data-dir /var/lib/etcd \
+    - --listen-client-urls https://${LOCAL_IP}:2379 \
+    - --advertise-client-urls https://${LOCAL_IP}:2379 \
+    - --listen-peer-urls https://${LOCAL_IP}:2380 \
+    - --initial-advertise-peer-urls https://${LOCAL_IP}:2380 \
+    - --cert-file=/certs/server.pem \
+    - --key-file=/certs/server-key.pem \
+    - --client-cert-auth \
+    - --trusted-ca-file=/certs/ca.pem \
+    - --peer-cert-file=/certs/peer.pem \
+    - --peer-key-file=/certs/peer-key.pem \
+    - --peer-client-cert-auth \
+    - --peer-trusted-ca-file=/certs/ca.pem \
+    - --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380 \
+    - --initial-cluster-token my-etcd-token \
     - --initial-cluster-state new
     image: gcr.io/google_containers/etcd-amd64:${ETCD_VERSION}
     livenessProbe:
