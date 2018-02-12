@@ -10,6 +10,12 @@ KUBE_REPO_PREFIX=gcr.io/google_containers
 KUBE_VERSION=v1.9.3
 ETCD_VERSION=v3.1.11
  
+MASTERS=(
+    rdp-mgr1.k8s
+    rdp-mgr2.k8s
+    rdp-mgr3.k8s
+)
+
 root=$(id -u)
 if [ "$root" -ne 0 ] ;then
     echo must run as root
@@ -340,6 +346,7 @@ kube::install_etcd()
     rm -rf etcd-$ETCD_VERSION-linux-amd64*
 
     touch /etc/etcd.env
+    echo "" > /etc/etcd.env
     echo "PEER_NAME=$PEER_NAME" >> /etc/etcd.env
     echo "PRIVATE_IP=$LOCAL_IP" >> /etc/etcd.env
 
@@ -372,7 +379,7 @@ ExecStart=/usr/local/bin/etcd --name ${PEER_NAME} \
     --peer-key-file=/etc/kubernetes/pki/etcd/peer-key.pem \
     --peer-client-cert-auth \
     --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.pem \
-    --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380 \
+    --initial-cluster ${MASTERS[0]}=https://${MASTER_NODES[0]}:2380,${MASTERS[1]}=https://${MASTER_NODES[1]}:2380,${MASTERS[2]}=https://${MASTER_NODES[2]}:2380 \
     --initial-cluster-token my-etcd-token \
     --initial-cluster-state new
 
