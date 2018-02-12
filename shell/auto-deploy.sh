@@ -388,7 +388,7 @@ WantedBy=multi-user.target
 EOF
 
     systemctl daemon-reload && systemctl start etcd
-    systemctl status etcd
+    # systemctl status etcd
 }
  
 kube::config_node()
