@@ -387,7 +387,7 @@ ExecStart=/usr/local/bin/etcd --name ${PEER_NAME} \
 WantedBy=multi-user.target
 EOF
 
-    systemctl daemon-reload && systemctl start etcd
+    systemctl daemon-reload && systemctl start etcd &
     # systemctl status etcd
 }
  
