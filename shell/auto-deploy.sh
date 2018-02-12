@@ -150,7 +150,7 @@ kube::get_env()
  
 kube::install_keepalived()
 {
-    kube::get_env $@
+    # kube::get_env $@
     set +e
     which keepalived > /dev/null 2>&1
     i=$?
@@ -334,7 +334,7 @@ kube::copy_master_config()
 
 kube::install_etcd()
 {
-    kube::get_env $@
+    # kube::get_env $@
 
     curl -sSL http://$HTTP_SERVER/etcd/etcd-${ETCD_VERSION}-linux-amd64.tar.gz | tar -xzv --strip-components=1 -C /usr/local/bin/
     rm -rf etcd-$ETCD_VERSION-linux-amd64*
@@ -406,7 +406,7 @@ kube::set_label()
  
 kube::init_master()
 {
-    kube::get_env $@
+    # kube::get_env $@
 
     cd ~ && mkdir -p $(hostname)-deploy && cd $(hostname)-deploy
 
@@ -484,9 +484,9 @@ kube::replica_up()
  
     kube::install_bin
  
-    kube::install_etcd $@
+    kube::copy_master_config $@
  
-    kube::copy_master_config
+    kube::install_etcd
 
     kube::init_master
  
