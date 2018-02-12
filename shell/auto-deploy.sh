@@ -25,6 +25,11 @@ kube::config_env()
     sed -i 's/us.archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
     apt update && sudo apt full-upgrade -yy
     apt install ssh vim htop curl ntp ntpdate -y && ntpdate pool.ntp.org
+
+    # passwd root
+    # passwd -u root 
+    # sed -i s/"PermitRootLogin prohibit-password"/"PermitRootLogin yes"/g /etc/ssh/sshd_config
+    # service ssh restart
 }
 
 kube::install_docker()
@@ -321,75 +326,52 @@ kube::config_etcd()
 {
     kube::get_env $@
 
-    mkdir -p /etc/kubernetes/manifests
+    curl -sSL http://$HTTP_SERVER/etcd/etcd-${ETCD_VERSION}-linux-amd64.tar.gz | tar -xzv --strip-components=1 -C /usr/local/bin/
+    rm -rf etcd-$ETCD_VERSION-linux-amd64*
 
-cat <<EOF >/etc/kubernetes/manifests/etcd.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-labels:
-    component: etcd
-    tier: control-plane
-name: ${ETCD_PODNAME}
-namespace: kube-system
-spec:
-containers:
-- command:
-    - etcd --name ${PEER_NAME} \
-    - --data-dir /var/lib/etcd \
-    - --listen-client-urls https://${LOCAL_IP}:2379 \
-    - --advertise-client-urls https://${LOCAL_IP}:2379 \
-    - --listen-peer-urls https://${LOCAL_IP}:2380 \
-    - --initial-advertise-peer-urls https://${LOCAL_IP}:2380 \
-    - --cert-file=/certs/server.pem \
-    - --key-file=/certs/server-key.pem \
-    - --client-cert-auth \
-    - --trusted-ca-file=/certs/ca.pem \
-    - --peer-cert-file=/certs/peer.pem \
-    - --peer-key-file=/certs/peer-key.pem \
-    - --peer-client-cert-auth \
-    - --peer-trusted-ca-file=/certs/ca.pem \
-    - --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380 \
-    - --initial-cluster-token my-etcd-token \
-    - --initial-cluster-state new
-    image: gcr.io/google_containers/etcd-amd64:${ETCD_VERSION}
-    livenessProbe:
-    httpGet:
-        path: /health
-        port: 2379
-        scheme: HTTP
-    initialDelaySeconds: 15
-    timeoutSeconds: 15
-    name: etcd
-    env:
-    - name: PUBLIC_IP
-    valueFrom:
-        fieldRef:
-        fieldPath: status.hostIP
-    - name: PRIVATE_IP
-    valueFrom:
-        fieldRef:
-        fieldPath: status.podIP
-    - name: PEER_NAME
-    valueFrom:
-        fieldRef:
-        fieldPath: metadata.name
-    volumeMounts:
-    - mountPath: /var/lib/etcd
-    name: etcd
-    - mountPath: /certs
-    name: certs
-hostNetwork: true
-volumes:
-- hostPath:
-    path: /var/lib/etcd
-    type: DirectoryOrCreate
-    name: etcd
-- hostPath:
-    path: /etc/kubernetes/pki/etcd
-    name: certs
+    touch /etc/etcd.env
+    echo "PEER_NAME=$PEER_NAME" >> /etc/etcd.env
+    echo "PRIVATE_IP=$LOCAL_IP" >> /etc/etcd.env
+
+cat >/etc/systemd/system/etcd.service <<EOF
+[Unit]
+Description=etcd
+Documentation=https://github.com/coreos/etcd
+Conflicts=etcd.service
+Conflicts=etcd2.service
+
+[Service]
+EnvironmentFile=/etc/etcd.env
+Type=notify
+Restart=always
+RestartSec=5s
+LimitNOFILE=40000
+TimeoutStartSec=0
+
+ExecStart=/usr/local/bin/etcd --name ${PEER_NAME} \
+    --data-dir /var/lib/etcd \
+    --listen-client-urls https://${LOCAL_IP}:2379 \
+    --advertise-client-urls https://${LOCAL_IP}:2379 \
+    --listen-peer-urls https://${LOCAL_IP}:2380 \
+    --initial-advertise-peer-urls https://${LOCAL_IP}:2380 \
+    --cert-file=/etc/kubernetes/pki/etcd/server.pem \
+    --key-file=/etc/kubernetes/pki/etcd/server-key.pem \
+    --client-cert-auth \
+    --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.pem \
+    --peer-cert-file=/etc/kubernetes/pki/etcd/peer.pem \
+    --peer-key-file=/etc/kubernetes/pki/etcd/peer-key.pem \
+    --peer-client-cert-auth \
+    --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.pem \
+    --initial-cluster etcd0=https://${MASTER_NODES[0]}:2380,etcd1=https://${MASTER_NODES[1]}:2380,etcd1=https://${MASTER_NODES[2]}:2380 \
+    --initial-cluster-token my-etcd-token \
+    --initial-cluster-state new
+
+[Install]
+WantedBy=multi-user.target
 EOF
 
+    systemctl daemon-reload && systemctl start etcd
+    systemctl status etcd
 }
  
 kube::config_node()

@@ -1,4 +1,5 @@
 .vscode/
 debs/
 images/
+etcd/
 nohup.out
