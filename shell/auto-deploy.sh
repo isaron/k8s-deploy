@@ -456,15 +456,26 @@ EOF
     mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 }
 
-kube::etcd_up()
+kube::env_up()
 {
-    # shift
- 
+    kube::set_env
+    
     kube::install_docker
  
     kube::load_images
  
     kube::install_bin
+}
+
+kube::etcd_up()
+{
+    # shift
+ 
+    # kube::install_docker
+ 
+    # kube::load_images
+ 
+    # kube::install_bin
 
     if [ $(hostname) == ${MASTERS[0]} ]; then
         kube::install_etcd_cert $@
@@ -590,8 +601,8 @@ main()
     "d" | "down" )
         kube::tear_down
         ;;
-    "s" | "setenv" )
-        kube::set_env
+    "v" | "env" )
+        kube::env_up
         ;;
     "c" | "config_node" )
         kube::config_node
@@ -606,7 +617,7 @@ main()
         echo "       $0 replica to setup replica master "
         echo "       $0 join   to join master with token "
         echo "       $0 down   to tear all down ,inlude all data! so becarefull "
-        echo "       $0 setenv   to setup environment "
+        echo "       $0 env   to setup environment "
         echo "       $0 config_node   to config nodes "
         echo "       $0 get_env   to get environment "
         echo "       unkown command $0 $@ "
