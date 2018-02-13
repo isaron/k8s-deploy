@@ -320,7 +320,7 @@ kube::save_master_ip()
     set -e
 }
  
-kube::copy_master_config()
+kube::copy_etcd_config()
 {
     kube::get_env $@
 
@@ -340,6 +340,13 @@ kube::copy_master_config()
 
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server config.json | cfssljson -bare server
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=peer config.json | cfssljson -bare peer
+}
+kube::copy_master_config()
+{
+    kube::get_env $@
+
+    scp -r root@${MASTER_IP}:/etc/kubernetes/pki/* /etc/kubernetes/pki
+    # rm apiserver.crt
 }
 
 kube::install_etcd()
@@ -371,7 +378,7 @@ TimeoutStartSec=0
 
 ExecStart=/usr/local/bin/etcd --name ${PEER_NAME} \
     --data-dir /var/lib/etcd \
-    --listen-client-urls https://${LOCAL_IP}:2379 \
+    --listen-client-urls https://${LOCAL_IP}:2379,https://127.0.0.1:2379 \
     --advertise-client-urls https://${LOCAL_IP}:2379 \
     --listen-peer-urls https://${LOCAL_IP}:2380 \
     --initial-advertise-peer-urls https://${LOCAL_IP}:2380 \
@@ -462,7 +469,7 @@ kube::etcd_up()
     if [ $(hostname) == ${MASTERS[0]} ]; then
         kube::install_etcd_cert $@
     else
-        kube::copy_master_config $@
+        kube::copy_etcd_config $@
     fi
 
     kube::install_etcd
@@ -515,11 +522,13 @@ kube::replica_up()
  
     # kube::install_bin
  
-    # kube::copy_master_config $@
+    # kube::copy_etcd_config $@
  
     # kube::install_etcd
 
-    kube::init_master  $@
+    kube::copy_master_config $@
+
+    kube::init_master
  
     kube::install_keepalived "BACKUP" 
 
