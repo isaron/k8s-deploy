@@ -156,7 +156,7 @@ kube::get_env()
  
 kube::install_keepalived()
 {
-    # kube::get_env $@
+    kube::get_env $@
     set +e
     which keepalived > /dev/null 2>&1
     i=$?
