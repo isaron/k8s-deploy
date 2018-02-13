@@ -22,7 +22,7 @@ if [ "$root" -ne 0 ] ;then
     exit 1
 fi
 
-kube::config_env()
+kube::set_env()
 {
     echo "Asia/Chongqing" > /etc/timezone
     swapoff -a && sed -i 's/.*swap.*/#&/' /etc/fstab
@@ -449,7 +449,7 @@ EOF
     mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 }
 
-kube::master_up()
+kube::etcd_up()
 {
     # shift
  
@@ -459,11 +459,31 @@ kube::master_up()
  
     kube::install_bin
 
-    kube::install_etcd_cert $@
+    if [ $(hostname) == ${MASTERS[0]} ]; then
+        kube::install_etcd_cert $@
+    else
+        kube::copy_master_config $@
+    fi
 
     kube::install_etcd
+    
+}
+
+kube::master_up()
+{
+    # shift
  
-    [ ${KUBE_HA} == true ] && kube::install_keepalived "MASTER"
+    # kube::install_docker
+ 
+    # kube::load_images
+ 
+    # kube::install_bin
+
+    # kube::install_etcd_cert $@
+
+    # kube::install_etcd
+ 
+    [ ${KUBE_HA} == true ] && kube::install_keepalived "MASTER"  $@
  
     # 存储master_ip，master02和master03需要用这个信息来copy配置
     #kube::save_master_ip
@@ -489,17 +509,17 @@ kube::replica_up()
 {
     # shift
  
-    kube::install_docker
+    # kube::install_docker
  
-    kube::load_images
+    # kube::load_images
  
-    kube::install_bin
+    # kube::install_bin
  
-    kube::copy_master_config $@
+    # kube::copy_master_config $@
  
-    kube::install_etcd
+    # kube::install_etcd
 
-    kube::init_master
+    kube::init_master  $@
  
     kube::install_keepalived "BACKUP" 
 
@@ -546,6 +566,9 @@ kube::tear_down()
 main()
 {
     case $1 in
+    "e" | "etcd" )
+        kube::etcd_up $@
+        ;;
     "m" | "master" )
         kube::master_up $@
         ;;
@@ -558,8 +581,8 @@ main()
     "d" | "down" )
         kube::tear_down
         ;;
-    "e" | "env" )
-        kube::config_env
+    "s" | "setenv" )
+        kube::set_env
         ;;
     "c" | "config_node" )
         kube::config_node
@@ -568,13 +591,16 @@ main()
         kube::get_env $@
         ;;
     *)
-        echo "usage: $0 m[master] | r[replica] | j[join] token | d[down] "
+        echo "usage: $0 e[etcd] m[master] | r[replica] | j[join] token | d[down] s[setenv] c[config_node] g[get_env] "
+        echo "       $0 etcd to setup etcd "
         echo "       $0 master to setup master "
         echo "       $0 replica to setup replica master "
         echo "       $0 join   to join master with token "
-        echo "       $0 down   to tear all down ,inlude all data! so becarefull"
-        echo "       $0 env   to config environment"
-        echo "       unkown command $0 $@"
+        echo "       $0 down   to tear all down ,inlude all data! so becarefull "
+        echo "       $0 setenv   to setup environment "
+        echo "       $0 config_node   to config nodes "
+        echo "       $0 get_env   to get environment "
+        echo "       unkown command $0 $@ "
         ;;
     esac
 }
