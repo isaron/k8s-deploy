@@ -120,7 +120,7 @@ restrict source notrap nomodify noquery
 
 EOF
 
-    ntpdate 172.30.80.88
+    # ntpdate 172.30.80.88
     systemctl daemon-reload && systemctl start ntp
     hwclock -w
 }
