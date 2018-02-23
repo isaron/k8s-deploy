@@ -30,7 +30,8 @@ kube::set_env()
     sed -i s/"deb cdrom"/"#deb cdrom"/g /etc/apt/sources.list
     sed -i 's/us.archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
     apt update && sudo apt full-upgrade -yy
-    apt install ssh vim htop curl ntp ntpdate -y && ntpdate pool.ntp.org
+    # apt install ssh vim htop curl ntp ntpdate -y && ntpdate pool.ntp.org
+    apt install ssh vim htop curl -y
 
     # passwd root
     # passwd -u root 
