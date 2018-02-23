@@ -75,6 +75,7 @@ restrict 172.30.80.88 nomodify notrap noquery
 
 server 127.127.1.0
 fudge 127.127.1.0 stratum 10
+
 # Access control configuration; see /usr/share/doc/ntp-doc/html/accopt.html for
 # details.  The web page <http://support.ntp.org/bin/view/Support/AccessRestrictions>
 # might also be helpful.
