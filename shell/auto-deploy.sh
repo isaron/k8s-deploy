@@ -217,6 +217,11 @@ kube::disable_static_pod()
 kube::get_env()
 {
     HA_STATE=$1
+    if [ $HA_STATE == "master" ]; then
+        $HA_STATE == "MASTER"
+    else if [ $HA_STATE == "replica" ]; then
+        $HA_STATE == "BACKUP"
+    fi
     [ $HA_STATE == "MASTER" ] && HA_PRIORITY=200 || HA_PRIORITY=`expr 200 - ${RANDOM} / 1000 + 1`
     KUBE_VIP=$(echo $2 |awk -F= '{print $2}')
     VIP_PREFIX=$(echo ${KUBE_VIP} | cut -d . -f 1,2,3)
@@ -664,7 +669,7 @@ kube::master_up()
 
     # kube::install_etcd
  
-    [ ${KUBE_HA} == true ] && kube::install_keepalived "MASTER"  $@
+    [ ${KUBE_HA} == true ] && kube::install_keepalived $@
  
     # 存储master_ip，master02和master03需要用这个信息来copy配置
     #kube::save_master_ip
@@ -704,7 +709,7 @@ kube::replica_up()
 
     kube::init_master
  
-    kube::install_keepalived "BACKUP" 
+    kube::install_keepalived
 
     #kube::set_label
  
