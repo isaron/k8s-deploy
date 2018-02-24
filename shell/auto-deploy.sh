@@ -219,7 +219,8 @@ kube::get_env()
     HA_STATE=$1
     if [ $HA_STATE == "master" ]; then
         $HA_STATE == "MASTER"
-    else if [ $HA_STATE == "replica" ]; then
+    fi
+    if [ $HA_STATE == "replica" ]; then
         $HA_STATE == "BACKUP"
     fi
     [ $HA_STATE == "MASTER" ] && HA_PRIORITY=200 || HA_PRIORITY=`expr 200 - ${RANDOM} / 1000 + 1`
