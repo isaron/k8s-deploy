@@ -148,7 +148,7 @@ kube::config_docker()
  
     # sysctl -w net.bridge.bridge-nf-call-iptables=1
     # sysctl -w net.bridge.bridge-nf-call-ip6tables=1
-cat <<EOF >>/etc/sysctl.conf
+cat >>/etc/sysctl.conf <<EOF
     net.bridge.bridge-nf-call-ip6tables = 1
     net.bridge.bridge-nf-call-iptables = 1
 EOF
@@ -240,7 +240,8 @@ kube::get_env()
     j=0
     for i in ${MASTER_NODES[@]}; do
         if [ $i == $LOCAL_IP ]; then
-            ETCD_PODNAME=etcd$j
+            # ETCD_PODNAME=etcd$j
+            ETCD_PODNAME=${MASTERS[$j]}
             break
         fi
         let j+=1
@@ -265,7 +266,7 @@ kube::install_keepalived()
 kube::config_keepalived()
 {
   echo "gen keepalived configuration"
-cat <<EOF >/etc/keepalived/keepalived.conf
+cat >/etc/keepalived/keepalived.conf <<EOF
 global_defs {
    router_id LVS_k8s
 }
@@ -316,7 +317,7 @@ kube::install_etcd_cert()
 
     mkdir -p /etc/kubernetes/pki/etcd && cd /etc/kubernetes/pki/etcd
 
-cat <<EOF >ca-config.json
+cat >ca-config.json <<EOF
 {
     "signing": {
         "default": {
@@ -354,7 +355,7 @@ cat <<EOF >ca-config.json
 }
 EOF
 
-cat <<EOF >ca-csr.json
+cat >ca-csr.json <<EOF
 {
     "CN": "etcd",
     "key": {
@@ -375,7 +376,7 @@ EOF
 
     cfssl gencert -initca ca-csr.json | cfssljson -bare ca -
 
-cat <<EOF >client.json
+cat >client.json <<EOF
 {
     "CN": "client",
     "key": {
@@ -502,7 +503,7 @@ kube::install_etcd()
 
     mkdir -p /etc/kubernetes/manifests
 
-cat <<EOF >/etc/kubernetes/manifests/etcd.yaml
+cat >/etc/kubernetes/manifests/etcd.yaml <<EOF
 apiVersion: v1
 kind: Pod
 metadata:
