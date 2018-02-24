@@ -699,14 +699,14 @@ main()
         ;;
     *)
         echo "usage: $0 e[etcd] m[master] | r[replica] | j[join] token | d[down] s[setenv] c[config_node] g[get_env] "
-        echo "       $0 etcd to setup etcd "
-        echo "       $0 master to setup master "
-        echo "       $0 replica to setup replica master "
-        echo "       $0 join   to join master with token "
-        echo "       $0 down   to tear all down ,inlude all data! so becarefull "
-        echo "       $0 env   to setup environment "
-        echo "       $0 config_node   to config nodes "
-        echo "       $0 get_env   to get environment "
+        echo "       $0 etcd            to setup etcd "
+        echo "       $0 master          to setup master "
+        echo "       $0 replica         to setup replica master "
+        echo "       $0 join            to join master with token "
+        echo "       $0 down            to tear all down ,inlude all data! so becarefull "
+        echo "       $0 env             to setup environment "
+        echo "       $0 config_node     to config nodes "
+        echo "       $0 get_env         to get environment "
         echo "       unkown command $0 $@ "
         ;;
     esac
