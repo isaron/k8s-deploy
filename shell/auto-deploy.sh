@@ -11,9 +11,9 @@ KUBE_VERSION=v1.9.3
 ETCD_VERSION=v3.1.11
  
 MASTERS=(
-    rdp-mgr1.k8s
-    rdp-mgr2.k8s
-    rdp-mgr3.k8s
+    rdp-mgr1
+    rdp-mgr2
+    rdp-mgr3
 )
 
 root=$(id -u)
