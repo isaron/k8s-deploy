@@ -42,7 +42,7 @@ kube::set_env()
 }
 kube::config_ntp()
 {
-    apt install ntp -y && systemctl stop ntp
+    apt purge ntp -y && apt install ntp -y && systemctl stop ntp
     # mv /etc/ntp.conf /etc/net.conf.bak
 
 cat > /etc/ntp.conf <<EOF
