@@ -218,10 +218,10 @@ kube::get_env()
 {
     # HA_STATE=$1
     if [ $1 == "master" ]; then
-        HA_STATE = "MASTER"
+        HA_STATE="MASTER"
     fi
     if [ $1 == "replica" ]; then
-        HA_STATE = "BACKUP"
+        HA_STATE="BACKUP"
     fi
     [ $HA_STATE == "MASTER" ] && HA_PRIORITY=200 || HA_PRIORITY=`expr 200 - ${RANDOM} / 1000 + 1`
     KUBE_VIP=$(echo $2 |awk -F= '{print $2}')
