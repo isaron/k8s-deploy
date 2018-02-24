@@ -11,9 +11,9 @@ KUBE_VERSION=v1.9.3
 ETCD_VERSION=v3.1.11
  
 MASTERS=(
-    rdp-mgr1
-    rdp-mgr2
-    rdp-mgr3
+    rdp-mgr1.k8s
+    rdp-mgr2.k8s
+    rdp-mgr3.k8s
 )
 
 root=$(id -u)
@@ -428,6 +428,7 @@ kube::copy_etcd_config()
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server config.json | cfssljson -bare server
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=peer config.json | cfssljson -bare peer
 }
+
 kube::copy_master_config()
 {
     kube::get_env $@
@@ -436,7 +437,7 @@ kube::copy_master_config()
     # rm apiserver.crt
 }
 
-kube::install_etcd()
+kube::install_etcd_systemd()
 {
     # kube::get_env $@
 
@@ -487,6 +488,81 @@ EOF
 
     systemctl daemon-reload && systemctl start etcd &
     # systemctl status etcd
+}
+
+kube::install_etcd()
+{
+    # kube::get_env $@
+
+    mkdir -p /etc/kubernetes/manifests
+
+cat <<EOF >/etc/kubernetes/manifests/etcd.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+labels:
+    component: etcd
+    tier: control-plane
+name: ${ETCD_PODNAME}
+namespace: kube-system
+spec:
+containers:
+- command:
+    - etcd --name ${PEER_NAME} \
+    - --data-dir /var/lib/etcd \
+    - --listen-client-urls https://${LOCAL_IP}:2379 \
+    - --advertise-client-urls https://${LOCAL_IP}:2379 \
+    - --listen-peer-urls https://${LOCAL_IP}:2380 \
+    - --initial-advertise-peer-urls https://${LOCAL_IP}:2380 \
+    - --cert-file=/certs/server.pem \
+    - --key-file=/certs/server-key.pem \
+    - --client-cert-auth \
+    - --trusted-ca-file=/certs/ca.pem \
+    - --peer-cert-file=/certs/peer.pem \
+    - --peer-key-file=/certs/peer-key.pem \
+    - --peer-client-cert-auth \
+    - --peer-trusted-ca-file=/certs/ca.pem \
+    - --initial-cluster ${MASTERS[0]}=https://${MASTER_NODES[0]}:2380,${MASTERS[1]}=https://${MASTER_NODES[1]}:2380,${MASTERS[2]}=https://${MASTER_NODES[2]}:2380 \
+    - --initial-cluster-token rdpetcd \
+    - --initial-cluster-state new
+    image: gcr.io/google_containers/etcd-amd64:3.1.11
+    livenessProbe:
+    httpGet:
+        path: /health
+        port: 2379
+        scheme: HTTP
+    initialDelaySeconds: 15
+    timeoutSeconds: 15
+    name: etcd
+    env:
+    - name: PUBLIC_IP
+    valueFrom:
+        fieldRef:
+        fieldPath: status.hostIP
+    - name: PRIVATE_IP
+    valueFrom:
+        fieldRef:
+        fieldPath: status.podIP
+    - name: PEER_NAME
+    valueFrom:
+        fieldRef:
+        fieldPath: metadata.name
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+    name: etcd
+    - mountPath: /certs
+    name: certs
+hostNetwork: true
+volumes:
+- hostPath:
+    path: /var/lib/etcd
+    type: DirectoryOrCreate
+    name: etcd
+- hostPath:
+    path: /etc/kubernetes/pki/etcd
+    name: certs
+EOF
+
 }
  
 kube::config_node()
