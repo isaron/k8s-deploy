@@ -45,7 +45,7 @@ kube::config_ntp()
     apt install ntp && systemctl stop ntp
     mv /etc/ntp.conf /etc/net.conf.bak
 
-cat > /etc/ntp.conf << EOF
+cat > /etc/ntp.conf <<EOF
 # /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help
 
 driftfile /var/lib/ntp/ntp.drift
