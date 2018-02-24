@@ -216,11 +216,11 @@ kube::disable_static_pod()
  
 kube::get_env()
 {
-    HA_STATE=$1
-    if [ $HA_STATE == "master" ]; then
+    # HA_STATE=$1
+    if [ $1 == "master" ]; then
         HA_STATE == "MASTER"
     fi
-    if [ $HA_STATE == "replica" ]; then
+    if [ $1 == "replica" ]; then
         HA_STATE == "BACKUP"
     fi
     [ $HA_STATE == "MASTER" ] && HA_PRIORITY=200 || HA_PRIORITY=`expr 200 - ${RANDOM} / 1000 + 1`
