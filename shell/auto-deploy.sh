@@ -406,7 +406,10 @@ cat > config.json <<EOF
 {
     "CN": "$PEER_NAME",
     "hosts": [
-        "$LOCAL_IP"
+        "172.30.80.31",
+        "172.30.80.32",
+        "172.30.80.33",
+        "172.30.80.30"
     ],
     "key": {
         "algo": "ecdsa",
@@ -459,7 +462,10 @@ cat > config.json <<EOF
 {
     "CN": "$PEER_NAME",
     "hosts": [
-        "$LOCAL_IP"
+        "172.30.80.31",
+        "172.30.80.32",
+        "172.30.80.33",
+        "172.30.80.30"
     ],
     "key": {
         "algo": "ecdsa",
