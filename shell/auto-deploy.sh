@@ -398,9 +398,32 @@ EOF
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client client.json | cfssljson -bare client
 
     cfssl print-defaults csr > config.json
-    sed -i '0,/CN/{s/example\.net/'"$PEER_NAME"'/}' config.json
-    sed -i 's/www\.example\.net/'"$LOCAL_IP"'/' config.json
-    sed -i 's/example\.net/'"$LOCAL_IP"'/' config.json
+    # sed -i '0,/CN/{s/example\.net/'"$PEER_NAME"'/}' config.json
+    # sed -i 's/www\.example\.net/'"$LOCAL_IP"'/' config.json
+    # sed -i 's/example\.net/'"$LOCAL_IP"'/' config.json
+
+cat > config.json <<EOF
+{
+    "CN": "$PEER_NAME",
+    "hosts": [
+        "$LOCAL_IP"
+    ],
+    "key": {
+        "algo": "ecdsa",
+        "size": 256
+    },
+    "names": [
+        {
+            "C": "CN",
+            "ST": "ChengDu",
+            "L": "ChengDu",
+            "O": "k8s",
+            "OU": "System"
+    	}
+    ]
+}
+
+EOF
 
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server config.json | cfssljson -bare server
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=peer config.json | cfssljson -bare peer
@@ -428,9 +451,32 @@ kube::copy_etcd_config()
     #rm apiserver.crt
 
     cfssl print-defaults csr > config.json
-    sed -i '0,/CN/{s/example\.net/'"$PEER_NAME"'/}' config.json
-    sed -i 's/www\.example\.net/'"$LOCAL_IP"'/' config.json
-    sed -i 's/example\.net/'"$LOCAL_IP"'/' config.json
+    # sed -i '0,/CN/{s/example\.net/'"$PEER_NAME"'/}' config.json
+    # sed -i 's/www\.example\.net/'"$LOCAL_IP"'/' config.json
+    # sed -i 's/example\.net/'"$LOCAL_IP"'/' config.json
+
+cat > config.json <<EOF
+{
+    "CN": "$PEER_NAME",
+    "hosts": [
+        "$LOCAL_IP"
+    ],
+    "key": {
+        "algo": "ecdsa",
+        "size": 256
+    },
+    "names": [
+        {
+            "C": "CN",
+            "ST": "ChengDu",
+            "L": "ChengDu",
+            "O": "k8s",
+            "OU": "System"
+    	}
+    ]
+}
+
+EOF
 
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server config.json | cfssljson -bare server
     cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=peer config.json | cfssljson -bare peer
