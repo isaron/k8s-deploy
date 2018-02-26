@@ -444,7 +444,7 @@ kube::copy_master_config()
     # rm apiserver.crt
 }
 
-kube::install_etcd_systemd()
+kube::install_etcd()
 {
     # kube::get_env $@
 
@@ -473,7 +473,7 @@ TimeoutStartSec=0
 
 ExecStart=/usr/local/bin/etcd --name ${PEER_NAME} \
     --data-dir /var/lib/etcd \
-    --listen-client-urls https://${LOCAL_IP}:2379,https://127.0.0.1:2379 \
+    --listen-client-urls https://${LOCAL_IP}:2379,https://127.0.0.1:2379,http://127.0.0.1:2379 \
     --advertise-client-urls https://${LOCAL_IP}:2379 \
     --listen-peer-urls https://${LOCAL_IP}:2380 \
     --initial-advertise-peer-urls https://${LOCAL_IP}:2380 \
@@ -497,7 +497,7 @@ EOF
     # systemctl status etcd
 }
 
-kube::install_etcd()
+kube::install_etcd_pod()
 {
     # kube::get_env $@
 
