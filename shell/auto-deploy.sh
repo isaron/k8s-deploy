@@ -762,6 +762,8 @@ kube::replica_up()
     kube::copy_master_config $@
 
     kube::init_master
+
+    kubectl taint nodes --all node-role.kubernetes.io/master-
  
     kube::install_keepalived
 
