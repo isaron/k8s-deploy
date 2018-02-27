@@ -169,6 +169,7 @@ kube::load_images()
         kube-scheduler-amd64_v1.9.3
         kube-proxy-amd64_v1.9.3
         etcd-amd64_3.1.11
+        flannel_v0.9.1-amd64
         pause-amd64_3.0
         k8s-dns-sidecar-amd64_1.14.7
         k8s-dns-kube-dns-amd64_1.14.7
