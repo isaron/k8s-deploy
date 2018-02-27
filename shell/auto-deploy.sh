@@ -272,7 +272,7 @@ global_defs {
 }
  
 vrrp_script CheckK8sMaster {
-    script "curl -k https://172.30.80.31:6443"
+    script "curl -k https://172.30.80.30:6443"
     interval 3
     timeout 9
     fall 2
