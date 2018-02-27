@@ -787,7 +787,7 @@ kube::node_up()
  
     kube::disable_static_pod
  
-    kubeadm join $@
+    kubeadm $@
 
     # 如果加入集群时没有指向VIP则需要配置，否则不需要
     #kube::config_node
