@@ -802,7 +802,7 @@ kube::tear_down()
     then
       apt remove -y keepalived
       rm -rf /etc/keepalived/keepalived.conf
-      ip addr del ${KUBE_VIP} dev ${VIP_INTERFACE}
+    #   ip addr del ${KUBE_VIP} dev ${VIP_INTERFACE}
     fi
     rm -rf /var/lib/cni
     # ip link del cni0
