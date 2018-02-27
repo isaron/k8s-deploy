@@ -494,7 +494,8 @@ kube::copy_master_config()
 {
     kube::get_env $@
 
-    scp -r root@${MASTER_IP}:/etc/kubernetes/pki/* /etc/kubernetes/pki
+    scp root@${MASTER_IP}:/etc/kubernetes/pki/ca.* /etc/kubernetes/pki
+    scp root@${MASTER_IP}:/etc/kubernetes/pki/sa.* /etc/kubernetes/pki
     # rm apiserver.crt
 }
 
