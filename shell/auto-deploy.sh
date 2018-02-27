@@ -791,7 +791,7 @@ kube::node_up()
  
 kube::tear_down()
 {
-    systemctl stop kubelet.service
+    systemctl stop kubelet.service etcd.service
     docker ps -aq|xargs -I '{}' docker stop {}
     docker ps -aq|xargs -I '{}' docker rm {}
     df |grep /var/lib/kubelet|awk '{ print $6 }'|xargs -I '{}' umount {}
