@@ -7,6 +7,7 @@ dockerimages=(
     kube-scheduler-amd64:v1.9.3
     kube-proxy-amd64:v1.9.3
     etcd-amd64:3.1.11
+    flannel:v0.9.1-amd64
     pause-amd64:3.0
     k8s-dns-sidecar-amd64:1.14.7
     k8s-dns-kube-dns-amd64:1.14.7
