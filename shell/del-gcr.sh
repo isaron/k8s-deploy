@@ -10,7 +10,7 @@ pause-amd64:3.0
 k8s-dns-sidecar-amd64:1.14.7
 k8s-dns-kube-dns-amd64:1.14.7
 k8s-dns-dnsmasq-nanny-amd64:1.14.7
-kubenetes-dashboard-amd64:v1.8.3)
+kubernetes-dashboard-amd64:v1.8.3)
 
 j=1
 for i in ${dockerimages[@]}
