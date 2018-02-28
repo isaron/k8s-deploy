@@ -12,7 +12,7 @@ dockerimages=(
     k8s-dns-sidecar-amd64:1.14.7
     k8s-dns-kube-dns-amd64:1.14.7
     k8s-dns-dnsmasq-nanny-amd64:1.14.7
-    kubenetes-dashboard-amd64:v1.8.2
+    kubenetes-dashboard-amd64:v1.8.3
 )
 
 j=1
@@ -30,9 +30,9 @@ do
 done
 
 # dashboard: if pull dashboard error
-# docker pull arborhuang/dashboard:v1.8.2
-# docker tag arborhuang/dashboard:v1.8.2 gcr.io/google_containers/kubenetes-dashboard-amd64:v1.8.2
-# docker save gcr.io/google_containers/kubenetes-dashboard-amd64:v1.8.2 -o kubenetes-dashboard-amd64:v1.8.2.tar
-# docker rmi arborhuang/dashboard:v1.8.2
+# docker pull arborhuang/dashboard:v1.8.3
+# docker tag arborhuang/dashboard:v1.8.3 gcr.io/google_containers/kubenetes-dashboard-amd64:v1.8.3
+# docker save gcr.io/google_containers/kubenetes-dashboard-amd64:v1.8.3 -o kubenetes-dashboard-amd64:v1.8.3.tar
+# docker rmi arborhuang/dashboard:v1.8.3
 
 set +x
