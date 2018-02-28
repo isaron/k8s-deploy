@@ -31,8 +31,8 @@ done
 
 # dashboard: if pull dashboard error
 # docker pull arborhuang/dashboard:v1.8.3
-# docker tag arborhuang/dashboard:v1.8.3 gcr.io/google_containers/kubenetes-dashboard-amd64:v1.8.3
-# docker save gcr.io/google_containers/kubenetes-dashboard-amd64:v1.8.3 -o kubenetes-dashboard-amd64:v1.8.3.tar
+# docker tag arborhuang/dashboard:v1.8.3 k8s.gcr.io/kubenetes-dashboard-amd64:v1.8.3
+# docker save k8s.gcr.io/kubenetes-dashboard-amd64:v1.8.3 -o kubenetes-dashboard-amd64:v1.8.3.tar
 # docker rmi arborhuang/dashboard:v1.8.3
 
 set +x
