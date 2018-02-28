@@ -160,10 +160,24 @@ metadata:
   name: kubernetes-dashboard
   namespace: kube-system
 spec:
-  type: NodePort
   ports:
     - port: 443
       targetPort: 8443
-      nodePort: 32666
   selector:
     k8s-app: kubernetes-dashboard
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dashboard-ingress
+  namespace: default
+spec:
+  rules:
+  - host: dashboard.rdd.ssii.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kubernetes-dashboard
+          servicePort: 80
