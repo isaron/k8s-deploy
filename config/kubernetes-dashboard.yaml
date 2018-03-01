@@ -172,6 +172,8 @@ kind: Ingress
 metadata:
   name: dashboard-ingress
   namespace: default
+  annotations: 
+    ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: dashboard.rdd.ssii.com
