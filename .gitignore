@@ -2,4 +2,5 @@
 debs/
 images/
 etcd/
+certs/
 nohup.out
