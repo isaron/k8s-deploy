@@ -172,8 +172,6 @@ kind: Ingress
 metadata:
   name: dashboard-ingress
   namespace: default
-  annotations: 
-    kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
   - host: dashboard.k8s.rdd.ssii.com
