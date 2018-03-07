@@ -27,6 +27,7 @@ spec:
             - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
             - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
             - --annotations-prefix=nginx.ingress.kubernetes.io
+            - --apiserver-host=https://172.30.80.30:6443
           env:
             - name: POD_NAME
               valueFrom:
