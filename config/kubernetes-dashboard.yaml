@@ -173,7 +173,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: dashboard-ingress
-  namespace: kube-system
+  namespace: ingress-nginx
 spec:
   rules:
   - host: dashboard.k8s.rdd.ssii.com
