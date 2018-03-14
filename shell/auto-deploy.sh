@@ -440,7 +440,17 @@ cat > config.json <<EOF
         "172.30.80.31",
         "172.30.80.32",
         "172.30.80.33",
-        "172.30.80.30"
+        "172.30.80.30",
+        "dashboard.k8s.rdd.ssii.com",
+        "172.30.80.34",
+        "172.30.80.35",
+        "172.30.80.36",
+        "10.244.0.1",
+        "kubernetes",
+        "kubernetes.default",
+        "kubernetes.default.svc",
+        "kubernetes.default.svc.cluster",
+        "kubernetes.default.svc.cluster.local"
     ],
     "key": {
         "algo": "ecdsa",
@@ -497,7 +507,17 @@ cat > config.json <<EOF
         "172.30.80.31",
         "172.30.80.32",
         "172.30.80.33",
-        "172.30.80.30"
+        "172.30.80.30",
+        "dashboard.k8s.rdd.ssii.com",
+        "172.30.80.34",
+        "172.30.80.35",
+        "172.30.80.36",
+        "10.244.0.1",
+        "kubernetes",
+        "kubernetes.default",
+        "kubernetes.default.svc",
+        "kubernetes.default.svc.cluster",
+        "kubernetes.default.svc.cluster.local"
     ],
     "key": {
         "algo": "ecdsa",
@@ -544,6 +564,9 @@ kube::install_etcd()
 cat >/etc/systemd/system/etcd.service <<EOF
 [Unit]
 Description=etcd
+After=network.target
+After=network-online.target
+Wants=network-online.target
 Documentation=https://github.com/coreos/etcd
 Conflicts=etcd.service
 Conflicts=etcd2.service
@@ -552,13 +575,13 @@ Conflicts=etcd2.service
 EnvironmentFile=/etc/etcd.env
 Type=notify
 Restart=always
-RestartSec=5s
+RestartSec=5
 LimitNOFILE=40000
 TimeoutStartSec=0
 
 ExecStart=/usr/local/bin/etcd --name ${PEER_NAME} \
     --data-dir /var/lib/etcd \
-    --listen-client-urls https://${LOCAL_IP}:2379,http://127.0.0.1:2379 \
+    --listen-client-urls https://${LOCAL_IP}:2379,https://127.0.0.1:2379 \
     --advertise-client-urls https://${LOCAL_IP}:2379 \
     --listen-peer-urls https://${LOCAL_IP}:2380 \
     --initial-advertise-peer-urls https://${LOCAL_IP}:2380 \
@@ -657,16 +680,25 @@ EOF
 
 }
  
+kube::config_master()
+{
+    # kube::get_env $@
+    KUBE_VIP=172.30.80.30
+
+    # on master
+    kubectl get configmap -n kube-system kube-proxy -o yaml > kube-proxy.yaml
+    sed -i 's#server:.*#server: https://${KUBE_VIP}:6443#g' kube-proxy.yaml
+    kubectl apply -f kube-proxy.yaml --force
+    # restart all kube-proxy pods to ensure that they load the new configmap
+    kubectl delete pod -n kube-system -l k8s-app=kube-proxy
+}
+
 kube::config_node()
 {
     # kube::get_env $@
     KUBE_VIP=172.30.80.30
 
-    kubectl get configmap -n kube-system kube-proxy -o yaml > kube-proxy.yaml
-    sed -i 's#server:.*#server: https://${KUBE_VIP}:6443#g' kube-proxy.cm
-    kubectl apply -f kube-proxy.cm --force
-    # restart all kube-proxy pods to ensure that they load the new configmap
-    kubectl delete pod -n kube-system -l k8s-app=kube-proxy
+    # on node
     sed -i 's#server:.*#server: https://${KUBE_VIP}:6443#g' /etc/kubernetes/kubelet.conf
     systemctl restart kubelet
 }
@@ -775,7 +807,10 @@ kube::master_up()
     kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
  
     # show pods
-    kubectl get pod --all-namespaces
+    # kubectl get pods --all-namespaces
+
+    # 更新配置使kube-proxy通过VIP访问apiserver
+    kube::config_master
 }
  
 kube::replica_up()
@@ -819,7 +854,7 @@ kube::node_up()
     kubeadm $@
 
     # 如果加入集群时没有指向VIP则需要配置，否则不需要
-    #kube::config_node
+    kube::config_node
 }
  
 kube::tear_down()
