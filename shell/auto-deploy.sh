@@ -200,8 +200,8 @@ kube::install_bin()
         dpkg -i /tmp/debs/*.deb
         rm -rf /tmp/debs*
         systemctl enable kubelet.service && systemctl start kubelet.service && rm -rf /etc/kubernetes
-        kube::config_cni
     fi
+    kube::config_cni
 }
  
 kube::config_cni()
