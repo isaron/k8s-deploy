@@ -875,6 +875,7 @@ kube::tear_down()
     #   ip addr del ${KUBE_VIP} dev ${VIP_INTERFACE}
     fi
     rm -rf /var/lib/cni
+    rm -rf ~/.kube
     # ip link del cni0
 }
  
