@@ -450,7 +450,8 @@ cat > config.json <<EOF
         "kubernetes.default",
         "kubernetes.default.svc",
         "kubernetes.default.svc.cluster",
-        "kubernetes.default.svc.cluster.local"
+        "kubernetes.default.svc.cluster.local",
+        "k8s.local"
     ],
     "key": {
         "algo": "ecdsa",
@@ -517,7 +518,8 @@ cat > config.json <<EOF
         "kubernetes.default",
         "kubernetes.default.svc",
         "kubernetes.default.svc.cluster",
-        "kubernetes.default.svc.cluster.local"
+        "kubernetes.default.svc.cluster.local",
+        "k8s.local"
     ],
     "key": {
         "algo": "ecdsa",
