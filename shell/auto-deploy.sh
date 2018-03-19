@@ -544,7 +544,7 @@ EOF
 
 kube::copy_master_config()
 {
-    kube::get_env $@
+    # kube::get_env $@
 
     scp root@${MASTER_IP}:/etc/kubernetes/pki/ca.* /etc/kubernetes/pki
     scp root@${MASTER_IP}:/etc/kubernetes/pki/sa.* /etc/kubernetes/pki
@@ -829,14 +829,14 @@ kube::replica_up()
  
     # kube::install_etcd
 
-    kube::copy_master_config $@
+    kube::install_keepalived $@
+
+    kube::copy_master_config
 
     kube::init_master
 
     # kubectl taint nodes --all node-role.kubernetes.io/master-
  
-    kube::install_keepalived
-
     #kube::set_label
 
     # 更新配置使kube-proxy通过VIP访问apiserver
