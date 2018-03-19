@@ -446,6 +446,7 @@ cat > config.json <<EOF
         "172.30.80.35",
         "172.30.80.36",
         "10.244.0.1",
+        "10.96.0.10",
         "kubernetes",
         "kubernetes.default",
         "kubernetes.default.svc",
