@@ -812,7 +812,7 @@ kube::master_up()
     # kubectl get pods --all-namespaces
 
     # 更新配置使kube-proxy通过VIP访问apiserver
-    kube::config_master
+    # kube::config_master
 }
  
 kube::replica_up()
@@ -838,6 +838,9 @@ kube::replica_up()
     kube::install_keepalived
 
     #kube::set_label
+
+    # 更新配置使kube-proxy通过VIP访问apiserver
+    # kube::config_master
  
 }
  
