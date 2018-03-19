@@ -146,8 +146,8 @@ kube::config_docker()
 {
     setenforce 0 > /dev/null 2>&1 && sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
  
-    # sysctl -w net.bridge.bridge-nf-call-iptables=1
-    # sysctl -w net.bridge.bridge-nf-call-ip6tables=1
+    sysctl net.bridge.bridge-nf-call-iptables=1
+    sysctl net.bridge.bridge-nf-call-ip6tables=1
 cat >>/etc/sysctl.conf <<EOF
     net.bridge.bridge-nf-call-ip6tables = 1
     net.bridge.bridge-nf-call-iptables = 1
