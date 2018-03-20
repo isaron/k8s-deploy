@@ -177,7 +177,7 @@ spec:
   - host: dashboard.k8s.rdd.ssii.com
     http:
       paths:
-      - path: /
+      - path: /dashboard
         backend:
           serviceName: kubernetes-dashboard
           servicePort: 80
