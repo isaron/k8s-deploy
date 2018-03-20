@@ -27,6 +27,7 @@ spec:
             - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
             - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
             - --annotations-prefix=nginx.ingress.kubernetes.io
+            - --report-node-internal-ip-address=true
           env:
             - name: POD_NAME
               valueFrom:
