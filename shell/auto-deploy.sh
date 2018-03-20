@@ -7,8 +7,8 @@ MASTER_IP=172.30.80.31
 KUBE_HA=true
  
 KUBE_REPO_PREFIX=gcr.io/google_containers
-KUBE_VERSION=v1.9.3
-ETCD_VERSION=v3.1.11
+KUBE_VERSION=v1.9.5
+ETCD_VERSION=v3.1.12
  
 MASTERS=(
     rdp-mgr1.k8s
@@ -167,16 +167,17 @@ kube::load_images()
     mkdir -p /tmp/k8s
  
     images=(
-        kube-apiserver-amd64_v1.9.3
-        kube-controller-manager-amd64_v1.9.3
-        kube-scheduler-amd64_v1.9.3
-        kube-proxy-amd64_v1.9.3
-        etcd-amd64_3.1.11
-        flannel_v0.9.1-amd64
-        pause-amd64_3.0
-        k8s-dns-sidecar-amd64_1.14.7
-        k8s-dns-kube-dns-amd64_1.14.7
-        k8s-dns-dnsmasq-nanny-amd64_1.14.7
+        kube-apiserver-amd64:v1.9.5
+        kube-controller-manager-amd64:v1.9.5
+        kube-scheduler-amd64:v1.9.5
+        kube-proxy-amd64:v1.9.5
+        etcd-amd64:3.1.12
+        flannel:v0.9.1-amd64
+        pause-amd64:3.0
+        k8s-dns-sidecar-amd64:1.14.7
+        k8s-dns-kube-dns-amd64:1.14.7
+        k8s-dns-dnsmasq-nanny-amd64:1.14.7
+        kubernetes-dashboard-amd64:v1.8.3
     )
  
     for i in "${!images[@]}"; do
@@ -646,7 +647,7 @@ containers:
     - --initial-cluster ${MASTERS[0]}=https://${MASTER_NODES[0]}:2380,${MASTERS[1]}=https://${MASTER_NODES[1]}:2380,${MASTERS[2]}=https://${MASTER_NODES[2]}:2380 \
     - --initial-cluster-token rdpetcd \
     - --initial-cluster-state new
-    image: gcr.io/google_containers/etcd-amd64:3.1.11
+    image: gcr.io/google_containers/etcd-amd64:3.1.12
     livenessProbe:
     httpGet:
         path: /health
