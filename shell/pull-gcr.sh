@@ -13,7 +13,6 @@ dockerimages=(
     k8s-dns-kube-dns-amd64:1.14.7
     k8s-dns-dnsmasq-nanny-amd64:1.14.7
     kubernetes-dashboard-amd64:v1.8.3
-    quay-nginx-ingress-controller:0.12.0
 )
 
 j=1
@@ -29,6 +28,11 @@ do
 
     let j+=1
 done
+
+docker pull arborhuang/quay-nginx-ingress-controller:0.12.0
+docker tage arborhuang/quay-nginx-ingress-controller:0.12.0 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.12.0
+docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.12.0 -o nginx-ingress-controller:0.12.0.tar
+docker rmi arborhuang/quay-nginx-ingress-controller:0.12.0
 
 # dashboard: if pull dashboard error
 # docker pull arborhuang/dashboard:v1.8.3
