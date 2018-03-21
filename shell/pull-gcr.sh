@@ -13,6 +13,7 @@ dockerimages=(
     k8s-dns-kube-dns-amd64:1.14.7
     k8s-dns-dnsmasq-nanny-amd64:1.14.7
     kubernetes-dashboard-amd64:v1.8.3
+    quay-nginx-ingress-controller:0.12.0
 )
 
 j=1
