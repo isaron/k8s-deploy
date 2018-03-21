@@ -34,10 +34,4 @@ docker tage arborhuang/quay-nginx-ingress-controller:0.12.0 quay.io/kubernetes-i
 docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.12.0 -o nginx-ingress-controller:0.12.0.tar
 docker rmi arborhuang/quay-nginx-ingress-controller:0.12.0
 
-# dashboard: if pull dashboard error
-# docker pull arborhuang/dashboard:v1.8.3
-# docker tag arborhuang/dashboard:v1.8.3 k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3
-# docker save k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3 -o kubernetes-dashboard-amd64:v1.8.3.tar
-# docker rmi arborhuang/dashboard:v1.8.3
-
 set +x
