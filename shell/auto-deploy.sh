@@ -602,7 +602,7 @@ ExecStart=/usr/local/bin/etcd --name ${PEER_NAME} \
     --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.pem \
     --initial-cluster ${MASTERS[0]}=https://${MASTER_NODES[0]}:2380,${MASTERS[1]}=https://${MASTER_NODES[1]}:2380,${MASTERS[2]}=https://${MASTER_NODES[2]}:2380 \
     --initial-cluster-token rdpetcd \
-    --initial-cluster-state existing
+    --initial-cluster-state new
 
 [Install]
 WantedBy=multi-user.target
