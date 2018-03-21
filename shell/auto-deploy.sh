@@ -167,17 +167,17 @@ kube::load_images()
     mkdir -p /tmp/k8s
  
     images=(
-        kube-apiserver-amd64:v1.9.5
-        kube-controller-manager-amd64:v1.9.5
-        kube-scheduler-amd64:v1.9.5
-        kube-proxy-amd64:v1.9.5
-        etcd-amd64:3.1.12
-        flannel:v0.9.1-amd64
-        pause-amd64:3.0
-        k8s-dns-sidecar-amd64:1.14.7
-        k8s-dns-kube-dns-amd64:1.14.7
-        k8s-dns-dnsmasq-nanny-amd64:1.14.7
-        kubernetes-dashboard-amd64:v1.8.3
+        kube-apiserver-amd64_v1.9.5
+        kube-controller-manager-amd64_v1.9.5
+        kube-scheduler-amd64_v1.9.5
+        kube-proxy-amd64_v1.9.5
+        etcd-amd64_3.1.12
+        flannel_v0.9.1-amd64
+        pause-amd64_3.0
+        k8s-dns-sidecar-amd64_1.14.7
+        k8s-dns-kube-dns-amd64_1.14.7
+        k8s-dns-dnsmasq-nanny-amd64_1.14.7
+        kubernetes-dashboard-amd64_v1.8.3
     )
  
     for i in "${!images[@]}"; do
