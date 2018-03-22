@@ -34,7 +34,7 @@ kube::set_env()
     apt install ssh vim htop curl -y
 
     # echo "up route del default gw 192.168.52.2" >> /etc/network/interfaces
-    # echo "up route add default gw 172.30.0.1" >> /etc/network/interfaces
+    echo "up route add default gw 172.30.80.88" >> /etc/network/interfaces
 
     kube::config_ntp
 
