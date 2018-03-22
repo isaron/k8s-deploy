@@ -845,7 +845,7 @@ kube::replica_up()
     #kube::set_label
 
     # 更新配置使kube-proxy通过VIP访问apiserver
-    kube::config_master
+    # kube::config_master
  
 }
  
