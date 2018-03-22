@@ -35,7 +35,7 @@ docker rmi arborhuang/quay-nginx-ingress-controller:0.12.0
 
 docker pull arborhuang/flannel:v0.10.0-amd64
 docker tag arborhuang/flannel:v0.10.0-amd64 quay.io/coreos/flannel:v0.10.0-amd64
-docker save quay.io/coreos/flannel:v0.10.0-amd64.tar
+docker save quay.io/coreos/flannel:v0.10.0-amd64 -o flannel:v0.10.0-amd64.tar
 docker rmi arborhuang/flannel:v0.10.0-amd64
 
 set +x
