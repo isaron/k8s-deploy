@@ -7,7 +7,6 @@ dockerimages=(
     kube-scheduler-amd64:v1.9.5
     kube-proxy-amd64:v1.9.5
     etcd-amd64:3.1.12
-    flannel:v0.9.1-amd64
     pause-amd64:3.0
     k8s-dns-sidecar-amd64:1.14.7
     k8s-dns-kube-dns-amd64:1.14.7
@@ -30,8 +29,13 @@ do
 done
 
 docker pull arborhuang/quay-nginx-ingress-controller:0.12.0
-docker tage arborhuang/quay-nginx-ingress-controller:0.12.0 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.12.0
+docker tag arborhuang/quay-nginx-ingress-controller:0.12.0 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.12.0
 docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.12.0 -o nginx-ingress-controller:0.12.0.tar
 docker rmi arborhuang/quay-nginx-ingress-controller:0.12.0
+
+docker pull arborhuang/flannel:v0.10.0-amd64
+docker tag arborhuang/flannel:v0.10.0-amd64 quay.io/coreos/flannel:v0.10.0-amd64
+docker save quay.io/coreos/flannel:v0.10.0-amd64.tar
+docker rmi arborhuang/flannel:v0.10.0-amd64
 
 set +x

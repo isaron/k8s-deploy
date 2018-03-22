@@ -172,7 +172,6 @@ kube::load_images()
         kube-scheduler-amd64_v1.9.5
         kube-proxy-amd64_v1.9.5
         etcd-amd64_3.1.12
-        flannel_v0.9.1-amd64
         pause-amd64_3.0
         k8s-dns-sidecar-amd64_1.14.7
         k8s-dns-kube-dns-amd64_1.14.7
@@ -812,7 +811,7 @@ kube::master_up()
     echo -e "\033[32m 注意记录下token信息，node加入集群时需要使用！\033[0m"
  
     # install flannel network
-    kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
+    kubectl apply -f http://172.30.80.88:8000/config/kube-flannel.yml
  
     # show pods
     # kubectl get pods --all-namespaces
