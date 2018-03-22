@@ -303,21 +303,21 @@ cat >/etc/keepalived/keepalived.conf <<EOF
 global_defs {
    router_id LVS_k8s
 }
- 
-vrrp_script CheckK8sMaster {
-    script "curl -k https://172.30.80.31:6443"
+
+vrrp_script check_apiserver {
+    script "/etc/keepalived/check_apiserver.sh"
     interval 3
-    timeout 9
-    fall 2
+    weight -2
+    fall 10
     rise 2
 }
- 
+
 vrrp_instance VI_1 {
     state ${HA_STATE}
     interface ${VIP_INTERFACE}
     virtual_router_id 61
     priority ${HA_PRIORITY}
-    advert_int 1
+    advert_int 2
     mcast_src_ip ${LOCAL_IP}
     nopreempt
     authentication {
@@ -331,13 +331,29 @@ vrrp_instance VI_1 {
         ${KUBE_VIP}
     }
     track_script {
-        CheckK8sMaster
+        check_apiserver
     }
 }
- 
+
 EOF
-  modprobe ip_vs
-  systemctl daemon-reload && systemctl restart keepalived.service
+
+cat > /etc/keepalived/check_apiserver.sh <<EOF
+#!/bin/sh
+
+errorExit() {
+    echo "*** $*" 1>&2
+    exit 1
+}
+
+curl --silent --max-time 2 --insecure https://localhost:6443/ -o /dev/null || errorExit "Error GET https://localhost:6443/"
+if ip addr | grep -q ${KUBE_VIP}; then
+    curl --silent --max-time 2 --insecure https://${KUBE_VIP}:6443/ -o /dev/null || errorExit "Error GET https://${KUBE_VIP}:6443/"
+fi
+EOF
+
+    chmod +x /etc/keepalived/check_apiserver.sh
+    modprobe ip_vs
+    systemctl daemon-reload && systemctl restart keepalived.service
 }
 
 kube::install_etcd_cert()
@@ -693,9 +709,9 @@ kube::config_master()
     # KUBE_VIP=172.30.80.30
 
     # on master
-    kubectl get configmap -n kube-system kube-proxy -o yaml > kube-proxy.yaml
-    sed -i 's#server:.*#server: https://172.30.80.30:6443#g' kube-proxy.yaml
-    kubectl apply -f kube-proxy.yaml --force
+    kubectl get configmap -n kube-system kube-proxy -o yaml > kube-proxy-cm.yaml
+    sed -i 's#server:.*#server: https://172.30.80.30:6443#g' kube-proxy-cm.yaml
+    kubectl apply -f kube-proxy-cm.yaml --force
     # restart all kube-proxy pods to ensure that they load the new configmap
     kubectl delete pod -n kube-system -l k8s-app=kube-proxy
 }
