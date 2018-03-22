@@ -842,7 +842,7 @@ kube::replica_up()
 
     # kubectl taint nodes --all node-role.kubernetes.io/master-
  
-    #kube::set_label
+    kube::set_label
 
     # 更新配置使kube-proxy通过VIP访问apiserver
     # kube::config_master
