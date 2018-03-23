@@ -171,10 +171,6 @@ kind: Ingress
 metadata:
   name: dashboard-ingress
 spec:
-  tls:
-  - hosts:
-    - k8s.rdd.ssii.com
-    secretName: ingress-secret
   rules:
   - host: k8s.rdd.ssii.com
     http:
