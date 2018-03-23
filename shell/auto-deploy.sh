@@ -317,15 +317,10 @@ vrrp_instance VI_1 {
     interface ${VIP_INTERFACE}
     virtual_router_id 61
     priority ${HA_PRIORITY}
-    advert_int 2
-    mcast_src_ip ${LOCAL_IP}
-    nopreempt
+    advert_int 1
     authentication {
         auth_type PASS
         auth_pass rdpha
-    }
-    unicast_peer {
-        ${MASTER_NODES_NO_LOCAL_IP}
     }
     virtual_ipaddress {
         ${KUBE_VIP}
