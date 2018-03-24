@@ -8,10 +8,11 @@ dockerimages=(
     kube-proxy-amd64:v1.9.5
     etcd-amd64:3.1.12
     pause-amd64:3.0
-    k8s-dns-sidecar-amd64:1.14.7
-    k8s-dns-kube-dns-amd64:1.14.7
-    k8s-dns-dnsmasq-nanny-amd64:1.14.7
+    k8s-dns-sidecar-amd64:1.14.8
+    k8s-dns-kube-dns-amd64:1.14.8
+    k8s-dns-dnsmasq-nanny-amd64:1.14.8
     kubernetes-dashboard-amd64:v1.8.3
+    cluster-autoscaler:v1.1.2
 )
 
 j=1
