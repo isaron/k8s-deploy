@@ -898,6 +898,7 @@ kube::tear_down()
     rm -rf /var/lib/cni
     rm -rf ~/.kube
     # ip link del cni0
+    service networking restart
 }
  
 main()
