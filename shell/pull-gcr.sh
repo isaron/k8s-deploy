@@ -13,6 +13,7 @@ dockerimages=(
     k8s-dns-dnsmasq-nanny-amd64:1.14.8
     kubernetes-dashboard-amd64:v1.8.3
     cluster-autoscaler:v1.1.2
+    defaultbackend:1.4
 )
 
 j=1

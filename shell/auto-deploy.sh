@@ -178,6 +178,7 @@ kube::load_images()
         k8s-dns-dnsmasq-nanny-amd64_1.14.8
         kubernetes-dashboard-amd64_v1.8.3
         cluster-autoscaler_v1.1.2
+        defaultbackend_1.4
     )
  
     for i in "${!images[@]}"; do
