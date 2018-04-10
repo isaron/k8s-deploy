@@ -171,6 +171,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: dashboard-ingress
+  namespace: kube-system
 spec:
   tls:
   - hosts:
