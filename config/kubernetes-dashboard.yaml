@@ -181,7 +181,6 @@ spec:
   - host: k8s.rdd.ssii.com
     http:
       paths:
-      - path: /
         backend:
           serviceName: kubernetes-dashboard
           servicePort: 443
