@@ -349,7 +349,7 @@ fi
 EOF
 
     chmod +x /etc/keepalived/check_apiserver.sh
-    # modprobe ip_vs
+    modprobe ip_vs
     systemctl daemon-reload && systemctl restart keepalived.service
 }
 
