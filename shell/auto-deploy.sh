@@ -862,7 +862,7 @@ kube::master_up()
 
     # kube::install_etcd
  
-    [ ${KUBE_HA} == true ] && kube::install_keepalived $@
+    [ ${KUBE_HA} == true ] && kube::config_loadbalancer $@
  
     # 存储master_ip，master02和master03需要用这个信息来copy配置
     #kube::save_master_ip
@@ -901,7 +901,7 @@ kube::replica_up()
  
     # kube::install_etcd
 
-    kube::install_keepalived $@
+    kube::config_loadbalancer $@
 
     kube::copy_master_config
 
