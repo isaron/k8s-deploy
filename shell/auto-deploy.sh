@@ -403,7 +403,8 @@ ExecStop=/usr/local/bin/lvs_dr_stop
 WantedBy=multi-user.target
 EOF
 
-
+    modprobe ip_vs
+    systemctl daemon-reload && systemctl restart lvs-dr.service
 }
 
 kube::install_etcd_cert()
