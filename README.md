@@ -16,15 +16,17 @@ Components to be deployed:
   - k8s-dns-dnsmasq-nanny-amd64:1.14.7
   - kubernetes-dashboard-amd64:v1.8.3
   - cluster-autoscaler:v1.1.2
-- ingress-nginx
-- keepalived
+- ingress-nginx # disabled, using istio-ingress
+- lvs + keepalived
 - istio
-  - v0.7.0
+  - v0.7.1
+- helm + draft
 - prometheus
 - grafana
-- elk
+- elk stack
 - netflix suite
-- habor
+- habor + dragonfly
 - nexus
 - jenkins
-- gitlab
+- gitlab (or gogs)
+- ...
