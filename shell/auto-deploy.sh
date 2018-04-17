@@ -358,32 +358,25 @@ kube::config_loadbalancer()
     kube::get_env $@
 
 cat > /usr/local/sbin/lvs_dr_start <<EOF
-#!/bin/sh
+#!/bin/bash
 ip addr add ${KUBE_VIP}/32 dev lo
 route add -host ${KUBE_VIP} lo
 echo "1" > /proc/sys/net/ipv4/conf/lo/arp_ignore
 echo "2" > /proc/sys/net/ipv4/conf/lo/arp_announce
 echo "1" > /proc/sys/net/ipv4/conf/all/arp_ignore
 echo "2" > /proc/sys/net/ipv4/conf/all/arp_announce
-
-EOF
-
-cat >> /etc/sysctl.conf <<EOF
-net.ipv4.conf.all.arp_ignore = 1
-net.ipv4.conf.all.arp_announce = 2
-net.ipv4.conf.lo.arp_ignore = 1
-net.ipv4.conf.lo.arp_announce = 2
+exit 0
 EOF
 
 cat > /usr/local/sbin/lvs_dr_stop <<EOF
-#!/bin/sh
+#!/bin/bash
 route del ${KUBE_VIP} lo
 ip addr del ${KUBE_VIP}/32 dev lo
 echo "0" >/proc/sys/net/ipv4/conf/lo/arp_ignore
 echo "0" >/proc/sys/net/ipv4/conf/lo/arp_announce
 echo "0" >/proc/sys/net/ipv4/conf/all/arp_ignore
 echo "0" >/proc/sys/net/ipv4/conf/all/arp_announce
-
+exit 0
 EOF
 
     chmod +x /usr/local/sbin/lvs_dr*
@@ -391,17 +384,16 @@ EOF
 cat >/etc/systemd/system/lvs-dr.service <<EOF
 [Unit]
 Description=LVS DR
+ConditionPathExists=
 After=network.target
 After=network-online.target
 Wants=network-online.target
 
 [Service]
-Type=notify
+Type=simple
 Restart=always
 RestartSec=5
-LimitNOFILE=40000
 TimeoutStartSec=0
-
 ExecStart=/usr/local/sbin/lvs_dr_start
 ExecStop=/usr/local/sbin/lvs_dr_stop
 
@@ -411,7 +403,7 @@ WantedBy=multi-user.target
 EOF
 
     modprobe ip_vs
-    systemctl daemon-reload && systemctl start lvs-dr.service
+    systemctl daemon-reload && systemctl enable lvs-dr.service && systemctl start lvs-dr.service
 }
 
 kube::install_etcd_cert()
