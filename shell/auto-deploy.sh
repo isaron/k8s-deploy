@@ -360,8 +360,8 @@ kube::config_loadbalancer()
 cat > /usr/local/sbin/lvs_dr_start <<EOF
 #! /bin/bash
 vip=${KUBE_VIP}
-ifconfig lo:0 $vip broadcast $vip netmask 255.255.255.255 up
-route add -host $vip lo:0
+ifconfig lo:0 ${KUBE_VIP} broadcast ${KUBE_VIP} netmask 255.255.255.255 up
+route add -host ${KUBE_VIP} lo:0
 echo "1" >/proc/sys/net/ipv4/conf/lo/arp_ignore
 echo "2" >/proc/sys/net/ipv4/conf/lo/arp_announce
 echo "1" >/proc/sys/net/ipv4/conf/all/arp_ignore
@@ -371,7 +371,7 @@ EOF
 cat > /usr/local/sbin/lvs_dr_stop <<EOF
 #! /bin/bash
 vip=${KUBE_VIP}
-route delete $vip lo:0
+route delete ${KUBE_VIP} lo:0
 ifconfig lo:0 down
 echo "0" >/proc/sys/net/ipv4/conf/lo/arp_ignore
 echo "0" >/proc/sys/net/ipv4/conf/lo/arp_announce
@@ -379,7 +379,6 @@ echo "0" >/proc/sys/net/ipv4/conf/all/arp_ignore
 echo "0" >/proc/sys/net/ipv4/conf/all/arp_announce
 EOF
 
-    modprobe ip_vs
     chmod +x /usr/local/sbin/lvs_dr*
 
 cat >/etc/systemd/system/lvs-dr.service <<EOF
@@ -396,15 +395,15 @@ RestartSec=5
 LimitNOFILE=40000
 TimeoutStartSec=0
 
-ExecStart=/usr/local/bin/lvs_dr_start
-ExecStop=/usr/local/bin/lvs_dr_stop
+ExecStart=/usr/local/sbin/lvs_dr_start
+ExecStop=/usr/local/sbin/lvs_dr_stop
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
     modprobe ip_vs
-    systemctl daemon-reload && systemctl restart lvs-dr.service
+    systemctl daemon-reload && systemctl start lvs-dr.service
 }
 
 kube::install_etcd_cert()
