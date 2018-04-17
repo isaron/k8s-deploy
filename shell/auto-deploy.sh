@@ -358,25 +358,32 @@ kube::config_loadbalancer()
     kube::get_env $@
 
 cat > /usr/local/sbin/lvs_dr_start <<EOF
-#! /bin/bash
-vip=${KUBE_VIP}
-ifconfig lo:0 ${KUBE_VIP} broadcast ${KUBE_VIP} netmask 255.255.255.255 up
-route add -host ${KUBE_VIP} lo:0
-echo "1" >/proc/sys/net/ipv4/conf/lo/arp_ignore
-echo "2" >/proc/sys/net/ipv4/conf/lo/arp_announce
-echo "1" >/proc/sys/net/ipv4/conf/all/arp_ignore
-echo "2" >/proc/sys/net/ipv4/conf/all/arp_announce
+#!/bin/sh
+ip addr add ${KUBE_VIP}/32 dev lo
+route add -host ${KUBE_VIP} lo
+echo "1" > /proc/sys/net/ipv4/conf/lo/arp_ignore
+echo "2" > /proc/sys/net/ipv4/conf/lo/arp_announce
+echo "1" > /proc/sys/net/ipv4/conf/all/arp_ignore
+echo "2" > /proc/sys/net/ipv4/conf/all/arp_announce
+
+EOF
+
+cat >> /etc/sysctl.conf <<EOF
+net.ipv4.conf.all.arp_ignore = 1
+net.ipv4.conf.all.arp_announce = 2
+net.ipv4.conf.lo.arp_ignore = 1
+net.ipv4.conf.lo.arp_announce = 2
 EOF
 
 cat > /usr/local/sbin/lvs_dr_stop <<EOF
-#! /bin/bash
-vip=${KUBE_VIP}
-route delete ${KUBE_VIP} lo:0
-ifconfig lo:0 down
+#!/bin/sh
+route del ${KUBE_VIP} lo
+ip addr del ${KUBE_VIP}/32 dev lo
 echo "0" >/proc/sys/net/ipv4/conf/lo/arp_ignore
 echo "0" >/proc/sys/net/ipv4/conf/lo/arp_announce
 echo "0" >/proc/sys/net/ipv4/conf/all/arp_ignore
 echo "0" >/proc/sys/net/ipv4/conf/all/arp_announce
+
 EOF
 
     chmod +x /usr/local/sbin/lvs_dr*
@@ -400,6 +407,7 @@ ExecStop=/usr/local/sbin/lvs_dr_stop
 
 [Install]
 WantedBy=multi-user.target
+
 EOF
 
     modprobe ip_vs
