@@ -357,53 +357,59 @@ kube::config_loadbalancer()
 {
     kube::get_env $@
 
-cat > /usr/local/sbin/lvs_dr_start <<EOF
-#!/bin/bash
-ip addr add ${KUBE_VIP}/32 dev lo
-route add -host ${KUBE_VIP} lo
-echo "1" > /proc/sys/net/ipv4/conf/lo/arp_ignore
-echo "2" > /proc/sys/net/ipv4/conf/lo/arp_announce
-echo "1" > /proc/sys/net/ipv4/conf/all/arp_ignore
-echo "2" > /proc/sys/net/ipv4/conf/all/arp_announce
-exit 0
-EOF
+    modprobe ip_vs
+    ln -fs /lib/systemd/system/rc-local.service /etc/systemd/system/rc-local.service
 
-cat > /usr/local/sbin/lvs_dr_stop <<EOF
-#!/bin/bash
-route del ${KUBE_VIP} lo
-ip addr del ${KUBE_VIP}/32 dev lo
-echo "0" >/proc/sys/net/ipv4/conf/lo/arp_ignore
-echo "0" >/proc/sys/net/ipv4/conf/lo/arp_announce
-echo "0" >/proc/sys/net/ipv4/conf/all/arp_ignore
-echo "0" >/proc/sys/net/ipv4/conf/all/arp_announce
-exit 0
-EOF
+cat > /etc/systemd/system/rc-local.service <<EOF
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
 
-    chmod +x /usr/local/sbin/lvs_dr*
-
-cat >/etc/systemd/system/lvs-dr.service <<EOF
+# This unit gets pulled automatically into multi-user.target by
+# systemd-rc-local-generator if /etc/rc.local is executable.
 [Unit]
-Description=LVS DR
-ConditionPathExists=
+Description=/etc/rc.local Compatibility
+ConditionFileIsExecutable=/etc/rc.local
 After=network.target
-After=network-online.target
-Wants=network-online.target
 
 [Service]
-Type=simple
-Restart=always
-RestartSec=5
-TimeoutStartSec=0
-ExecStart=/usr/local/sbin/lvs_dr_start
-ExecStop=/usr/local/sbin/lvs_dr_stop
+Type=forking
+ExecStart=/etc/rc.local start
+TimeoutSec=0
+RemainAfterExit=yes
+GuessMainPID=no
 
 [Install]
 WantedBy=multi-user.target
+Alias=rc-local.service
 
 EOF
 
-    modprobe ip_vs
-    systemctl daemon-reload && systemctl enable lvs-dr.service && systemctl start lvs-dr.service
+cat > /etc/rc.local <<EOF
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+ip addr add ${KUBE_VIP}/32 dev lo
+route add -host ${KUBE_VIP} lo
+
+exit 0
+
+EOF
+
+    chmod 755 /etc/rc.local
 }
 
 kube::install_etcd_cert()
