@@ -149,8 +149,8 @@ kube::config_docker()
 {
     setenforce 0 > /dev/null 2>&1 && sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
  
-    sysctl net.bridge.bridge-nf-call-iptables=1
-    sysctl net.bridge.bridge-nf-call-ip6tables=1
+    # sysctl net.bridge.bridge-nf-call-iptables=1
+    # sysctl net.bridge.bridge-nf-call-ip6tables=1
 cat >>/etc/sysctl.conf <<EOF
     net.bridge.bridge-nf-call-ip6tables = 1
     net.bridge.bridge-nf-call-iptables = 1
@@ -410,6 +410,16 @@ exit 0
 EOF
 
     chmod 755 /etc/rc.local
+
+cat >> /etc/sysctl.conf <<EOF
+net.ipv4.conf.all.arp_ignore = 1
+net.ipv4.conf.all.arp_announce = 2
+net.ipv4.conf.lo.arp_ignore = 1
+net.ipv4.conf.lo.arp_announce = 2
+EOF
+
+    # sysctl -p
+
 }
 
 kube::install_etcd_cert()
