@@ -11,9 +11,9 @@ Components to be deployed:
   - kube-proxy-amd64:v1.9.7
   - etcd-amd64:3.1.12
   - pause-amd64:3.0
-  - k8s-dns-sidecar-amd64:1.14.7
-  - k8s-dns-kube-dns-amd64:1.14.7
-  - k8s-dns-dnsmasq-nanny-amd64:1.14.7
+  - k8s-dns-sidecar-amd64:1.14.10
+  - k8s-dns-kube-dns-amd64:1.14.10
+  - k8s-dns-dnsmasq-nanny-amd64:1.14.10
   - kubernetes-dashboard-amd64:v1.8.3
   - cluster-autoscaler:v1.1.2
 - ingress-nginx # disabled, using istio-ingress
