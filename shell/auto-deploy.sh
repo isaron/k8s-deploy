@@ -7,7 +7,7 @@ MASTER_IP=172.30.80.31
 KUBE_HA=true
  
 KUBE_REPO_PREFIX=gcr.io/google_containers
-KUBE_VERSION=v1.9.6
+KUBE_VERSION=v1.9.7
 ETCD_VERSION=v3.1.12
  
 MASTERS=(
@@ -167,10 +167,10 @@ kube::load_images()
     mkdir -p /tmp/k8s
  
     images=(
-        kube-apiserver-amd64_v1.9.6
-        kube-controller-manager-amd64_v1.9.6
-        kube-scheduler-amd64_v1.9.6
-        kube-proxy-amd64_v1.9.6
+        kube-apiserver-amd64_v1.9.7
+        kube-controller-manager-amd64_v1.9.7
+        kube-scheduler-amd64_v1.9.7
+        kube-proxy-amd64_v1.9.7
         etcd-amd64_3.1.12
         pause-amd64_3.0
         k8s-dns-sidecar-amd64_1.14.7
