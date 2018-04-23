@@ -173,9 +173,9 @@ kube::load_images()
         kube-proxy-amd64_v1.9.7
         etcd-amd64_3.1.12
         pause-amd64_3.0
-        k8s-dns-sidecar-amd64_1.14.10
-        k8s-dns-kube-dns-amd64_1.14.10
-        k8s-dns-dnsmasq-nanny-amd64_1.14.10
+        k8s-dns-sidecar-amd64_1.14.7
+        k8s-dns-kube-dns-amd64_1.14.7
+        k8s-dns-dnsmasq-nanny-amd64_1.14.7
         kubernetes-dashboard-amd64_v1.8.3
         cluster-autoscaler_v1.1.2
         defaultbackend_1.4
