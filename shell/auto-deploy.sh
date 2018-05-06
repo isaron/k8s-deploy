@@ -1,15 +1,15 @@
 #!/bin/bash
 set -x
 set -e
- 
+
 HTTP_SERVER=172.30.80.88:8000
 MASTER_IP=172.30.80.31
 KUBE_HA=true
- 
+
 KUBE_REPO_PREFIX=gcr.io/google_containers
-KUBE_VERSION=v1.9.7
+KUBE_VERSION=v1.10.2
 ETCD_VERSION=v3.1.12
- 
+
 MASTERS=(
     rdp-mgr1.k8s
     rdp-mgr2.k8s
@@ -39,7 +39,7 @@ kube::set_env()
     kube::config_ntp
 
     # passwd root
-    # passwd -u root 
+    # passwd -u root
     # sed -i s/"PermitRootLogin prohibit-password"/"PermitRootLogin yes"/g /etc/ssh/sshd_config
     # service ssh restart
 }
@@ -144,11 +144,11 @@ kube::install_docker()
     fi
     echo docker has been installed
 }
- 
+
 kube::config_docker()
 {
     setenforce 0 > /dev/null 2>&1 && sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
- 
+
     # sysctl net.bridge.bridge-nf-call-iptables=1
     # sysctl net.bridge.bridge-nf-call-ip6tables=1
 cat >>/etc/sysctl.conf <<EOF
@@ -161,26 +161,26 @@ EOF
     curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://e24ee5b3.m.daocloud.io
     systemctl daemon-reload && systemctl restart docker.service
 }
- 
+
 kube::load_images()
 {
     mkdir -p /tmp/k8s
- 
+
     images=(
-        kube-apiserver-amd64_v1.9.7
-        kube-controller-manager-amd64_v1.9.7
-        kube-scheduler-amd64_v1.9.7
-        kube-proxy-amd64_v1.9.7
+        kube-apiserver-amd64_v1.10.2
+        kube-controller-manager-amd64_v1.10.2
+        kube-scheduler-amd64_v1.10.2
+        kube-proxy-amd64_v1.10.2
         etcd-amd64_3.1.12
         pause-amd64_3.0
-        k8s-dns-sidecar-amd64_1.14.7
-        k8s-dns-kube-dns-amd64_1.14.7
-        k8s-dns-dnsmasq-nanny-amd64_1.14.7
+        k8s-dns-sidecar-amd64_1.14.10
+        k8s-dns-kube-dns-amd64_1.14.10
+        k8s-dns-dnsmasq-nanny-amd64_1.14.10
         kubernetes-dashboard-amd64_v1.8.3
-        cluster-autoscaler_v1.1.2
+        cluster-autoscaler_v1.2.1
         defaultbackend_1.4
     )
- 
+
     for i in "${!images[@]}"; do
         ret=$(docker images | awk 'NR!=1{print $1"_"$2}'| grep $KUBE_REPO_PREFIX/${images[$i]} | wc -l)
         if [ $ret -lt 1 ];then
@@ -188,10 +188,10 @@ kube::load_images()
             docker load -i /tmp/k8s/${images[$i]}.tar
         fi
     done
- 
+
     rm /tmp/k8s* -rf
 }
- 
+
 kube::install_bin()
 {
     set +e
@@ -208,7 +208,7 @@ kube::install_bin()
     fi
     kube::config_cni
 }
- 
+
 kube::config_cni()
 {
     mkdir -p /etc/cni/net.d
@@ -241,14 +241,14 @@ kube::wait_apiserver()
 {
     until curl https://172.30.80.31:6443; do sleep 1; done
 }
- 
+
 kube::disable_static_pod()
 {
     # remove the waring log in kubelet
     sed -i 's/--pod-manifest-path=\/etc\/kubernetes\/manifests//g' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
     systemctl daemon-reload && systemctl restart kubelet.service
 }
- 
+
 kube::get_env()
 {
     # HA_STATE=$1
@@ -282,7 +282,7 @@ kube::get_env()
         let j+=1
     done
 }
- 
+
 kube::install_keepalived()
 {
     kube::get_env $@
@@ -297,7 +297,7 @@ kube::install_keepalived()
         kube::config_keepalived
     fi
 }
- 
+
 kube::config_keepalived()
 {
   echo "gen keepalived configuration"
@@ -567,7 +567,7 @@ kube::save_master_ip()
     [ ${KUBE_HA} == true ] && etcdctl mk ha_master ${LOCAL_IP}
     set -e
 }
- 
+
 kube::copy_etcd_config()
 {
     kube::get_env $@
@@ -768,7 +768,7 @@ volumes:
 EOF
 
 }
- 
+
 kube::config_master()
 {
     # kube::get_env $@
@@ -797,7 +797,7 @@ kube::set_label()
   until kubectl get no | grep `hostname`; do sleep 1; done
   kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=master
 }
- 
+
 kube::init_master()
 {
     # kube::get_env $@
@@ -835,22 +835,22 @@ EOF
 kube::env_up()
 {
     kube::set_env
-    
+
     kube::install_docker
- 
+
     kube::load_images
- 
+
     kube::install_bin
 }
 
 kube::etcd_up()
 {
     # shift
- 
+
     # kube::install_docker
- 
+
     # kube::load_images
- 
+
     # kube::install_bin
 
     if [ $(hostname) == ${MASTERS[0]} ]; then
@@ -860,60 +860,60 @@ kube::etcd_up()
     fi
 
     kube::install_etcd
-    
+
 }
 
 kube::master_up()
 {
     # shift
- 
+
     # kube::install_docker
- 
+
     # kube::load_images
- 
+
     # kube::install_bin
 
     # kube::install_etcd_cert $@
 
     # kube::install_etcd
- 
+
     [ ${KUBE_HA} == true ] && kube::config_loadbalancer $@
- 
+
     # 存储master_ip，master02和master03需要用这个信息来copy配置
     #kube::save_master_ip
- 
+
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
     #kubeadm init --kubernetes-version=v1.9.3 --pod-network-cidr=10.244.0.0/16 $@
 
     kube::init_master
- 
+
     # 使master节点可以被调度
     kubectl taint nodes --all node-role.kubernetes.io/master-
- 
+
     echo -e "\033[32m 注意记录下token信息，node加入集群时需要使用！\033[0m"
- 
+
     # install flannel network
     kubectl apply -f http://172.30.80.88:8000/config/kube-flannel.yml
- 
+
     # show pods
     # kubectl get pods --all-namespaces
 
     # 更新配置使kube-proxy通过VIP访问apiserver
     # kube::config_master
 }
- 
+
 kube::replica_up()
 {
     # shift
- 
+
     # kube::install_docker
- 
+
     # kube::load_images
- 
+
     # kube::install_bin
- 
+
     # kube::copy_etcd_config $@
- 
+
     # kube::install_etcd
 
     kube::config_loadbalancer $@
@@ -923,32 +923,32 @@ kube::replica_up()
     kube::init_master
 
     # kubectl taint nodes --all node-role.kubernetes.io/master-
- 
+
     kube::set_label
 
     # 更新配置使kube-proxy通过VIP访问apiserver
     # kube::config_master
- 
+
 }
- 
+
 kube::node_up()
 {
     # shift
 
     kube::install_docker
- 
+
     kube::load_images
- 
+
     kube::install_bin
- 
+
     kube::disable_static_pod
- 
+
     kubeadm $@
 
     # 如果加入集群时没有指向VIP则需要配置，否则不需要
     # kube::config_node
 }
- 
+
 kube::tear_down()
 {
     systemctl daemon-reload && systemctl stop kubelet.service etcd.service
@@ -969,7 +969,7 @@ kube::tear_down()
     # ip link del cni0
     service networking restart
 }
- 
+
 main()
 {
     case $1 in
@@ -1011,5 +1011,5 @@ main()
         ;;
     esac
 }
- 
+
 main $@
