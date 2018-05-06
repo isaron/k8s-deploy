@@ -23,8 +23,8 @@ do
     echo $j
 
     docker pull arborhuang/$i
-    docker tag arborhuang/$i gcr.io/google_containers/$i
-    docker save gcr.io/google_containers/$i -o $i.tar
+    docker tag arborhuang/$i k8s.gcr.io/$i
+    docker save k8s.gcr.io/$i -o $i.tar
     docker rmi arborhuang/$i
 
     let j+=1
