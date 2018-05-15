@@ -40,9 +40,9 @@ docker tag arborhuang/flannel:v0.10.0-amd64 quay.io/coreos/flannel:v0.10.0-amd64
 docker save quay.io/coreos/flannel:v0.10.0-amd64 -o flannel:v0.10.0-amd64.tar
 docker rmi arborhuang/flannel:v0.10.0-amd64
 
-docker pull arborhuang/tiller:v2.8.2
-docker tag arborhuang/tiller:v2.8.2 gcr.io/kubernetes-helm/tiller:v2.8.2
-docker save gcr.io/kubernetes-helm/tiller:v2.8.2 -o tiller:v2.8.2.tar
-docker rmi arborhuang/tiller:v2.8.2
+docker pull arborhuang/tiller:v2.9.1
+docker tag arborhuang/tiller:v2.9.1 gcr.io/kubernetes-helm/tiller:v2.9.1
+docker save gcr.io/kubernetes-helm/tiller:v2.9.1 -o tiller:v2.9.1.tar
+docker rmi arborhuang/tiller:v2.9.1
 
 set +x
