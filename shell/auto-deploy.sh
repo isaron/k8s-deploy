@@ -692,6 +692,8 @@ EOF
 
     systemctl daemon-reload && systemctl start etcd &
     # systemctl status etcd
+    # sed -i s/"--initial-cluster-state new "/"--initial-cluster-state existing"/g /etc/systemd/system/etcd.service
+    # systemctl daemon-reload && systemctl restart etcd &
 }
 
 kube::install_etcd_pod()
