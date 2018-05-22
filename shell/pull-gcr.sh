@@ -45,4 +45,7 @@ docker tag arborhuang/tiller:v2.9.1 gcr.io/kubernetes-helm/tiller:v2.9.1
 docker save gcr.io/kubernetes-helm/tiller:v2.9.1 -o tiller:v2.9.1.tar
 docker rmi arborhuang/tiller:v2.9.1
 
+docker pull coredns/coredns:1.1.2
+docker save coredns/coredns:1.1.2 -o coredns:1.1.2.tar
+
 set +x

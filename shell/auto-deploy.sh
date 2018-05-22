@@ -830,7 +830,7 @@ apiServerExtraArgs:
 EOF
 
     systemctl daemon-reload && systemctl start kubelet.service
-    kubeadm init --config=config.yaml
+    kubeadm init --config=config.yaml --feature-gates=CoreDNS=true
     mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 }
 
