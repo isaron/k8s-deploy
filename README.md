@@ -16,6 +16,7 @@ Components to be deployed:
   - k8s-dns-dnsmasq-nanny-amd64:1.14.10
   - kubernetes-dashboard-amd64:v1.8.3
   - cluster-autoscaler:v1.2.2
+  - coredns:1.1.2 (replacing k8s-dns)
 - ingress-nginx # disabled, using istio-ingress
 - lvs + keepalived
 - istio
