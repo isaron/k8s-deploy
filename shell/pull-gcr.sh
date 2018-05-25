@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -x
-dockerimages=(
+k8simages=(
     kube-apiserver-amd64:v1.10.3
     kube-controller-manager-amd64:v1.10.3
     kube-scheduler-amd64:v1.10.3
@@ -17,7 +17,7 @@ dockerimages=(
 )
 
 j=1
-for i in ${dockerimages[@]}
+for i in ${k8simages[@]}
 do
     echo $i
     echo $j
@@ -47,5 +47,27 @@ docker rmi arborhuang/tiller:v2.9.1
 
 docker pull coredns/coredns:1.1.2
 docker save coredns/coredns:1.1.2 -o coredns:1.1.2.tar
+
+conduitimages=(
+    controller:v0.4.1
+    proxy:v0.4.1
+    proxy-init:v0.4.1
+    web:v0.4.1
+    grafana:v0.4.1
+)
+
+j=1
+for i in ${conduitimages[@]}
+do
+    echo $i
+    echo $j
+
+    docker pull arborhuang/runconduit-$i
+    docker tag arborhuang/runconduit-$i gcr.io/runconduit/$i
+    docker save gcr.io/runconduit/$i -o $i.tar
+    docker rmi arborhuang/runconduit-$i
+
+    let j+=1
+done
 
 set +x

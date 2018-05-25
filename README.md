@@ -21,6 +21,8 @@ Components to be deployed:
 - lvs + keepalived
 - istio
   - v0.7.1
+- conduit
+  - v0.4.1
 - helm + draft
 - prometheus
 - grafana
