@@ -64,7 +64,7 @@ do
 
     docker pull arborhuang/runconduit-$i
     docker tag arborhuang/runconduit-$i gcr.io/runconduit/$i
-    docker save gcr.io/runconduit/$i -o $i.tar
+    docker save gcr.io/runconduit/$i -o runconduit-$i.tar
     docker rmi arborhuang/runconduit-$i
 
     let j+=1
