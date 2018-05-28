@@ -692,8 +692,8 @@ EOF
 
     systemctl daemon-reload && systemctl start etcd &
     # systemctl status etcd
-    # sed -i s/"--initial-cluster-state new "/"--initial-cluster-state existing"/g /etc/systemd/system/etcd.service
-    # systemctl daemon-reload && systemctl restart etcd &
+    # sed -i s/"--initial-cluster-state new "/"--initial-cluster-state existing "/g /etc/systemd/system/etcd.service
+    # systemctl daemon-reload && systemctl restart etcd
 }
 
 kube::install_etcd_pod()
@@ -830,7 +830,8 @@ apiServerExtraArgs:
 EOF
 
     systemctl daemon-reload && systemctl start kubelet.service
-    kubeadm init --config=config.yaml --feature-gates=CoreDNS=true
+    # kubeadm init --config=config.yaml --feature-gates=CoreDNS=true
+    kubeadm init --config=config.yaml
     mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 }
 
