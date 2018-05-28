@@ -29,4 +29,24 @@ do
     let j+=1
 done
 
+conduitimages=(
+    controller:v0.4.1
+    proxy:v0.4.1
+    proxy-init:v0.4.1
+    web:v0.4.1
+    grafana:v0.4.1
+)
+
+j=1
+for i in ${conduitimages[@]}
+do
+    echo $i
+    echo $j
+
+    docker rmi arborhuang/runconduit-$i
+    docker rmi gcr.io/runconduit/$i
+
+    let j+=1
+done
+
 set +x
