@@ -30,6 +30,30 @@ do
     let j+=1
 done
 
+set -x
+jximages=(
+    heapster:v1.3.0
+    heapster-amd64:v1.5.0
+    heapster-grafana-amd64:v4.4.3
+    heapster-influxdb-amd64:v1.3.3
+    kube-addon-manager:v8.6
+    addon-resizer:1.7
+)
+
+j=1
+for i in ${jximages[@]}
+do
+    echo $i
+    echo $j
+
+    docker pull arborhuang/$i
+    docker tag arborhuang/$i k8s.gcr.io/$i
+    docker save k8s.gcr.io/$i -o $i.tar
+    docker rmi arborhuang/$i
+
+    let j+=1
+done
+
 docker pull arborhuang/quay-nginx-ingress-controller:0.15.0
 docker tag arborhuang/quay-nginx-ingress-controller:0.15.0 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.15.0
 docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.15.0 -o nginx-ingress-controller:0.15.0.tar
