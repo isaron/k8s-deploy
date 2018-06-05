@@ -20,16 +20,16 @@ Components to be deployed:
 - ingress-nginx # disabled, using istio-ingress
 - lvs + keepalived
 - istio
-  - v0.7.1
+  - v0.8.0 (LTS)
 - conduit
   - v0.4.2
 - helm + draft
 - prometheus
 - grafana
-- elk stack
+- efk stack
 - netflix suite
 - habor + dragonfly
 - nexus
 - jenkins
-- gitlab (or gogs)
+- gitlab (or gogs/gitea)
 - ...
