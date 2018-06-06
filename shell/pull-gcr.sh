@@ -94,4 +94,29 @@ do
     let j+=1
 done
 
+spinnakerimages=(
+    clouddriver:2.0.0-20180221152902
+    echo:0.8.0-20180221133510
+    deck:2.1.0-20180221143146
+    igor:0.9.0-20180221133510
+    orca:0.10.0-20180221133510
+    gate:0.10.0-20180221133510
+    front50:0.9.0-20180221133510
+    rosco:0.5.0-20180221133510
+)
+
+j=1
+for i in ${spinnakerimages[@]}
+do
+    echo $i
+    echo $j
+
+    docker pull arborhuang/spinnaker-$i
+    docker tag arborhuang/spinnaker-$i gcr.io/spinnaker-marketplace/$i
+    docker save gcr.io/spinnaker-marketplace/$i -o spinnaker-$i.tar
+    docker rmi arborhuang/spinnaker-$i
+
+    let j+=1
+done
+
 set +x
