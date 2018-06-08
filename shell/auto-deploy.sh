@@ -33,6 +33,8 @@ kube::set_env()
     # apt install ssh vim htop curl ntp ntpdate -y && systemctl stop ntp && ntpdate 172.30.80.88
     apt install ssh vim htop curl -y
 
+    modprobe ip_vs # enable ipvs by default
+
     # echo "up route del default gw 192.168.52.2" >> /etc/network/interfaces
     # echo "up route add default gw 172.30.80.88" >> /etc/network/interfaces
 
@@ -46,7 +48,7 @@ kube::set_env()
 kube::config_ntp()
 {
     apt purge ntp -y && apt install ntp -y && systemctl stop ntp
-    # mv /etc/ntp.conf /etc/net.conf.bak
+    # mv /etc/ntp.conf /etc/ntp.conf.bak
 
 cat > /etc/ntp.conf <<EOF
 # /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help
