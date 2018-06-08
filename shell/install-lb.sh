@@ -65,14 +65,14 @@ vrrp_instance VI_1 {
     }
 }
 
-virtual_server 172.30.80.30 6443 {
+virtual_server fwmark 1 {
     delay_loop 6
     lb_algo wrr
     lb_kind DR
-    persistence_timeout 0
+    persistence_timeout 900
     protocol TCP
 
-    real_server 172.30.80.31 6443 {
+    real_server 172.30.80.31 {
         weight 1
         TCP_CHECK {
             connect_timeout 10
@@ -82,7 +82,7 @@ virtual_server 172.30.80.30 6443 {
         }
     }
 
-    real_server 172.30.80.32 6443 {
+    real_server 172.30.80.32 {
         weight 1
         TCP_CHECK {
             connect_timeout 10
@@ -92,7 +92,7 @@ virtual_server 172.30.80.30 6443 {
         }
     }
 
-    real_server 172.30.80.33 6443 {
+    real_server 172.30.80.33 {
         weight 1
         TCP_CHECK {
             connect_timeout 10
