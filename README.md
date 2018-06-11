@@ -19,6 +19,7 @@ Components to be deployed:
   - coredns:1.1.2 (replacing k8s-dns)
 - ingress-nginx # disabled, using istio-ingress
 - lvs + keepalived
+- metallb
 - istio
   - v0.8.0 (LTS)
 - conduit
