@@ -6,7 +6,7 @@ metadata:
 data:
   config: |
     address-pools:
-    - name: my-ip-space
+    - name: metallb-ips
       protocol: layer2
       addresses:
       - 172.30.80.27-172.30.80.30
