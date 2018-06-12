@@ -95,7 +95,6 @@ do
     let j+=1
 done
 
-set -x
 jximages=(
     heapster:v1.3.0
     heapster-amd64:v1.5.0
@@ -119,7 +118,6 @@ do
     let j+=1
 done
 
-set -x
 jximages2=(
     chartmuseum/chartmuseum:v0.2.8
     jenkinsxio/jenkinsx:0.0.25
