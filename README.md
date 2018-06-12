@@ -23,7 +23,7 @@ Components to be deployed:
 - istio
   - v0.8.0 (LTS)
 - conduit
-  - v0.4.2
+  - v0.4.3
 - helm + draft
 - prometheus
 - grafana

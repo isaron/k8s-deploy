@@ -30,11 +30,11 @@ do
 done
 
 conduitimages=(
-    controller:v0.4.2
-    proxy:v0.4.2
-    proxy-init:v0.4.2
-    web:v0.4.2
-    grafana:v0.4.2
+    controller:v0.4.3
+    proxy:v0.4.3
+    proxy-init:v0.4.3
+    web:v0.4.3
+    grafana:v0.4.3
 )
 
 j=1
@@ -45,6 +45,29 @@ do
 
     docker rmi arborhuang/runconduit-$i
     docker rmi gcr.io/runconduit/$i
+
+    let j+=1
+done
+
+spinnakerimages=(
+    clouddriver:2.0.0-20180221152902
+    echo:0.8.0-20180221133510
+    deck:2.1.0-20180221143146
+    igor:0.9.0-20180221133510
+    orca:0.10.0-20180221133510
+    gate:0.10.0-20180221133510
+    front50:0.9.0-20180221133510
+    rosco:0.5.0-20180221133510
+)
+
+j=1
+for i in ${conduitimages[@]}
+do
+    echo $i
+    echo $j
+
+    docker rmi arborhuang/spinnaker-$i
+    docker rmi gcr.io/spinnaker-marketplace/$i
 
     let j+=1
 done
