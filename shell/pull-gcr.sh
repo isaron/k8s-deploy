@@ -127,7 +127,7 @@ jximages2=(
     jenkinsxio/builder-scala:0.0.96
     jenkinsxio/builder-go:0.0.275
     jenkinsxio/builder-terraform:0.0.52
-    jenkinsxio/builder-rust:0.0.128
+    jenkinsxio/builder-rust:0.0.130
     jenkinsxio/builder-nodejs:0.0.228
     jenkinsxio/builder-base:0.0.312
     jenkinsxio/builder-python2:0.0.45
