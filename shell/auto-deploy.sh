@@ -31,7 +31,7 @@ kube::set_env()
     sed -i 's/us.archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
     apt update && apt purge open-vm-tools-desktop -y && apt full-upgrade -yy && apt autoremove -y && apt autoclean
     # apt install ssh vim htop curl ntp ntpdate -y && systemctl stop ntp && ntpdate 172.30.80.88
-    apt install ssh vim htop curl -y
+    apt install ssh vim htop curl nethogs -y
 
     modprobe ip_vs # enable ipvs by default
 
