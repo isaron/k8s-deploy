@@ -900,6 +900,8 @@ kube::master_up()
     # install flannel network
     kubectl apply -f http://172.30.80.88:8000/config/kube-flannel.yml
 
+    kube::set_label
+
     # show pods
     # kubectl get pods --all-namespaces
 
@@ -927,7 +929,7 @@ kube::replica_up()
 
     kube::init_master
 
-    # kubectl taint nodes --all node-role.kubernetes.io/master-
+    kubectl taint nodes --all node-role.kubernetes.io/master-
 
     kube::set_label
 
