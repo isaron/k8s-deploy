@@ -7,7 +7,7 @@ MASTER_IP=172.30.80.31
 KUBE_HA=true
 
 KUBE_REPO_PREFIX=k8s.gcr.io
-KUBE_VERSION=v1.10.3
+KUBE_VERSION=v1.10.5
 ETCD_VERSION=v3.1.12
 
 MASTERS=(
@@ -169,10 +169,10 @@ kube::load_images()
     mkdir -p /tmp/k8s
 
     images=(
-        kube-apiserver-amd64_v1.10.3
-        kube-controller-manager-amd64_v1.10.3
-        kube-scheduler-amd64_v1.10.3
-        kube-proxy-amd64_v1.10.3
+        kube-apiserver-amd64_v1.10.5
+        kube-controller-manager-amd64_v1.10.5
+        kube-scheduler-amd64_v1.10.5
+        kube-proxy-amd64_v1.10.5
         etcd-amd64_3.1.12
         pause-amd64_3.1
         k8s-dns-sidecar-amd64_1.14.10

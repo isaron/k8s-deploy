@@ -1,14 +1,14 @@
 # k8s-deploy
 
-k8s version: v1.10.3
+k8s version: v1.10.5
 
 Components to be deployed:
 
 - k8s suite
-  - kube-apiserver-amd64:v1.10.3
-  - kube-controller-manager-amd64:v1.10.3
-  - kube-scheduler-amd64:v1.10.3
-  - kube-proxy-amd64:v1.10.3
+  - kube-apiserver-amd64:v1.10.5
+  - kube-controller-manager-amd64:v1.10.5
+  - kube-scheduler-amd64:v1.10.5
+  - kube-proxy-amd64:v1.10.5
   - etcd-amd64:3.1.12
   - pause-amd64:3.1
   - k8s-dns-sidecar-amd64:1.14.10
@@ -20,6 +20,7 @@ Components to be deployed:
 - ingress-nginx # disabled, using istio-ingress
 - lvs + keepalived
 - metallb
+- cert-manager
 - istio
   - v0.8.0 (LTS)
 - conduit
