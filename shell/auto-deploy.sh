@@ -206,6 +206,16 @@ kube::install_bin()
         tar zxf /tmp/debs.tar.gz -C /tmp
         dpkg -i /tmp/debs/*.deb
         rm -rf /tmp/debs*
+#         apt update && apt install -y apt-transport-https
+#         curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add - 
+
+# cat >/etc/apt/sources.list.d/kubernetes.list <<EOF
+# deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
+# EOF  
+
+#         apt update && apt install socat ebtables ethtool cri-tools -y
+#         apt install -y kubelet kubeadm kubectl kubernetes-cni
+
         systemctl enable kubelet.service && systemctl start kubelet.service && rm -rf /etc/kubernetes
     fi
     kube::config_cni
@@ -832,8 +842,8 @@ apiServerExtraArgs:
 EOF
 
     systemctl daemon-reload && systemctl start kubelet.service
-    # kubeadm init --config=config.yaml --feature-gates=CoreDNS=true
-    kubeadm init --config=config.yaml
+    kubeadm init --config=config.yaml --feature-gates=CoreDNS=true
+    # kubeadm init --config=config.yaml
     mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 }
 
