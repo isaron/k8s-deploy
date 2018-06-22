@@ -1,8 +1,9 @@
+---
 apiVersion: certmanager.k8s.io/v1alpha1
-kind: Issuer
+kind: ClusterIssuer
 metadata:
   name: letsencrypt-staging
-  namespace: jx
+  namespace: kube-system
 spec:
   acme:
     # The ACME server URL
@@ -19,47 +20,48 @@ spec:
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: jx-cd-rdp-dev
+  name: jx-ingress-certs
   namespace: jx
 spec:
-  secretName: jx-cd-rdp-dev-tls
+  secretName: jx-ingress-certs
   issuerRef:
     name: letsencrypt-staging
-  commonName: jx.cd.rdp.dev
+    kind: ClusterIssuer
+  commonName: jx.rdp.dev
   dnsNames:
-  - chartmuseum.jx.cd.rdp.dev
-  - docker-registry.jx.cd.rdp.dev
-  - gitea-gitea.jx.cd.rdp.dev
-  - jenkins.jx.cd.rdp.dev
-  - monocular.jx.cd.rdp.dev
-  - nexus.jx.cd.rdp.dev
+  - chartmuseum.jx.rdp.dev
+  - docker-registry.jx.rdp.dev
+  - gitea-gitea.jx.rdp.dev
+  - jenkins.jx.rdp.dev
+  - monocular.jx.rdp.dev
+  - nexus.jx.rdp.dev
   acme:
     config:
     # - http01:
     #     ingressClass: nginx
     #   domains:
-    #   - jx.cd.rdp.dev
+    #   - jx.rdp.dev
     - http01:
         ingress: chartmuseum
       domains:
-      - chartmuseum.jx.cd.rdp.dev
+      - chartmuseum.jx.rdp.dev
     - http01:
         ingress: docker-registry
       domains:
-      - docker-registry.jx.cd.rdp.dev
+      - docker-registry.jx.rdp.dev
     - http01:
         ingress: gitea-gitea
       domains:
-      - gitea-gitea.jx.cd.rdp.dev
+      - gitea-gitea.jx.rdp.dev
     - http01:
         ingress: jenkins
       domains:
-      - jenkins.jx.cd.rdp.dev
+      - jenkins.jx.rdp.dev
     - http01:
         ingress: monocular
       domains:
-      - monocular.jx.cd.rdp.dev
+      - monocular.jx.rdp.dev
     - http01:
         ingress: nexus
       domains:
-      - nexus.jx.cd.rdp.dev
+      - nexus.jx.rdp.dev
