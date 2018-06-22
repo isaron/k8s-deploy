@@ -1,0 +1,65 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: letsencrypt-staging
+  namespace: jx
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: admin@ssii.com
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    # Enable the HTTP-01 challenge provider
+    http01: {}
+
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: jx-cd-rdp-dev
+  namespace: jx
+spec:
+  secretName: jx-cd-rdp-dev-tls
+  issuerRef:
+    name: letsencrypt-staging
+  commonName: jx.cd.rdp.dev
+  dnsNames:
+  - chartmuseum.jx.cd.rdp.dev
+  - docker-registry.jx.cd.rdp.dev
+  - gitea-gitea.jx.cd.rdp.dev
+  - jenkins.jx.cd.rdp.dev
+  - monocular.jx.cd.rdp.dev
+  - nexus.jx.cd.rdp.dev
+  acme:
+    config:
+    # - http01:
+    #     ingressClass: nginx
+    #   domains:
+    #   - jx.cd.rdp.dev
+    - http01:
+        ingress: chartmuseum
+      domains:
+      - chartmuseum.jx.cd.rdp.dev
+    - http01:
+        ingress: docker-registry
+      domains:
+      - docker-registry.jx.cd.rdp.dev
+    - http01:
+        ingress: gitea-gitea
+      domains:
+      - gitea-gitea.jx.cd.rdp.dev
+    - http01:
+        ingress: jenkins
+      domains:
+      - jenkins.jx.cd.rdp.dev
+    - http01:
+        ingress: monocular
+      domains:
+      - monocular.jx.cd.rdp.dev
+    - http01:
+        ingress: nexus
+      domains:
+      - nexus.jx.cd.rdp.dev
