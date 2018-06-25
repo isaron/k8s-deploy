@@ -812,6 +812,12 @@ kube::set_label()
   kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=master
 }
 
+kube::set_label_node()
+{
+  until kubectl get no | grep `hostname`; do sleep 1; done
+  kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=node
+}
+
 kube::init_master()
 {
     # kube::get_env $@
@@ -961,6 +967,8 @@ kube::node_up()
     kube::disable_static_pod
 
     kubeadm $@
+
+    kube::set_label_node
 
     # 如果加入集群时没有指向VIP则需要配置，否则不需要
     # kube::config_node
