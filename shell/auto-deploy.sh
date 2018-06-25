@@ -975,12 +975,12 @@ kube::tear_down()
     rm -rf /var/lib/kubelet && rm -rf /etc/kubernetes/ && rm -rf /var/lib/etcd
     kubeadm reset
     apt remove -y kubectl kubeadm kubelet kubernetes-cni
-    if [ ${KUBE_HA} == true ]
-    then
-      apt remove -y keepalived
-      rm -rf /etc/keepalived/keepalived.conf
+    # if [ ${KUBE_HA} == true ]
+    # then
+    #   apt remove -y keepalived
+    #   rm -rf /etc/keepalived/keepalived.conf
     #   ip addr del ${KUBE_VIP} dev ${VIP_INTERFACE}
-    fi
+    # fi
     rm -rf /var/lib/cni
     rm -rf ~/.kube
     # ip link del cni0
