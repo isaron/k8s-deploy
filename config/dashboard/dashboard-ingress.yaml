@@ -6,15 +6,15 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
 spec:
-  tls:
-  - hosts:
-    - k8s.rdd.ssii.com
-    secretName: ingress-secret
+  # tls:
+  # - hosts:
+  #   - dashboard.k8s.rdp.dev
+  #   secretName: ingress-secret
   rules:
-  - host: k8s.rdd.ssii.com
+  - host: dashboard.k8s.rdp.dev
     http:
       paths:
-      - path: /dashboard
+      - path: /
         backend:
           serviceName: kubernetes-dashboard
           servicePort: 443
