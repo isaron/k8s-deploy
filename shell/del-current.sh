@@ -61,7 +61,7 @@ spinnakerimages=(
 )
 
 j=1
-for i in ${conduitimages[@]}
+for i in ${spinnakerimages[@]}
 do
     echo $i
     echo $j
