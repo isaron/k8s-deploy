@@ -904,7 +904,7 @@ kube::master_up()
     #kube::save_master_ip
 
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
-    #kubeadm init --kubernetes-version=v1.9.3 --pod-network-cidr=10.244.0.0/16 $@
+    #kubeadm init --kubernetes-version=v1.10.5 --pod-network-cidr=10.244.0.0/16 $@
 
     kube::init_master
 
@@ -971,7 +971,7 @@ kube::node_up()
     kube::set_label_node
 
     # 如果加入集群时没有指向VIP则需要配置，否则不需要
-    # kube::config_node
+    kube::config_node
 }
 
 kube::tear_down()
