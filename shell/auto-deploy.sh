@@ -909,7 +909,7 @@ kube::master_up()
     kube::init_master
 
     # 使master节点可以被调度
-    kubectl taint nodes --all node-role.kubernetes.io/master-
+    # kubectl taint nodes --all node-role.kubernetes.io/master-
 
     echo -e "\033[32m 注意记录下token信息，node加入集群时需要使用！\033[0m"
 
@@ -945,7 +945,7 @@ kube::replica_up()
 
     kube::init_master
 
-    # kubectl taint nodes --all node-role.kubernetes.io/master-
+    kubectl taint nodes --all node-role.kubernetes.io/master-
 
     kube::set_label
 
