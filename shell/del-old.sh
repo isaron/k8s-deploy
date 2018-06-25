@@ -30,11 +30,11 @@ do
 done
 
 conduitimages=(
-    controller:v0.4.2
-    proxy:v0.4.2
-    proxy-init:v0.4.2
-    web:v0.4.2
-    grafana:v0.4.2
+    controller:v0.4.3
+    proxy:v0.4.3
+    proxy-init:v0.4.3
+    web:v0.4.3
+    grafana:v0.4.3
 )
 
 j=1
