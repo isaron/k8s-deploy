@@ -968,7 +968,7 @@ kube::node_up()
 
     kubeadm $@
 
-    kube::set_label_node
+    # kube::set_label_node
 
     # 如果加入集群时没有指向VIP则需要配置，否则不需要
     kube::config_node
