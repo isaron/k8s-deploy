@@ -19,10 +19,15 @@ spec:
   - nexus.jx.rdp.dev
   acme:
     config:
-    # - http01:
-    #     ingressClass: nginx
-    #   domains:
-    #   - jx.rdp.dev
+    - http01:
+        ingressClass: nginx
+      domains:
+      - chartmuseum.jx.rdp.dev
+      - docker-registry.jx.rdp.dev
+      - gitea-gitea.jx.rdp.dev
+      - jenkins.jx.rdp.dev
+      - monocular.jx.rdp.dev
+      - nexus.jx.rdp.dev
     - http01:
         ingress: chartmuseum
       domains:
