@@ -19,36 +19,36 @@ spec:
   - nexus.jx.rdp.dev
   acme:
     config:
-    - http01:
-        ingressClass: nginx
-      domains:
-      - chartmuseum.jx.rdp.dev
-      - docker-registry.jx.rdp.dev
-      - gitea-gitea.jx.rdp.dev
-      - jenkins.jx.rdp.dev
-      - monocular.jx.rdp.dev
-      - nexus.jx.rdp.dev
     # - http01:
-    #     ingress: chartmuseum
+    #     ingressClass: nginx
     #   domains:
     #   - chartmuseum.jx.rdp.dev
-    # - http01:
-    #     ingress: docker-registry
-    #   domains:
     #   - docker-registry.jx.rdp.dev
-    # - http01:
-    #     ingress: gitea-gitea
-    #   domains:
     #   - gitea-gitea.jx.rdp.dev
-    # - http01:
-    #     ingress: jenkins
-    #   domains:
     #   - jenkins.jx.rdp.dev
-    # - http01:
-    #     ingress: monocular
-    #   domains:
     #   - monocular.jx.rdp.dev
-    # - http01:
-    #     ingress: nexus
-    #   domains:
     #   - nexus.jx.rdp.dev
+    - http01:
+        ingress: chartmuseum
+      domains:
+      - chartmuseum.jx.rdp.dev
+    - http01:
+        ingress: docker-registry
+      domains:
+      - docker-registry.jx.rdp.dev
+    - http01:
+        ingress: gitea-gitea
+      domains:
+      - gitea-gitea.jx.rdp.dev
+    - http01:
+        ingress: jenkins
+      domains:
+      - jenkins.jx.rdp.dev
+    - http01:
+        ingress: monocular
+      domains:
+      - monocular.jx.rdp.dev
+    - http01:
+        ingress: nexus
+      domains:
+      - nexus.jx.rdp.dev
