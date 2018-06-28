@@ -1,4 +1,3 @@
----
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
@@ -7,7 +6,9 @@ metadata:
 spec:
   secretName: jx-ingress-certs
   issuerRef:
-    name: letsencrypt-staging
+    name: ca-issuer
+    # We can reference ClusterIssuers by changing the kind here.
+    # The default value is Issuer (i.e. a locally namespaced Issuer)
     kind: ClusterIssuer
   commonName: jx.rdp.dev
   dnsNames:
@@ -17,38 +18,4 @@ spec:
   - jenkins.jx.rdp.dev
   - monocular.jx.rdp.dev
   - nexus.jx.rdp.dev
-  acme:
-    config:
-    # - http01:
-    #     ingressClass: nginx
-    #   domains:
-    #   - chartmuseum.jx.rdp.dev
-    #   - docker-registry.jx.rdp.dev
-    #   - gitea-gitea.jx.rdp.dev
-    #   - jenkins.jx.rdp.dev
-    #   - monocular.jx.rdp.dev
-    #   - nexus.jx.rdp.dev
-    - http01:
-        ingress: chartmuseum
-      domains:
-      - chartmuseum.jx.rdp.dev
-    - http01:
-        ingress: docker-registry
-      domains:
-      - docker-registry.jx.rdp.dev
-    - http01:
-        ingress: gitea-gitea
-      domains:
-      - gitea-gitea.jx.rdp.dev
-    - http01:
-        ingress: jenkins
-      domains:
-      - jenkins.jx.rdp.dev
-    - http01:
-        ingress: monocular
-      domains:
-      - monocular.jx.rdp.dev
-    - http01:
-        ingress: nexus
-      domains:
-      - nexus.jx.rdp.dev
+  
