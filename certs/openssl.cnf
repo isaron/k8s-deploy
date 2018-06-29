@@ -133,7 +133,8 @@ countryName_max			= 2
 stateOrProvinceName		= State or Province Name (full name)
 stateOrProvinceName_default	= Sichuan
 
-localityName			= Chengdu
+localityName                    = Locality Name
+localityName_default		= Chengdu
 
 0.organizationName		= Organization Name (eg, company)
 0.organizationName_default	= SSII Dev
@@ -142,13 +143,15 @@ localityName			= Chengdu
 #1.organizationName		= Second Organization Name (eg, company)
 #1.organizationName_default	= World Wide Web Pty Ltd
 
-organizationalUnitName		= Dev
-#organizationalUnitName_default	=
+organizationalUnitName		= Organizational Unit Name
+organizationalUnitName_default	= Dev
 
-commonName			= rdp.dev
+commonName			= Common Name
+commonName_default              = rdp.dev
 commonName_max			= 64
 
-emailAddress			= admin@rdp.dev
+emailAddress                    = Email Address
+emailAddress_default		= admin@rdp.dev
 emailAddress_max		= 64
 
 # SET-ex3			= SET extension number 3
