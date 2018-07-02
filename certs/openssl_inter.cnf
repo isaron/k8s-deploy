@@ -85,7 +85,7 @@ stateOrProvinceName_default     = Sichuan
 localityName_default            = Chengdu
 0.organizationName_default      = SSII Dev
 organizationalUnitName_default  = Dev
-commonName			= RDP Dev Inter CA
+commonName_default  			= RDP Dev Inter CA
 emailAddress_default            = admin@rdp.dev
 
 [ v3_req ]
