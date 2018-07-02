@@ -39,7 +39,7 @@ default_ca	= CA_default		# The default ca section
 ####################################################################
 [ CA_default ]
 
-dir		= /root/localCA		# Where everything is kept
+dir		= /root/localca		# Where everything is kept
 certs		= $dir/certs		# Where the issued certs are kept
 crl_dir		= $dir/crl		# Where the issued crl are kept
 database	= $dir/index.txt	# database index file.
@@ -147,7 +147,7 @@ organizationalUnitName		= Organizational Unit Name
 organizationalUnitName_default	= Dev
 
 commonName			= Common Name
-commonName_default              = rdp.dev
+commonName_default              = RDP Dev Root CA
 commonName_max			= 64
 
 emailAddress                    = Email Address
@@ -228,6 +228,7 @@ subjectAltName = @alt_names
 [alt_names]
 DNS.1 = *.rdp.dev
 DNS.2 = *.jx.rdp.dev
+DNS.3 = *.k8s.rdp.dev
 #DNS.2 = chartmuseum.jx.rdp.dev
 #DNS.3 = docker-registry.jx.rdp.dev
 #DNS.4 = jenkins.jx.rdp.dev
