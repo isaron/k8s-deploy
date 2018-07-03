@@ -99,12 +99,13 @@ subjectAltName = @alt_names
 [alt_names]
 DNS.1 = *.rdp.dev
 DNS.2 = *.jx.rdp.dev
-#DNS.2 = chartmuseum.jx.rdp.dev
-#DNS.3 = docker-registry.jx.rdp.dev
-#DNS.4 = jenkins.jx.rdp.dev
-#DNS.5 = gitea-gitea.jx.rdp.dev
-#DNS.6 = monocular.jx.rdp.dev
-#DNS.7 = nexus.jx.rdp.dev
+DNS.3 = k8s.rdp.dev
+DNS.4 = chartmuseum.jx.rdp.dev
+DNS.5 = docker-registry.jx.rdp.dev
+DNS.6 = jenkins.jx.rdp.dev
+DNS.7 = gitea-gitea.jx.rdp.dev
+DNS.8 = monocular.jx.rdp.dev
+DNS.9 = nexus.jx.rdp.dev
 #IP.1 = 172.30.80.100
 
 [ v3_ca ]
