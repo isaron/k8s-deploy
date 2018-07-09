@@ -55,7 +55,12 @@ data:
           fallthrough in-addr.arpa ip6.arpa
         }
         prometheus :9153
-        proxy . /etc/resolv.conf
+        proxy rdp.dev 172.30.80.89 172.30.80.88 {
+          policy round_robin
+        }
+        proxy . /etc/resolv.conf {
+          except rdp.dev
+        }
         cache 30
         reload
     }
