@@ -245,9 +245,9 @@ DNS.9 = nexus.jx.rdp.dev
 
 # PKIX recommendation.
 
-subjectKeyIdentifier=hash
+subjectKeyIdentifier = hash
 
-authorityKeyIdentifier=keyid:always,issuer
+authorityKeyIdentifier = keyid:always,issuer
 
 basicConstraints = critical, CA:true
 
