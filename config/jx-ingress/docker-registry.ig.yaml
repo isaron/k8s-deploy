@@ -1,33 +1,34 @@
-apiVersion: extensions/v1beta1
-kind: Ingress
+# apiVersion: extensions/v1beta1
+# kind: Ingress
 metadata:
   annotations:
     certmanager.k8s.io/cluster-issuer: ClusterIssuer
-    fabric8.io/generated-by: exposecontroller
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/proxy-body-size: 2g
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    # fabric8.io/generated-by: exposecontroller
+    # kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/proxy-body-size: 2g
   # creationTimestamp: 2018-06-28T09:46:55Z
   # generation: 2
-  labels:
-    provider: fabric8
-  name: docker-registry
-  namespace: jx
+  # labels:
+  #   provider: fabric8
+  # name: docker-registry
+  # namespace: jx
   # resourceVersion: "655288"
   # selfLink: /apis/extensions/v1beta1/namespaces/jx/ingresses/docker-registry
   # uid: 313e1e56-7ab8-11e8-a07e-000c2972e7e0
 spec:
-  rules:
-  - host: docker-registry.jx.rdp.dev
-    http:
-      paths:
-      - backend:
-          serviceName: jenkins-x-docker-registry
-          servicePort: 5000
+  # rules:
+  # - host: docker-registry.jx.rdp.dev
+  #   http:
+  #     paths:
+  #     - backend:
+  #         serviceName: jenkins-x-docker-registry
+  #         servicePort: 5000
   tls:
   - hosts:
     - docker-registry.jx.rdp.dev
     secretName: jx-ingress-certs
-status:
-  loadBalancer:
-    ingress:
-    - {}
+# status:
+#   loadBalancer:
+#     ingress:
+#     - {}

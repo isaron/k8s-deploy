@@ -1,39 +1,40 @@
-apiVersion: extensions/v1beta1
-kind: Ingress
+# apiVersion: extensions/v1beta1
+# kind: Ingress
 metadata:
   annotations:
     certmanager.k8s.io/cluster-issuer: ClusterIssuer
-    fabric8.io/generated-by: exposecontroller
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    # fabric8.io/generated-by: exposecontroller
+    # kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/rewrite-target: /
   # creationTimestamp: 2018-06-28T09:46:54Z
   # generation: 3
-  labels:
-    provider: fabric8
-  name: monocular
-  namespace: jx
+  # labels:
+  #   provider: fabric8
+  # name: monocular
+  # namespace: jx
   # resourceVersion: "655492"
   # selfLink: /apis/extensions/v1beta1/namespaces/jx/ingresses/monocular
   # uid: 30f6e14b-7ab8-11e8-a07e-000c2972e7e0
 spec:
-  rules:
-  - host: monocular.jx.rdp.dev
-    http:
-      paths:
-      - backend:
-          serviceName: jenkins-x-monocular-api
-          servicePort: 80
-        path: /api/
-      - backend:
-          serviceName: jenkins-x-monocular-ui
-          servicePort: 80
-        path: /
+  # rules:
+  # - host: monocular.jx.rdp.dev
+  #   http:
+  #     paths:
+  #     - backend:
+  #         serviceName: jenkins-x-monocular-api
+  #         servicePort: 80
+  #       path: /api/
+  #     - backend:
+  #         serviceName: jenkins-x-monocular-ui
+  #         servicePort: 80
+  #       path: /
   tls:
   - hosts:
     - monocular.jx.rdp.dev
     secretName: jx-ingress-certs
-status:
-  loadBalancer:
-    ingress:
-    - {}
+# status:
+#   loadBalancer:
+#     ingress:
+#     - {}
