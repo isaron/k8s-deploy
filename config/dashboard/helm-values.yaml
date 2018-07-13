@@ -64,12 +64,12 @@ resources:
 ingress:
   ## If true, Kubernetes Dashboard Ingress will be created.
   ##
-  enabled: false
+  enabled: true
 
   ## Kubernetes Dashboard Ingress annotations
   ##
-  # annotations:
-  #   kubernetes.io/ingress.class: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
   #   nginx.ingress.kubernetes.io/secure-backends: "true"
   #   kubernetes.io/tls-acme: 'true'
 
@@ -80,8 +80,8 @@ ingress:
   ## Kubernetes Dashboard Ingress hostnames
   ## Must be provided if Ingress is enabled
   ##
-  # hosts:
-  #   - kubernetes-dashboard.domain.com
+  hosts:
+    - dashboard.rdp.dev
 
   ## Kubernetes Dashboard Ingress TLS configuration
   ## Secrets must be manually created in the namespace
@@ -89,7 +89,7 @@ ingress:
   # tls:
   #   - secretName: kubernetes-dashboard-tls
   #     hosts:
-  #       - kubernetes-dashboard.domain.com
+  #       - dashboard.rdp.dev
 
 rbac:
   # Specifies whether RBAC resources should be created
