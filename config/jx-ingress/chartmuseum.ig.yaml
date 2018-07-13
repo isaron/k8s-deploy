@@ -16,7 +16,7 @@ metadata:
   # selfLink: /apis/extensions/v1beta1/namespaces/jx/ingresses/chartmuseum
   # uid: 30e7d6c2-7ab8-11e8-a07e-000c2972e7e0
 spec:
-  rules:
+  # rules:
   # - host: chartmuseum.jx.rdp.dev
   #   http:
   #     paths:
