@@ -806,6 +806,7 @@ kube::config_node()
     # on node
     sed -i 's#server:.*#server: https://172.30.80.30:6443#g' /etc/kubernetes/kubelet.conf
     systemctl restart kubelet
+    # mkdir -p $HOME/.kube && scp root@172.30.80.30:/etc/kubernetes/admin.conf $HOME/.kube/config
 }
 
 kube::set_label()
