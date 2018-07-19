@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - dashboard.jx.rdp.dev
+    - dashboard.rdp.dev
     secretName: dashboard-ingress-secrets
   rules:
-  - host: dashboard.jx.rdp.dev
+  - host: dashboard.rdp.dev
     http:
       paths:
       - path: /
