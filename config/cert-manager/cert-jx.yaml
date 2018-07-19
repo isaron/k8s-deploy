@@ -12,4 +12,9 @@ spec:
     kind: ClusterIssuer
   commonName: jx.rdp.dev
   dnsNames:
-    - *.jx.rdp.dev
+  - chartmuseum.jx.rdp.dev
+  - docker-registry.jx.rdp.dev
+  - gitea-gitea.jx.rdp.dev
+  - jenkins.jx.rdp.dev
+  - monocular.jx.rdp.dev
+  - nexus.jx.rdp.dev
