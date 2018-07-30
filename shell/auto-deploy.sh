@@ -813,12 +813,13 @@ kube::set_label()
 {
   until kubectl get no | grep `hostname`; do sleep 1; done
   kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=master
+  kubectl label node `hostname` node-type=master
 }
 
 kube::set_label_node()
 {
   until kubectl get no | grep `hostname`; do sleep 1; done
-  kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=node
+#   kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=node
 }
 
 kube::init_master()
