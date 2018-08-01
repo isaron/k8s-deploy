@@ -204,7 +204,7 @@ keycloak:
       - keycloak.rdp.dev
 
     ## TLS configuration
-    tls: []
+    tls: 
     - hosts:
         - keycloak.rdp.dev
       secretName: ingress-certs
