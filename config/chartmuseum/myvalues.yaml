@@ -134,7 +134,7 @@ nodeSelector:
   node-type: master
 
 tolerations: 
-  key: master
+- key: master
   operator: Equal
   value: yes
   effect: NoSchedule
