@@ -48,6 +48,9 @@ api:
       - name: stable-mirror
         url: http://172.30.80.31:8080
         source: https://github.com/kubernetes/charts/tree/master/stable
+      # - name: chartmuseum
+      #   url: https://chartmuseum.rdp.dev
+      #   source: https://github.com/kubernetes/charts/tree/master/stable
     cors:
       allowed_origins:
         - ""
