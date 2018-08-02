@@ -81,7 +81,7 @@ keycloak:
 
   nodeSelector: 
     node-type: master
-    kubernetes.io/hostname: rdp-mgr3.k8s
+    kubernetes.io/hostname: rdp-mgr1.k8s
   tolerations: 
   - key: "master"
     operator: "Equal"
