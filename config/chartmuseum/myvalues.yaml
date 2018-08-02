@@ -131,13 +131,14 @@ serviceAccount:
 securityContext: {}
 
 nodeSelector: 
-  node-type: master
-
+    node-type: master
+    # kubernetes.io/hostname: rdp-mgr1.k8s
+    
 tolerations: 
-- key: master
-  operator: Equal
-  value: yes
-  effect: NoSchedule
+- key: "master"
+  operator: "Equal"
+  value: "yes"
+  effect: "NoSchedule"
 
 affinity: {}
 
