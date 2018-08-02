@@ -6,7 +6,7 @@ api:
   image:
     repository: bitnami/monocular-api
     tag: v0.7.3
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   service:
     name: monocular-api
     type: ClusterIP
@@ -44,6 +44,9 @@ api:
       - name: monocular
         url: https://helm.github.io/monocular
         source: https://github.com/helm/monocular/tree/master/charts
+      - name: stable-mirror
+        url: http://172.30.80.31:8080
+        source: https://github.com/kubernetes/charts/tree/master/stable
     cors:
       allowed_origins:
         - ""
@@ -57,15 +60,21 @@ api:
     tillerNamespace: kube-system
     # Cache refresh interval in sec.
     cacheRefreshInterval: 3600
-  nodeSelector: {}
-  tolerations: []
+  nodeSelector: 
+    node-type: master
+    kubernetes.io/hostname: rdp-mgr1.k8s
+  tolerations: 
+  - key: "master"
+    operator: "Equal"
+    value: "yes"
+    effect: "NoSchedule"
   affinity: {}
 ui:
   replicaCount: 2
   image:
     repository: bitnami/monocular-ui
     tag: v0.7.3
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   service:
     name: monocular-ui
     type: ClusterIP
@@ -87,8 +96,14 @@ ui:
   backendHostname: /api
   # e.g. API served on a different domain
   # backendHostname: http://monocular-api.local
-  nodeSelector: {}
-  tolerations: []
+  nodeSelector: 
+    node-type: master
+    kubernetes.io/hostname: rdp-mgr1.k8s
+  tolerations: 
+  - key: "master"
+    operator: "Equal"
+    value: "yes"
+    effect: "NoSchedule"
   affinity: {}
 
 prerender:
@@ -107,15 +122,21 @@ prerender:
     requests:
       cpu: 100m
       memory: 128Mi
-  nodeSelector: {}
-  tolerations: []
+  nodeSelector: 
+    node-type: master
+    kubernetes.io/hostname: rdp-mgr1.k8s
+  tolerations: 
+  - key: "master"
+    operator: "Equal"
+    value: "yes"
+    effect: "NoSchedule"
   affinity: {}
 
 ingress:
   enabled: true
   hosts:
   # Wildcard
-  -
+  - monocular.rdp.dev
   # - monocular.local
 
   ## Ingress annotations
@@ -132,5 +153,7 @@ ingress:
   ## Ingress TLS configuration
   ## Secrets must be manually created in the namespace
   ##
-  # tls:
-  #   secretName: monocular.local-tls
+  tls:
+  - hosts:
+      - keycloak.rdp.dev
+    secretName: ingress-certs

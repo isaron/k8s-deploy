@@ -10,3 +10,6 @@ api:
       - name: monocular
         url: https://helm.github.io/monocular
         source: https://github.com/helm/monocular/tree/master/charts
+      - name: stable-mirror
+        url: http://172.30.80.31:8080
+        source: https://github.com/kubernetes/charts/tree/master/stable
