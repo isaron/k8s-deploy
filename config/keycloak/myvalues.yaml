@@ -225,10 +225,10 @@ keycloak:
     # The key in the existing secret that stores the password
     existingSecretKey: postgres_password
 
-    dbName: postgres
+    dbName: keycloak
     dbHost: 172.30.80.103
     dbPort: 5432
-    dbUser: postgres
+    dbUser: keycloak
 
     # Only used if no existing secret is specified. In this case a new secret is created
     dbPassword: ""
