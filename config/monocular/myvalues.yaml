@@ -10,6 +10,7 @@ api:
   service:
     name: monocular-api
     type: ClusterIP
+    # port: 80
     externalPort: 80
     internalPort: 8081
     annotations: {}
@@ -62,7 +63,7 @@ api:
     cacheRefreshInterval: 3600
   nodeSelector: 
     node-type: master
-    kubernetes.io/hostname: rdp-mgr1.k8s
+    # kubernetes.io/hostname: rdp-mgr1.k8s
   tolerations: 
   - key: "master"
     operator: "Equal"
@@ -78,6 +79,7 @@ ui:
   service:
     name: monocular-ui
     type: ClusterIP
+    # port: 80
     externalPort: 80
     internalPort: 8080
     annotations: {}
@@ -98,7 +100,7 @@ ui:
   # backendHostname: http://monocular-api.local
   nodeSelector: 
     node-type: master
-    kubernetes.io/hostname: rdp-mgr1.k8s
+    # kubernetes.io/hostname: rdp-mgr1.k8s
   tolerations: 
   - key: "master"
     operator: "Equal"
@@ -116,6 +118,7 @@ prerender:
   service:
     name: prerender
     type: ClusterIP
+    # port: 80
     externalPort: 80
     internalPort: 3000
   resources:
@@ -124,7 +127,7 @@ prerender:
       memory: 128Mi
   nodeSelector: 
     node-type: master
-    kubernetes.io/hostname: rdp-mgr1.k8s
+    # kubernetes.io/hostname: rdp-mgr1.k8s
   tolerations: 
   - key: "master"
     operator: "Equal"

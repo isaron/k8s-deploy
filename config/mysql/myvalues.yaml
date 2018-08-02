@@ -11,9 +11,9 @@ mysqlRootPassword: p@ssw0rd
 
 ## Create a database user
 ##
-# mysqlUser:
+# mysqlUser: mysql
 ## Default: random 10 character string
-# mysqlPassword:
+# mysqlPassword: p@ssw0rd
 
 ## Allow unauthenticated access, uncomment to enable
 ##
@@ -77,10 +77,12 @@ resources:
     cpu: 100m
 
 # Custom mysql configuration files used to override default mysql settings
-configurationFiles: {}
-#  mysql.cnf: |-
-#    [mysqld]
-#    skip-name-resolve
+configurationFiles: 
+  mysql.cnf: |-
+    [mysqld]
+    skip-host-cache
+    skip-name-resolve
+    sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
 #    ssl-ca=/ssl/ca.pem
 #    ssl-cert=/ssl/server-cert.pem
 #    ssl-key=/ssl/server-key.pem
@@ -98,9 +100,9 @@ metrics:
   imageTag: v0.10.0
   imagePullPolicy: IfNotPresent
   resources: {}
-  annotations: {}
-    # prometheus.io/scrape: "true"
-    # prometheus.io/port: "9104"
+  annotations: 
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9104"
 
 ## Configure the service
 ## ref: http://kubernetes.io/docs/user-guide/services/
