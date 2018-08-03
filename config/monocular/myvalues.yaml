@@ -50,7 +50,7 @@ api:
         source: https://github.com/kubernetes/charts/tree/master/stable
       - name: chartmuseum
         url: https://chartmuseum.rdp.dev/charts
-        source: https://github.com/kubernetes/charts/tree/master/stable
+        source: https://gitea.rdp.dev/gitea/charts/tree/master
     cors:
       allowed_origins:
         - ""
@@ -161,5 +161,5 @@ ingress:
   ##
   tls:
   - hosts:
-      - keycloak.rdp.dev
+      - monocular.rdp.dev
     secretName: ingress-certs
