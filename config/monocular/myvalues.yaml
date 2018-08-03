@@ -160,6 +160,6 @@ ingress:
   ## Secrets must be manually created in the namespace
   ##
   tls:
-  - secretName: ingress-certs
+    secretName: ingress-certs
     hosts:
       - monocular.rdp.dev
