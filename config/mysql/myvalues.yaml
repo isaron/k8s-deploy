@@ -1,8 +1,8 @@
 ## mysql image version
 ## ref: https://hub.docker.com/r/library/mysql/tags/
 ##
-image: "mysql"
-imageTag: "5.7.14"
+image: mysql
+imageTag: 5.7.14
 
 ## Specify password for root user
 ##
@@ -95,7 +95,7 @@ initializationFiles: {}
 #    CREATE DATABASE IF NOT EXISTS second DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
 
 metrics:
-  enabled: false
+  enabled: true
   image: prom/mysqld-exporter
   imageTag: v0.10.0
   imagePullPolicy: IfNotPresent
