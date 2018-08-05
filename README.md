@@ -1,14 +1,14 @@
 # k8s-deploy
 
-k8s version: v1.10.5
+k8s version: v1.10.6
 
 Components to be deployed:
 
 - k8s suite
-  - kube-apiserver-amd64:v1.10.5
-  - kube-controller-manager-amd64:v1.10.5
-  - kube-scheduler-amd64:v1.10.5
-  - kube-proxy-amd64:v1.10.5
+  - kube-apiserver-amd64:v1.10.6
+  - kube-controller-manager-amd64:v1.10.6
+  - kube-scheduler-amd64:v1.10.6
+  - kube-proxy-amd64:v1.10.6
   - etcd-amd64:3.1.12
   - pause-amd64:3.1
   - k8s-dns-sidecar-amd64:1.14.10
