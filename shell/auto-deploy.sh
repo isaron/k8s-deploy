@@ -7,7 +7,7 @@ MASTER_IP=172.30.80.31
 KUBE_HA=true
 
 KUBE_REPO_PREFIX=k8s.gcr.io
-KUBE_VERSION=v1.10.5
+KUBE_VERSION=v1.10.6
 ETCD_VERSION=v3.1.12
 
 MASTERS=(
@@ -169,10 +169,10 @@ kube::load_images()
     mkdir -p /tmp/k8s
 
     images=(
-        kube-apiserver-amd64_v1.10.5
-        kube-controller-manager-amd64_v1.10.5
-        kube-scheduler-amd64_v1.10.5
-        kube-proxy-amd64_v1.10.5
+        kube-apiserver-amd64_v1.10.6
+        kube-controller-manager-amd64_v1.10.6
+        kube-scheduler-amd64_v1.10.6
+        kube-proxy-amd64_v1.10.6
         etcd-amd64_3.1.12
         pause-amd64_3.1
         k8s-dns-sidecar-amd64_1.14.10
@@ -207,11 +207,11 @@ kube::install_bin()
         dpkg -i /tmp/debs/*.deb
         rm -rf /tmp/debs*
 #         apt update && apt install -y apt-transport-https
-#         curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add - 
+#         curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
 
 # cat >/etc/apt/sources.list.d/kubernetes.list <<EOF
 # deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
-# EOF  
+# EOF
 
 #         apt update && apt install socat ebtables ethtool cri-tools -y
 #         apt install -y kubelet kubeadm kubectl kubernetes-cni
@@ -908,7 +908,7 @@ kube::master_up()
     #kube::save_master_ip
 
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
-    #kubeadm init --kubernetes-version=v1.10.5 --pod-network-cidr=10.244.0.0/16 $@
+    #kubeadm init --kubernetes-version=v1.10.6 --pod-network-cidr=10.244.0.0/16 $@
 
     kube::init_master
 
