@@ -46,7 +46,7 @@ api:
         url: https://helm.github.io/monocular
         source: https://github.com/helm/monocular/tree/master/charts
       - name: stable-mirror
-        url: http://172.30.80.31:8080
+        url: http://172.30.80.33:8080
         source: https://github.com/kubernetes/charts/tree/master/stable
       - name: chartmuseum
         url: https://chartmuseum.rdp.dev/charts
