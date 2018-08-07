@@ -10,7 +10,7 @@ serviceType: ClusterIP
 replicaCount: 1
 
 image: gitea/gitea
-imageTag: 1.4
+imageTag: 1.5
 imagePullPolicy: IfNotPresent
 
 gitea-expose:
@@ -38,10 +38,10 @@ service:
     fabric8.io/expose: "true"
     expose.config.fabric8.io/config-yaml: |-
       - key: app.ini
-        prefix: "DOMAIN = "
+        prefix: "DOMAIN = gitea.rdp.dev"
         expression: host
       - key: app.ini
-        prefix: "ROOT_URL = "
+        prefix: "ROOT_URL = https://gitea.rdp.dev"
         expression: url
 
   ## Override the components name (defaults to service).
@@ -61,7 +61,7 @@ service:
   ## SSH_DOMAIN - Domain name to be exposed in SSH clone URL.
   ## ref: https://docs.gitea.io/en-us/config-cheat-sheet
   ##
-  sshDomain: localhost
+  sshDomain: gitea.rdp.dev
 
   ## Gitea configuration values
   ## ref: https://docs.gitea.io/en-us/config-cheat-sheet
@@ -138,11 +138,11 @@ service:
 
     ## Enable this to use captcha validation for registration.
     ##
-    serverDomain: gitea.example.com
+    serverDomain: gitea.rdp.dev
 
     ## Full public URL of Gitea server.
     ##
-    serverRootUrl: http://gitea.example.com/
+    serverRootUrl: https://gitea.rdp.dev/
 
     ## Landing page for non-logged users, can be "home" or "explore"
     ##
@@ -156,19 +156,19 @@ service:
 
     ## Database host.  Unused unless `postgresql.install` is false.
     ##
-    databaseHost:
+    databaseHost: 172.30.80.103
 
     ## Database user.  Unused unless `postgresql.install` is false.
     ##
-    databaseUser:
+    databaseUser: gitea
 
     ## Database password.  Unused unless `postgresql.install` is false.
     ##
-    databasePassword:
+    databasePassword: p@ssw0rd
 
     ## Database password.  Unused unless `postgresql.install` is false.
     ##
-    databaseName:
+    databaseName: gitea
 
     ## postgres (database access) only, either "disable", "require" or "verify-full"
     databaseSSLMode: disable
@@ -212,7 +212,7 @@ service:
 
     ## Change this value for your installation.
     ##
-    securitySecretKey: "changeme"
+    securitySecretKey: "gitea"
 
     ## Number of repositories that are showed in one explore page
     ##
@@ -233,27 +233,27 @@ service:
   ingress:
     ## Enable Ingress.
     ##
-    enabled: false
+    enabled: true
 
     ## Annotations.
     ##
-    # annotations:
-    #   kubernetes.io/ingress.class: nginx
+    annotations:
+      kubernetes.io/ingress.class: nginx
     #   kubernetes.io/tls-acme: 'true'
 
     ## Hostnames.
     ## Must be provided if Ingress is enabled.
     ##
-    # hosts:
-    #   - gitea.domain.com
+    hosts:
+      - gitea.rdp.dev
 
     ## TLS configuration.
     ## Secrets must be manually created in the namespace.
     ##
-    # tls:
-    #   - secretName: gitea-tls
-    #     hosts:
-    #       - gitea.domain.com
+    tls:
+      - secretName: ingress-certs
+        hosts:
+          - gitea.rdp.dev
 
   ## Service annotations.
   ## Allows attaching metadata to services for kubernetes components to act on.
@@ -296,7 +296,7 @@ postgresql:
 
   ### Install PostgreSQL dependency
   ##
-  install: true
+  install: false
 
   ### PostgreSQL User to create.
   ##
