@@ -12,7 +12,6 @@ spec:
     kind: ClusterIssuer
   commonName: rdp.dev
   dnsNames:
-  - dashboard.rdp.dev
   - chartmuseum.rdp.dev
   - keycloak.rdp.dev
   - monocular.rdp.dev
