@@ -183,6 +183,7 @@ ingress:
         - /charts
         - /index.yaml
         - /health
+        - /api
 
 ## Chartmuseum Ingress TLS configuration
 ## Secrets must be manually created in the namespace
