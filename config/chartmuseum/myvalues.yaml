@@ -179,8 +179,10 @@ ingress:
 ##
   hosts:
     chartmuseum.rdp.dev:
+        - /
         - /charts
         - /index.yaml
+        - /health
 
 ## Chartmuseum Ingress TLS configuration
 ## Secrets must be manually created in the namespace
