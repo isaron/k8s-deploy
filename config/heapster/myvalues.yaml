@@ -7,7 +7,7 @@ image:
   pullPolicy: IfNotPresent
 ## Here labels can be added to the heapster deployment
 labels:
-  kubernetes.io/cluster-service: "true"
+  # kubernetes.io/cluster-service: "true"
   kubernetes.io/name: "heapster"
 # labels: {}
 
@@ -37,7 +37,7 @@ service:
 
   ## Here labels can be added to the heapster service
   labels:
-    kubernetes.io/cluster-service: "true"
+    # kubernetes.io/cluster-service: "true"
     kubernetes.io/name: "heapster"
   # labels:
 
