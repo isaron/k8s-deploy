@@ -42,7 +42,7 @@ service:
   ## This allows an override of the heapster service name
   ## Default: {{ .Chart.Name }}
   ##
-  # nameOverride:
+  nameOverride: kubernetes-dashboard
 
   ## Kubernetes Dashboard Service annotations
   ##
