@@ -14,16 +14,6 @@ imageTag: 1.4
 imagePullPolicy: IfNotPresent
 
 service:
-  annotations:
-    fabric8.io/expose: "true"
-    expose.config.fabric8.io/config-yaml: |-
-      - key: app.ini
-        prefix: "DOMAIN = gitea.rdp.dev"
-        expression: host
-      - key: app.ini
-        prefix: "ROOT_URL = https://gitea.rdp.dev"
-        expression: url
-
   ## Override the components name (defaults to service).
   ##
   # nameOverride:
