@@ -13,26 +13,6 @@ image: gitea/gitea
 imageTag: 1.4
 imagePullPolicy: IfNotPresent
 
-gitea-expose:
-  Args:
-    - --exposer
-    - Ingress
-    - --http
-    - "true"
-  Annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded
-  # add custom domain here else defaults to using nip.io if a single node cluster
-
-gitea-cleanup:
-  Args:
-    - --cleanup
-    - --filter
-    - gitea-gitea
-  Annotations:
-    helm.sh/hook: pre-delete
-    helm.sh/hook-delete-policy: hook-succeeded
-
 service:
   annotations:
     fabric8.io/expose: "true"
