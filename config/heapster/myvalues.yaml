@@ -112,7 +112,7 @@ rbac:
 ## see https://github.com/kubernetes/heapster/blob/master/docs/overview.md for the flags you can use
 ## you will probably want to change the --sink parameter
 eventer:
-  enabled: true
+  enabled: false
   flags:
   - "--source=kubernetes:https://kubernetes.default"
   - "--sink=log"
