@@ -8,7 +8,7 @@ image:
 ## Here labels can be added to the heapster deployment
 labels:
   kubernetes.io/cluster-service: "true"
-  kubernetes.io/name: "Heapster"
+  kubernetes.io/name: "heapster"
 # labels: {}
 
 ## Here labels can be added to the heapster deployment
@@ -38,7 +38,7 @@ service:
   ## Here labels can be added to the heapster service
   labels:
     kubernetes.io/cluster-service: "true"
-    kubernetes.io/name: "Heapster"
+    kubernetes.io/name: "heapster"
   # labels:
 
   ## Here annotations can be added to the heapster service
