@@ -14,7 +14,7 @@ replicaCount: 1
 ##
 labels:
   kubernetes.io/cluster-service: "true"
-  kubernetes.io/name: "Kubernetes Dashboard"
+  kubernetes.io/name: "kubernetes-dashboard"
 
 ## Additional container arguments
 ##
@@ -52,7 +52,7 @@ service:
   ## Here labels can be added to the Kubernetes Dashboard service
   ##
   labels: 
-    kubernetes.io/name: "Kubernetes Dashboard"
+    kubernetes.io/name: "kubernetes-dashboard"
 
 resources:
   limits:
