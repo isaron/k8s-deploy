@@ -11,7 +11,7 @@ replicaCount: 1
 
 image: gitea/gitea
 imageTag: 1.5
-imagePullPolicy: IfNotPresent
+imagePullPolicy: Always
 
 gitea-expose:
   Args:
@@ -287,7 +287,7 @@ persistence:
 
   ## Persistent Volume Storage Size.
   ##
-  size: 1Gi
+  size: 10Gi
 
 ## Configuration values for the postgresql dependency.
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/postgresql/README.md
