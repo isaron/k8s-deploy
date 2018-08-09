@@ -3,4 +3,5 @@ debs/
 images/
 etcd/
 certs/
+bin/
 nohup.out
