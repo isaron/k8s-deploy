@@ -8,7 +8,7 @@ KUBE_HA=true
 
 KUBE_REPO_PREFIX=k8s.gcr.io
 KUBE_VERSION=v1.10.6
-ETCD_VERSION=v3.2.25
+ETCD_VERSION=v3.2.24
 
 MASTERS=(
     rdp-mgr1.k8s
@@ -741,7 +741,7 @@ containers:
     - --initial-cluster ${MASTERS[0]}=https://${MASTER_NODES[0]}:2380,${MASTERS[1]}=https://${MASTER_NODES[1]}:2380,${MASTERS[2]}=https://${MASTER_NODES[2]}:2380 \
     - --initial-cluster-token rdpetcd \
     - --initial-cluster-state new
-    image: gcr.io/google_containers/etcd-amd64:3.2.25
+    image: gcr.io/google_containers/etcd-amd64:3.2.24
     livenessProbe:
     httpGet:
         path: /health
