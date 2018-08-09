@@ -8,7 +8,7 @@ KUBE_HA=true
 
 KUBE_REPO_PREFIX=k8s.gcr.io
 KUBE_VERSION=v1.10.6
-ETCD_VERSION=v3.1.12
+ETCD_VERSION=v3.2.25
 
 MASTERS=(
     rdp-mgr1.k8s
@@ -173,11 +173,7 @@ kube::load_images()
         kube-controller-manager-amd64_v1.10.6
         kube-scheduler-amd64_v1.10.6
         kube-proxy-amd64_v1.10.6
-        etcd-amd64_3.1.12
         pause-amd64_3.1
-        k8s-dns-sidecar-amd64_1.14.10
-        k8s-dns-kube-dns-amd64_1.14.10
-        k8s-dns-dnsmasq-nanny-amd64_1.14.10
         kubernetes-dashboard-amd64_v1.8.3
         cluster-autoscaler_v1.2.2
         defaultbackend_1.4
@@ -745,7 +741,7 @@ containers:
     - --initial-cluster ${MASTERS[0]}=https://${MASTER_NODES[0]}:2380,${MASTERS[1]}=https://${MASTER_NODES[1]}:2380,${MASTERS[2]}=https://${MASTER_NODES[2]}:2380 \
     - --initial-cluster-token rdpetcd \
     - --initial-cluster-state new
-    image: gcr.io/google_containers/etcd-amd64:3.1.12
+    image: gcr.io/google_containers/etcd-amd64:3.2.25
     livenessProbe:
     httpGet:
         path: /health

@@ -6,11 +6,11 @@ k8simages=(
     kube-controller-manager-amd64:v1.10.6
     kube-scheduler-amd64:v1.10.6
     kube-proxy-amd64:v1.10.6
-    etcd-amd64:3.1.12
+    # etcd-amd64:3.1.12
     pause-amd64:3.1
-    k8s-dns-sidecar-amd64:1.14.10
-    k8s-dns-kube-dns-amd64:1.14.10
-    k8s-dns-dnsmasq-nanny-amd64:1.14.10
+    # k8s-dns-sidecar-amd64:1.14.10
+    # k8s-dns-kube-dns-amd64:1.14.10
+    # k8s-dns-dnsmasq-nanny-amd64:1.14.10
     kubernetes-dashboard-amd64:v1.8.3
     cluster-autoscaler:v1.2.2
     defaultbackend:1.4
@@ -48,52 +48,52 @@ docker rmi arborhuang/tiller:v2.9.1
 docker pull coredns/coredns:1.1.2
 docker save coredns/coredns:1.1.2 -o coredns:1.1.2.tar
 
-conduitimages=(
-    controller:v0.5.0
-    proxy:v0.5.0
-    proxy-init:v0.5.0
-    web:v0.5.0
-    grafana:v0.5.0
-)
+# conduitimages=(
+#     controller:v0.5.0
+#     proxy:v0.5.0
+#     proxy-init:v0.5.0
+#     web:v0.5.0
+#     grafana:v0.5.0
+# )
 
-j=1
-for i in ${conduitimages[@]}
-do
-    echo $i
-    echo $j
+# j=1
+# for i in ${conduitimages[@]}
+# do
+#     echo $i
+#     echo $j
 
-    docker pull arborhuang/runconduit-$i
-    docker tag arborhuang/runconduit-$i gcr.io/runconduit/$i
-    docker save gcr.io/runconduit/$i -o runconduit-$i.tar
-    docker rmi arborhuang/runconduit-$i
+#     docker pull arborhuang/runconduit-$i
+#     docker tag arborhuang/runconduit-$i gcr.io/runconduit/$i
+#     docker save gcr.io/runconduit/$i -o runconduit-$i.tar
+#     docker rmi arborhuang/runconduit-$i
 
-    let j+=1
-done
+#     let j+=1
+# done
 
-spinnakerimages=(
-    clouddriver:2.0.0-20180221152902
-    echo:0.8.0-20180221133510
-    deck:2.1.0-20180221143146
-    igor:0.9.0-20180221133510
-    orca:0.10.0-20180221133510
-    gate:0.10.0-20180221133510
-    front50:0.9.0-20180221133510
-    rosco:0.5.0-20180221133510
-)
+# spinnakerimages=(
+#     clouddriver:2.0.0-20180221152902
+#     echo:0.8.0-20180221133510
+#     deck:2.1.0-20180221143146
+#     igor:0.9.0-20180221133510
+#     orca:0.10.0-20180221133510
+#     gate:0.10.0-20180221133510
+#     front50:0.9.0-20180221133510
+#     rosco:0.5.0-20180221133510
+# )
 
-j=1
-for i in ${spinnakerimages[@]}
-do
-    echo $i
-    echo $j
+# j=1
+# for i in ${spinnakerimages[@]}
+# do
+#     echo $i
+#     echo $j
 
-    docker pull arborhuang/spinnaker-$i
-    docker tag arborhuang/spinnaker-$i gcr.io/spinnaker-marketplace/$i
-    docker save gcr.io/spinnaker-marketplace/$i -o spinnaker-$i.tar
-    docker rmi arborhuang/spinnaker-$i
+#     docker pull arborhuang/spinnaker-$i
+#     docker tag arborhuang/spinnaker-$i gcr.io/spinnaker-marketplace/$i
+#     docker save gcr.io/spinnaker-marketplace/$i -o spinnaker-$i.tar
+#     docker rmi arborhuang/spinnaker-$i
 
-    let j+=1
-done
+#     let j+=1
+# done
 
 jximages=(
     heapster:v1.3.0
@@ -118,33 +118,33 @@ do
     let j+=1
 done
 
-jximages2=(
-    chartmuseum/chartmuseum:v0.2.8
-    jenkinsxio/jenkinsx:0.0.25
-    jenkinsci/jnlp-slave:3.14-1
-    jenkinsxio/builder-maven:0.0.280
-    jenkinsxio/builder-gradle:0.0.163
-    jenkinsxio/builder-scala:0.0.96
-    jenkinsxio/builder-go:0.0.275
-    jenkinsxio/builder-terraform:0.0.52
-    jenkinsxio/builder-rust:0.0.130
-    jenkinsxio/builder-nodejs:0.0.228
-    jenkinsxio/builder-base:0.0.312
-    jenkinsxio/builder-python2:0.0.45
-    jenkinsxio/builder-python:0.0.46
-    jenkinsxio/builder-ruby:0.0.312
-    jenkinsxio/builder-swift:0.0.312
-)
+# jximages2=(
+#     chartmuseum/chartmuseum:v0.2.8
+#     jenkinsxio/jenkinsx:0.0.25
+#     jenkinsci/jnlp-slave:3.14-1
+#     jenkinsxio/builder-maven:0.0.280
+#     jenkinsxio/builder-gradle:0.0.163
+#     jenkinsxio/builder-scala:0.0.96
+#     jenkinsxio/builder-go:0.0.275
+#     jenkinsxio/builder-terraform:0.0.52
+#     jenkinsxio/builder-rust:0.0.130
+#     jenkinsxio/builder-nodejs:0.0.228
+#     jenkinsxio/builder-base:0.0.312
+#     jenkinsxio/builder-python2:0.0.45
+#     jenkinsxio/builder-python:0.0.46
+#     jenkinsxio/builder-ruby:0.0.312
+#     jenkinsxio/builder-swift:0.0.312
+# )
 
-j=1
-for i in ${jximages2[@]}
-do
-    echo $i
-    echo $j
+# j=1
+# for i in ${jximages2[@]}
+# do
+#     echo $i
+#     echo $j
 
-    docker pull $i
+#     docker pull $i
 
-    let j+=1
-done
+#     let j+=1
+# done
 
 set +x
