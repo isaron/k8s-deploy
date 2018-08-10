@@ -30,15 +30,11 @@ do
     let j+=1
 done
 
-docker pull arborhuang/quay-nginx-ingress-controller:0.17.1
-docker tag arborhuang/quay-nginx-ingress-controller:0.17.1 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.17.1
+docker pull quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.17.1
 docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.17.1 -o nginx-ingress-controller:0.17.1.tar
-docker rmi arborhuang/quay-nginx-ingress-controller:0.17.1
 
-docker pull arborhuang/flannel:v0.10.0-amd64
-docker tag arborhuang/flannel:v0.10.0-amd64 quay.io/coreos/flannel:v0.10.0-amd64
+docker pull quay.io/coreos/flannel:v0.10.0-amd64
 docker save quay.io/coreos/flannel:v0.10.0-amd64 -o flannel:v0.10.0-amd64.tar
-docker rmi arborhuang/flannel:v0.10.0-amd64
 
 docker pull arborhuang/tiller:v2.9.1
 docker tag arborhuang/tiller:v2.9.1 gcr.io/kubernetes-helm/tiller:v2.9.1
