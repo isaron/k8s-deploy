@@ -54,21 +54,13 @@ metadata:
 data:
   cni-conf.json: |
     {
-      # "name": "cbr0",
-      "name":"cni0",
-      "cniVersion":"0.6.0",
+      "name": "cbr0",
       "plugins": [
         {
           "type": "flannel",
           "delegate": {
             "hairpinMode": true,
             "isDefaultGateway": true
-          }
-        },
-        {
-          "type": "portmap",
-          "capabilities": {
-            "portMappings": true
           }
         }
       ]
@@ -77,7 +69,6 @@ data:
     {
       "Network": "10.244.0.0/16",
       "Backend": {
-        # "Type": "vxlan"
         "Type": "host-gw"
       }
     }
