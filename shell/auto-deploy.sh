@@ -214,7 +214,7 @@ kube::install_bin()
 
         systemctl enable kubelet.service && systemctl start kubelet.service && rm -rf /etc/kubernetes
     fi
-    kube::config_cni
+    # kube::config_cni
 }
 
 kube::config_cni()
