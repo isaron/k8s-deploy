@@ -434,8 +434,8 @@ kube::install_etcd_cert()
 {
     kube::get_env $@
 
-    curl -o /usr/local/bin/cfssl http://$HTTP_SERVER/certs/cfssl
-    curl -o /usr/local/bin/cfssljson http://$HTTP_SERVER/certs/cfssljson
+    curl -o /usr/local/bin/cfssl http://$HTTP_SERVER/bin/cfssl
+    curl -o /usr/local/bin/cfssljson http://$HTTP_SERVER/bin/cfssljson
     chmod +x /usr/local/bin/cfssl*
 
     mkdir -p /etc/kubernetes/pki/etcd && cd /etc/kubernetes/pki/etcd
@@ -595,8 +595,8 @@ kube::copy_etcd_config()
 {
     kube::get_env $@
 
-    curl -o /usr/local/bin/cfssl http://$HTTP_SERVER/certs/cfssl
-    curl -o /usr/local/bin/cfssljson http://$HTTP_SERVER/certs/cfssljson
+    curl -o /usr/local/bin/cfssl http://$HTTP_SERVER/bin/cfssl
+    curl -o /usr/local/bin/cfssljson http://$HTTP_SERVER/bin/cfssljson
     chmod +x /usr/local/bin/cfssl*
 
     #local master_ip=$(etcdctl get ha_master)
