@@ -2,17 +2,17 @@
 
 set -x
 dockerimages=(
-    kube-apiserver-amd64:v1.10.5
-    kube-controller-manager-amd64:v1.10.5
-    kube-scheduler-amd64:v1.10.5
-    kube-proxy-amd64:v1.10.5
+    kube-apiserver-amd64:v1.10.6
+    kube-controller-manager-amd64:v1.10.6
+    kube-scheduler-amd64:v1.10.6
+    kube-proxy-amd64:v1.10.6
     etcd-amd64:3.1.12
     pause-amd64:3.0
-    k8s-dns-sidecar-amd64:1.14.7
-    k8s-dns-kube-dns-amd64:1.14.7
-    k8s-dns-dnsmasq-nanny-amd64:1.14.7
+    k8s-dns-sidecar-amd64:1.14.8
+    k8s-dns-kube-dns-amd64:1.14.8
+    k8s-dns-dnsmasq-nanny-amd64:1.14.8
     kubernetes-dashboard-amd64:v1.8.3
-    cluster-autoscaler:v1.1.2
+    cluster-autoscaler:v1.2.2
     defaultbackend:1.4
 )
 

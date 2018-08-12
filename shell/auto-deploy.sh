@@ -7,7 +7,7 @@ MASTER_IP=172.30.80.31
 KUBE_HA=true
 
 KUBE_REPO_PREFIX=k8s.gcr.io
-KUBE_VERSION=v1.10.6
+KUBE_VERSION=v1.11.2
 ETCD_VERSION=v3.2.24
 
 MASTERS=(
@@ -169,13 +169,13 @@ kube::load_images()
     mkdir -p /tmp/k8s
 
     images=(
-        kube-apiserver-amd64_v1.10.6
-        kube-controller-manager-amd64_v1.10.6
-        kube-scheduler-amd64_v1.10.6
-        kube-proxy-amd64_v1.10.6
+        kube-apiserver-amd64_v1.11.2
+        kube-controller-manager-amd64_v1.11.2
+        kube-scheduler-amd64_v1.11.2
+        kube-proxy-amd64_v1.11.2
         pause-amd64_3.1
         kubernetes-dashboard-amd64_v1.8.3
-        cluster-autoscaler_v1.2.2
+        cluster-autoscaler_v1.3.1
         defaultbackend_1.4
     )
 
@@ -531,6 +531,7 @@ cat > config.json <<EOF
     "hosts": [
         "127.0.0.1",
         "k8s.rdp.dev",
+        "rdp.dev",
         "10.244.0.1",
         "10.96.0.1",
         "172.30.80.88",
@@ -615,6 +616,7 @@ cat > config.json <<EOF
     "hosts": [
         "127.0.0.1",
         "k8s.rdp.dev",
+        "rdp.dev",
         "10.244.0.1",
         "10.96.0.1",
         "172.30.80.88",
@@ -852,6 +854,7 @@ kube::init_master()
 
     cd ~ && mkdir -p $(hostname)-deploy && cd $(hostname)-deploy
 
+# for k8s <1.11
 cat >config.yaml <<EOF
 apiVersion: kubeadm.k8s.io/v1alpha1
 kind: MasterConfiguration
@@ -873,6 +876,29 @@ kubernetesVersion: ${KUBE_VERSION}
 apiServerExtraArgs:
   endpoint-reconciler-type: lease
 
+EOF
+
+# for k8s 1.11
+
+cat >kubeadm-config.yaml <<EOF
+apiVersion: kubeadm.k8s.io/v1alpha2
+kind: MasterConfiguration
+kubernetesVersion: ${KUBE_VERSION}
+apiServerCertSANs:
+- "${KUBE_VIP}"
+api:
+    controlPlaneEndpoint: "${KUBE_VIP}:6443"
+etcd:
+    external:
+        endpoints:
+        - https://${MASTER_NODES[0]}:2379
+        - https://${MASTER_NODES[1]}:2379
+        - https://${MASTER_NODES[2]}:2379
+        caFile: /etc/kubernetes/pki/etcd/ca.pem
+        certFile: /etc/kubernetes/pki/etcd/client.pem
+        keyFile: /etc/kubernetes/pki/etcd/client-key.pem
+networking:
+    podSubnet: "10.244.0.0/16"
 EOF
 
     systemctl daemon-reload && systemctl start kubelet.service
@@ -932,7 +958,7 @@ kube::master_up()
     #kube::save_master_ip
 
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
-    #kubeadm init --kubernetes-version=v1.10.6 --pod-network-cidr=10.244.0.0/16 $@
+    #kubeadm init --kubernetes-version=v1.11.2 --pod-network-cidr=10.244.0.0/16 $@
 
     kube::init_master
 
