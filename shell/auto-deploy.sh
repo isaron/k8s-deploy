@@ -771,7 +771,7 @@ containers:
     - --initial-cluster ${MASTERS[0]}=https://${MASTER_NODES[0]}:2380,${MASTERS[1]}=https://${MASTER_NODES[1]}:2380,${MASTERS[2]}=https://${MASTER_NODES[2]}:2380 \
     - --initial-cluster-token rdpetcd \
     - --initial-cluster-state new
-    image: gcr.io/google_containers/etcd-amd64:3.2.24
+    image: gcr.io/google_containers/etcd-amd64:3.2.18
     livenessProbe:
     httpGet:
         path: /health
@@ -840,12 +840,14 @@ kube::set_label()
   until kubectl get no | grep `hostname`; do sleep 1; done
   kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=master
   kubectl label node `hostname` node-type=master
+  kubectl label node `hostname` node-role=mgr
 }
 
 kube::set_label_node()
 {
   until kubectl get no | grep `hostname`; do sleep 1; done
 #   kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=node
+  kubectl label node `hostname` node-role=mgr
 }
 
 kube::init_master()
@@ -962,9 +964,6 @@ kube::master_up()
 
     kube::init_master
 
-    # 使master节点可以被调度
-    # kubectl taint nodes --all node-role.kubernetes.io/master-
-
     echo -e "\033[32m 注意记录下token信息，node加入集群时需要使用！\033[0m"
 
     # install flannel network
@@ -977,6 +976,9 @@ kube::master_up()
 
     # 更新配置使kube-proxy通过VIP访问apiserver
     # kube::config_master
+
+    # 使master节点可以被调度
+    # kubectl taint nodes --all node-role.kubernetes.io/master-
 }
 
 kube::replica_up()
@@ -999,12 +1001,12 @@ kube::replica_up()
 
     kube::init_master
 
-    kubectl taint nodes --all node-role.kubernetes.io/master-
-
     kube::set_label
 
     # 更新配置使kube-proxy通过VIP访问apiserver
     # kube::config_master
+
+    kubectl taint nodes --all node-role.kubernetes.io/master-
 
 }
 
@@ -1022,7 +1024,7 @@ kube::node_up()
 
     kubeadm $@
 
-    # kube::set_label_node
+    kube::set_label_node
 
     # 如果加入集群时没有指向VIP则需要配置，否则不需要
     # kube::config_node
@@ -1030,7 +1032,7 @@ kube::node_up()
 
 kube::tear_down()
 {
-    systemctl daemon-reload && systemctl stop kubelet.service etcd.service
+    systemctl daemon-reload && systemctl stop kubelet.service #etcd.service
     docker ps -aq|xargs -I '{}' docker stop {}
     docker ps -aq|xargs -I '{}' docker rm {}
     df |grep /var/lib/kubelet|awk '{ print $6 }'|xargs -I '{}' umount {}
