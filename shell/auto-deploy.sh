@@ -186,7 +186,7 @@ kube::load_images()
     )
 
     for i in "${!images0[@]}"; do
-        ret=$(docker images0 | awk 'NR!=1{print $1"_"$2}'| grep $KUBE_REPO_PREFIX/${images0[$i]} | wc -l)
+        ret=$(docker images | awk 'NR!=1{print $1"_"$2}'| grep $KUBE_REPO_PREFIX/${images0[$i]} | wc -l)
         if [ $ret -lt 1 ];then
             curl -L http://$HTTP_SERVER/images/${images0[$i]}.tar > /tmp/k8s/${images0[$i]}.tar
             docker load -i /tmp/k8s/${images0[$i]}.tar
