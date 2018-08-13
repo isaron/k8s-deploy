@@ -168,7 +168,7 @@ kube::load_images()
 {
     mkdir -p /tmp/k8s
 
-    images=(
+    images0=(
         kube-apiserver-amd64_v1.11.2
         kube-controller-manager-amd64_v1.11.2
         kube-scheduler-amd64_v1.11.2
@@ -176,14 +176,36 @@ kube::load_images()
         pause-amd64_3.1
         kubernetes-dashboard-amd64_v1.8.3
         cluster-autoscaler_v1.3.1
-        defaultbackend_1.4
+
+        heapster_v1.3.0
+        heapster-amd64_v1.5.2
+        heapster-grafana-amd64_v4.4.3
+        heapster-influxdb-amd64_v1.3.3
+        kube-addon-manager_v8.6
+        addon-resizer_1.7
     )
 
-    for i in "${!images[@]}"; do
-        ret=$(docker images | awk 'NR!=1{print $1"_"$2}'| grep $KUBE_REPO_PREFIX/${images[$i]} | wc -l)
+    for i in "${!images0[@]}"; do
+        ret=$(docker images0 | awk 'NR!=1{print $1"_"$2}'| grep $KUBE_REPO_PREFIX/${images0[$i]} | wc -l)
         if [ $ret -lt 1 ];then
-            curl -L http://$HTTP_SERVER/images/${images[$i]}.tar > /tmp/k8s/${images[$i]}.tar
-            docker load -i /tmp/k8s/${images[$i]}.tar
+            curl -L http://$HTTP_SERVER/images/${images0[$i]}.tar > /tmp/k8s/${images0[$i]}.tar
+            docker load -i /tmp/k8s/${images0[$i]}.tar
+        fi
+    done
+
+    images1=(
+        defaultbackend_1.4
+        tiller_v2.9.1
+        nginx-ingress-controller_0.17.1
+        flannel_v0.10.0-amd64
+        coredns_1.1.3
+    )
+
+    for i in "${!images1[@]}"; do
+        ret=$(docker images1 | awk 'NR!=1{print $1"_"$2}'| grep ${images1[$i]} | wc -l)
+        if [ $ret -lt 1 ];then
+            curl -L http://$HTTP_SERVER/images/${images1[$i]}.tar > /tmp/k8s/${images1[$i]}.tar
+            docker load -i /tmp/k8s/${images1[$i]}.tar
         fi
     done
 
