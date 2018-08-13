@@ -30,6 +30,8 @@ do
     let j+=1
 done
 
+docker tag k8s.gcr.io/pause-amd64:3.1 k8s.gcr.io/pause:3.1
+
 docker tag k8s.gcr.io/defaultbackend:1.4 gcr.io/google_containers/defaultbackend:1.4
 docker rm -f defaultbackend:1.4.tar
 docker save gcr.io/google_containers/defaultbackend:1.4 -o defaultbackend:1.4.tar
@@ -46,6 +48,7 @@ docker save gcr.io/kubernetes-helm/tiller:v2.9.1 -o tiller:v2.9.1.tar
 docker rmi arborhuang/tiller:v2.9.1
 
 docker pull coredns/coredns:1.1.3
+docker ta coredns/coredns:1.1.3 k8s.gcr.io/coredns:1.1.3
 docker save coredns/coredns:1.1.3 -o coredns:1.1.3.tar
 
 # conduitimages=(
