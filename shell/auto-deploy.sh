@@ -219,20 +219,21 @@ kube::install_bin()
     i=$?
     set -e
     if [ $i -ne 0 ]; then
-        apt install socat ebtables ethtool -y
+        # apt install socat ebtables ethtool -y
         curl -L http://$HTTP_SERVER/debs/debs.tar.gz > /tmp/debs.tar.gz
         tar zxf /tmp/debs.tar.gz -C /tmp
         dpkg -i /tmp/debs/*.deb
         rm -rf /tmp/debs*
-#         apt update && apt install -y apt-transport-https
-#         curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
+        apt update && apt install -y apt-transport-https
+        curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
 
-# cat >/etc/apt/sources.list.d/kubernetes.list <<EOF
-# deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
-# EOF
+cat >/etc/apt/sources.list.d/kubernetes.list <<EOF
+deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
+EOF
 
-#         apt update && apt install socat ebtables ethtool cri-tools -y
-#         apt install -y kubelet kubeadm kubectl kubernetes-cni
+        apt update && apt install socat ebtables ethtool cri-tools -y
+        # apt install -y kubelet kubeadm kubectl kubernetes-cni
+        apt install -y kubelet kubeadm kubectl
 
         systemctl enable kubelet.service && systemctl start kubelet.service && rm -rf /etc/kubernetes
     fi
