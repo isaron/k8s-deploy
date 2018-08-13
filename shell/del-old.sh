@@ -29,6 +29,8 @@ do
     let j+=1
 done
 
+docker rmi coredns/coredns:1.1.2
+
 conduitimages=(
     controller:v0.5.0
     proxy:v0.5.0
