@@ -1059,7 +1059,7 @@ kube::tear_down()
     docker ps -aq|xargs -I '{}' docker stop {}
     docker ps -aq|xargs -I '{}' docker rm {}
     df |grep /var/lib/kubelet|awk '{ print $6 }'|xargs -I '{}' umount {}
-    rm -rf /var/lib/kubelet && rm -rf /etc/kubernetes/ && rm -rf /var/lib/etcd
+    rm -rf /var/lib/kubelet && rm -rf /etc/kubernetes/ && rm -rf /var/lib/etcd && rm -rf /etc/systemd/system/kubelet.service.d
     kubeadm reset -f
     apt remove -y kubectl kubeadm kubelet kubernetes-cni
     # if [ ${KUBE_HA} == true ]
