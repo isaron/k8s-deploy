@@ -51,56 +51,56 @@ do
     let j+=1
 done
 
-spinnakerimages=(
-    clouddriver:2.0.0-20180221152902
-    echo:0.8.0-20180221133510
-    deck:2.1.0-20180221143146
-    igor:0.9.0-20180221133510
-    orca:0.10.0-20180221133510
-    gate:0.10.0-20180221133510
-    front50:0.9.0-20180221133510
-    rosco:0.5.0-20180221133510
-)
+# spinnakerimages=(
+#     clouddriver:2.0.0-20180221152902
+#     echo:0.8.0-20180221133510
+#     deck:2.1.0-20180221143146
+#     igor:0.9.0-20180221133510
+#     orca:0.10.0-20180221133510
+#     gate:0.10.0-20180221133510
+#     front50:0.9.0-20180221133510
+#     rosco:0.5.0-20180221133510
+# )
 
-j=1
-for i in ${spinnakerimages[@]}
-do
-    echo $i
-    echo $j
+# j=1
+# for i in ${spinnakerimages[@]}
+# do
+#     echo $i
+#     echo $j
 
-    docker rmi arborhuang/spinnaker-$i
-    docker rmi gcr.io/spinnaker-marketplace/$i
+#     docker rmi arborhuang/spinnaker-$i
+#     docker rmi gcr.io/spinnaker-marketplace/$i
 
-    let j+=1
-done
+#     let j+=1
+# done
 
-jximages2=(
-    chartmuseum/chartmuseum:v0.2.8
-    jenkinsxio/jenkinsx:0.0.25
-    jenkinsci/jnlp-slave:3.14-1
-    jenkinsxio/builder-maven:0.0.280
-    jenkinsxio/builder-gradle:0.0.163
-    jenkinsxio/builder-scala:0.0.96
-    jenkinsxio/builder-go:0.0.275
-    jenkinsxio/builder-terraform:0.0.52
-    jenkinsxio/builder-rust:0.0.130
-    jenkinsxio/builder-nodejs:0.0.228
-    jenkinsxio/builder-base:0.0.312
-    jenkinsxio/builder-python2:0.0.45
-    jenkinsxio/builder-python:0.0.46
-    jenkinsxio/builder-ruby:0.0.312
-    jenkinsxio/builder-swift:0.0.312
-)
+# jximages2=(
+#     chartmuseum/chartmuseum:v0.2.8
+#     jenkinsxio/jenkinsx:0.0.25
+#     jenkinsci/jnlp-slave:3.14-1
+#     jenkinsxio/builder-maven:0.0.280
+#     jenkinsxio/builder-gradle:0.0.163
+#     jenkinsxio/builder-scala:0.0.96
+#     jenkinsxio/builder-go:0.0.275
+#     jenkinsxio/builder-terraform:0.0.52
+#     jenkinsxio/builder-rust:0.0.130
+#     jenkinsxio/builder-nodejs:0.0.228
+#     jenkinsxio/builder-base:0.0.312
+#     jenkinsxio/builder-python2:0.0.45
+#     jenkinsxio/builder-python:0.0.46
+#     jenkinsxio/builder-ruby:0.0.312
+#     jenkinsxio/builder-swift:0.0.312
+# )
 
-j=1
-for i in ${jximages2[@]}
-do
-    echo $i
-    echo $j
+# j=1
+# for i in ${jximages2[@]}
+# do
+#     echo $i
+#     echo $j
 
-    docker rmi $i
+#     docker rmi $i
 
-    let j+=1
-done
+#     let j+=1
+# done
 
 set +x
