@@ -220,10 +220,10 @@ kube::install_bin()
     set -e
     if [ $i -ne 0 ]; then
         # apt install socat ebtables ethtool -y
-        curl -L http://$HTTP_SERVER/debs/debs.tar.gz > /tmp/debs.tar.gz
-        tar zxf /tmp/debs.tar.gz -C /tmp
-        dpkg -i /tmp/debs/*.deb
-        rm -rf /tmp/debs*
+        # curl -L http://$HTTP_SERVER/debs/debs.tar.gz > /tmp/debs.tar.gz
+        # tar zxf /tmp/debs.tar.gz -C /tmp
+        # dpkg -i /tmp/debs/*.deb
+        # rm -rf /tmp/debs*
         apt update && apt install -y apt-transport-https
         curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
 
