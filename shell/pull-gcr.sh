@@ -32,7 +32,7 @@ done
 
 docker tag k8s.gcr.io/defaultbackend:1.4 gcr.io/google_containers/defaultbackend:1.4
 docker rm -f defaultbackend:1.4.tar
-docker save gcr.io/google_containers/defaultbackend:1.4 -o defaultbackend:1.4
+docker save gcr.io/google_containers/defaultbackend:1.4 -o defaultbackend:1.4.tar
 
 docker pull quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.17.1
 docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.17.1 -o nginx-ingress-controller:0.17.1.tar
