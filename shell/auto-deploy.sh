@@ -173,9 +173,10 @@ kube::load_images()
         kube-controller-manager-amd64_v1.11.2
         kube-scheduler-amd64_v1.11.2
         kube-proxy-amd64_v1.11.2
-        pause-amd64_3.1
+        pause_3.1
         kubernetes-dashboard-amd64_v1.8.3
         cluster-autoscaler_v1.3.1
+        coredns_1.1.3
 
         heapster_v1.3.0
         heapster-amd64_v1.5.2
@@ -198,7 +199,6 @@ kube::load_images()
         tiller_v2.9.1
         nginx-ingress-controller_0.17.1
         flannel_v0.10.0-amd64
-        coredns_1.1.3
     )
 
     for i in "${!images1[@]}"; do
