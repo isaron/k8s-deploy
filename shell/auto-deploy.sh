@@ -173,6 +173,7 @@ kube::load_images()
         kube-controller-manager-amd64_v1.11.2
         kube-scheduler-amd64_v1.11.2
         kube-proxy-amd64_v1.11.2
+        pause-amd64_3.1
         pause_3.1
         kubernetes-dashboard-amd64_v1.8.3
         cluster-autoscaler_v1.3.1
