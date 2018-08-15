@@ -930,7 +930,8 @@ EOF
     systemctl daemon-reload && systemctl start kubelet.service
     # kubeadm init --config=config.yaml --feature-gates=CoreDNS=true
     # kubeadm init --config=config.yaml
-    kubeadm init --config kubeadm-config.yaml --ignore-preflight-errors=all
+    kubeadm init --config kubeadm-config.yaml
+     #--ignore-preflight-errors=all
     mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 }
 
@@ -1057,11 +1058,13 @@ kube::node_up()
 
 kube::tear_down()
 {
-    systemctl daemon-reload && systemctl stop kubelet.service #etcd.service
+    systemctl daemon-reload && systemctl stop kubelet.service
+     #etcd.service
     docker ps -aq|xargs -I '{}' docker stop {}
     docker ps -aq|xargs -I '{}' docker rm {}
     df |grep /var/lib/kubelet|awk '{ print $6 }'|xargs -I '{}' umount {}
-    rm -rf /var/lib/kubelet && rm -rf /etc/kubernetes/ && rm -rf /var/lib/etcd #&& rm -rf /etc/systemd/system/kubelet.service.d
+    rm -rf /var/lib/kubelet && rm -rf /etc/kubernetes/ && rm -rf /var/lib/etcd
+     #&& rm -rf /etc/systemd/system/kubelet.service.d
     kubeadm reset -f
     apt remove -y kubectl kubeadm kubelet kubernetes-cni
     # if [ ${KUBE_HA} == true ]
