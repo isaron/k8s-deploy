@@ -927,10 +927,10 @@ networking:
     podSubnet: "10.244.0.0/16"
 EOF
 
-    systemctl daemon-reload #&& systemctl start kubelet.service
+    systemctl daemon-reload && systemctl start kubelet.service
     # kubeadm init --config=config.yaml --feature-gates=CoreDNS=true
     # kubeadm init --config=config.yaml
-    kubeadm init --config kubeadm-config.yaml
+    kubeadm init --config kubeadm-config.yaml --ignore-preflight-errors=all
     mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 }
 
