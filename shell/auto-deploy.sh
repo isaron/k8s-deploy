@@ -542,7 +542,7 @@ cat >client.json <<EOF
 }
 EOF
 
-    cfssl gencert -ca=ca.crt -ca-key=ca.key -config=ca-config.json -profile=client client.json | cfssljson -bare client
+    cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client client.json | cfssljson -bare client
 
     cfssl print-defaults csr > config.json
     # sed -i '0,/CN/{s/example\.net/'"$PEER_NAME"'/}' config.json
@@ -604,8 +604,8 @@ cat > config.json <<EOF
 
 EOF
 
-    cfssl gencert -ca=ca.crt -ca-key=ca.key -config=ca-config.json -profile=server config.json | cfssljson -bare server
-    cfssl gencert -ca=ca.crt -ca-key=ca.key -config=ca-config.json -profile=peer config.json | cfssljson -bare peer
+    cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server config.json | cfssljson -bare server
+    cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=peer config.json | cfssljson -bare peer
 }
 
 kube::save_master_ip()
@@ -689,8 +689,8 @@ cat > config.json <<EOF
 
 EOF
 
-    cfssl gencert -ca=ca.crt -ca-key=ca.key -config=ca-config.json -profile=server config.json | cfssljson -bare server
-    cfssl gencert -ca=ca.crt -ca-key=ca.key -config=ca-config.json -profile=peer config.json | cfssljson -bare peer
+    cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server config.json | cfssljson -bare server
+    cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=peer config.json | cfssljson -bare peer
 }
 
 kube::copy_master_config()
@@ -739,14 +739,14 @@ ExecStart=/usr/local/bin/etcd --name ${PEER_NAME} \
     --advertise-client-urls https://${LOCAL_IP}:2379 \
     --listen-peer-urls https://${LOCAL_IP}:2380 \
     --initial-advertise-peer-urls https://${LOCAL_IP}:2380 \
-    --cert-file=/etc/kubernetes/pki/etcd/server.crt \
-    --key-file=/etc/kubernetes/pki/etcd/server.key \
+    --cert-file=/etc/kubernetes/pki/etcd/server.pem \
+    --key-file=/etc/kubernetes/pki/etcd/server-key.pem \
     --client-cert-auth \
-    --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt \
-    --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt \
-    --peer-key-file=/etc/kubernetes/pki/etcd/peer.key \
+    --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.pem \
+    --peer-cert-file=/etc/kubernetes/pki/etcd/peer.pem \
+    --peer-key-file=/etc/kubernetes/pki/etcd/peer-key.pem \
     --peer-client-cert-auth \
-    --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt \
+    --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.pem \
     --initial-cluster ${MASTERS[0]}=https://${MASTER_NODES[0]}:2380,${MASTERS[1]}=https://${MASTER_NODES[1]}:2380,${MASTERS[2]}=https://${MASTER_NODES[2]}:2380 \
     --initial-cluster-token rdpetcd \
     --initial-cluster-state new
@@ -785,14 +785,14 @@ containers:
     - --advertise-client-urls https://${LOCAL_IP}:2379 \
     - --listen-peer-urls https://${LOCAL_IP}:2380 \
     - --initial-advertise-peer-urls https://${LOCAL_IP}:2380 \
-    - --cert-file=/certs/server.crt \
-    - --key-file=/certs/server.key \
+    - --cert-file=/certs/server.pem \
+    - --key-file=/certs/server-key.pem \
     - --client-cert-auth \
-    - --trusted-ca-file=/certs/ca.crt \
-    - --peer-cert-file=/certs/peer.crt \
-    - --peer-key-file=/certs/peer.key \
+    - --trusted-ca-file=/certs/ca.pem \
+    - --peer-cert-file=/certs/peer.pem \
+    - --peer-key-file=/certs/peer-key.pem \
     - --peer-client-cert-auth \
-    - --peer-trusted-ca-file=/certs/ca.crt \
+    - --peer-trusted-ca-file=/certs/ca.pem \
     - --initial-cluster ${MASTERS[0]}=https://${MASTER_NODES[0]}:2380,${MASTERS[1]}=https://${MASTER_NODES[1]}:2380,${MASTERS[2]}=https://${MASTER_NODES[2]}:2380 \
     - --initial-cluster-token rdpetcd \
     - --initial-cluster-state new
@@ -892,9 +892,9 @@ etcd:
   - https://${MASTER_NODES[0]}:2379
   - https://${MASTER_NODES[1]}:2379
   - https://${MASTER_NODES[2]}:2379
-  caFile: /etc/kubernetes/pki/etcd/ca.crt
-  certFile: /etc/kubernetes/pki/etcd/client.crt
-  keyFile: /etc/kubernetes/pki/etcd/client.key
+  caFile: /etc/kubernetes/pki/etcd/ca.pem
+  certFile: /etc/kubernetes/pki/etcd/client.pem
+  keyFile: /etc/kubernetes/pki/etcd/client-key.pem
 networking:
   podSubnet: 10.244.0.0/16
 apiServerCertSANs:
@@ -921,9 +921,9 @@ etcd:
         - https://${MASTER_NODES[0]}:2379
         - https://${MASTER_NODES[1]}:2379
         - https://${MASTER_NODES[2]}:2379
-        caFile: /etc/kubernetes/pki/etcd/ca.crt
-        certFile: /etc/kubernetes/pki/etcd/client.crt
-        keyFile: /etc/kubernetes/pki/etcd/client.key
+        caFile: /etc/kubernetes/pki/etcd/ca.pem
+        certFile: /etc/kubernetes/pki/etcd/client.pem
+        keyFile: /etc/kubernetes/pki/etcd/client-key.pem
 networking:
     podSubnet: "10.244.0.0/16"
 EOF
