@@ -875,7 +875,7 @@ kube::set_label()
 kube::set_label_node()
 {
   until kubectl get no | grep `hostname`; do sleep 1; done
-#   kubectl label node `hostname` node-role.kubernetes.io/node=""
+  kubectl label node `hostname` node-role.kubernetes.io/node=""
   kubectl label node `hostname` node-role=mgr
 }
 
@@ -1060,7 +1060,7 @@ kube::node_up()
 
     # 如果加入集群时没有指向VIP则需要配置，否则不需要
     kube::config_node
-    
+
     kube::set_label_node
 }
 
