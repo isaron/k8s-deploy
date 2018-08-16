@@ -33,7 +33,7 @@ kube::set_env()
     # apt install ssh vim htop curl ntp ntpdate -y && systemctl stop ntp && ntpdate 172.30.80.88
     apt install ssh vim htop curl nethogs nfs-common -y
 
-    modprobe ip_vs # enable ipvs by default
+    modprobe ip_vs ip_vs_wrr ip_vs_sh ip_vs_rr # enable ipvs by default
 
     # echo "up route del default gw 192.168.52.2" >> /etc/network/interfaces
     # echo "up route add default gw 172.30.80.88" >> /etc/network/interfaces
