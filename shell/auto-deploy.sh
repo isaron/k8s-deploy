@@ -862,8 +862,8 @@ kube::config_node()
 kube::set_label()
 {
   until kubectl get no | grep `hostname`; do sleep 1; done
-#   kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=master
-  kubectl label node `hostname` node-role.kubernetes.io/master=""
+  kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=master
+#   kubectl label node `hostname` node-role.kubernetes.io/master=""
   kubectl label node `hostname` node-type=master
   kubectl label node `hostname` node-role=mgr
 }
@@ -871,7 +871,7 @@ kube::set_label()
 kube::set_label_node()
 {
   until kubectl get no | grep `hostname`; do sleep 1; done
-  kubectl label node `hostname` node-role.kubernetes.io/node=""
+#   kubectl label node `hostname` node-role.kubernetes.io/node=""
   kubectl label node `hostname` node-role=mgr
 }
 
@@ -912,9 +912,9 @@ apiVersion: kubeadm.k8s.io/v1alpha2
 kind: MasterConfiguration
 kubernetesVersion: ${KUBE_VERSION}
 apiServerCertSANs:
-- ${LOCAL_IP}
+- ${KUBE_VIP}
 api:
-    controlPlaneEndpoint: ${LOCAL_IP}:6443
+    controlPlaneEndpoint: ${KUBE_VIP}:6443
 apiServerExtraArgs:
   advertise-address: ${LOCAL_IP}
   disable-admission-plugins: AlwaysPullImages
