@@ -916,6 +916,9 @@ apiServerCertSANs:
 - "${KUBE_VIP}"
 api:
     controlPlaneEndpoint: "${KUBE_VIP}:6443"
+apiServerExtraArgs:
+  advertise-address: ${LOCAL_IP}
+  disable-admission-plugins: AlwaysPullImages
 etcd:
     external:
         endpoints:
