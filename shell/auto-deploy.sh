@@ -912,7 +912,7 @@ apiVersion: kubeadm.k8s.io/v1alpha2
 kind: MasterConfiguration
 kubernetesVersion: ${KUBE_VERSION}
 apiServerCertSANs:
-- ${LOCAL_IP}
+- ${KUBE_VIP}
 api:
     controlPlaneEndpoint: ${LOCAL_IP}:6443
 apiServerExtraArgs:
