@@ -846,6 +846,10 @@ kube::config_master()
     kubectl apply -f kube-proxy-cm.yaml --force
     # restart all kube-proxy pods to ensure that they load the new configmap
     kubectl delete pod -n kube-system -l k8s-app=kube-proxy
+
+    kubectl get cm -n kube-public cluster-info -o yaml > cluster-info-cm.yaml
+    sed -i 's#server:.*#server: https://172.30.80.30:6443#g' kube-proxy-cm.yaml
+    kubectl apply -f cluster-info-cm.yaml --force
 }
 
 kube::config_node()
@@ -853,7 +857,7 @@ kube::config_node()
     # kube::get_env $@
     # KUBE_VIP=172.30.80.30
 
-    # on node
+    # on master and node
     sed -i 's#server:.*#server: https://172.30.80.30:6443#g' /etc/kubernetes/kubelet.conf
     systemctl restart kubelet
     # mkdir -p $HOME/.kube && scp root@172.30.80.30:/etc/kubernetes/admin.conf $HOME/.kube/config
