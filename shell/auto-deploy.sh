@@ -860,7 +860,7 @@ kube::config_node()
     # on master and node
     sed -i 's#server:.*#server: https://172.30.80.30:6443#g' /etc/kubernetes/kubelet.conf
     systemctl restart kubelet
-    # mkdir -p $HOME/.kube && scp root@172.30.80.30:/etc/kubernetes/admin.conf $HOME/.kube/config
+    mkdir -p $HOME/.kube && scp root@172.30.80.31:/etc/kubernetes/admin.conf $HOME/.kube/config
 }
 
 kube::set_label()
@@ -1058,10 +1058,10 @@ kube::node_up()
 
     kubeadm $@
 
-    kube::set_label_node
-
     # 如果加入集群时没有指向VIP则需要配置，否则不需要
-    # kube::config_node
+    kube::config_node
+    
+    kube::set_label_node
 }
 
 kube::tear_down()
