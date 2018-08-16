@@ -53,7 +53,7 @@ docker rmi arborhuang/tiller:v2.9.1
 
 docker pull coredns/coredns:1.1.3
 docker tag coredns/coredns:1.1.3 k8s.gcr.io/coredns:1.1.3
-docker save coredns/coredns:1.1.3 -o coredns:1.1.3.tar
+docker save k8s.gcr.io/coredns:1.1.3 -o coredns:1.1.3.tar
 
 # conduitimages=(
 #     controller:v0.5.0
