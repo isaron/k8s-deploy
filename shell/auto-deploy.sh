@@ -626,7 +626,8 @@ kube::copy_etcd_config()
 
     #local master_ip=$(etcdctl get ha_master)
     mkdir -p /etc/kubernetes/pki/etcd && cd /etc/kubernetes/pki/etcd
-    scp -r root@${MASTER_IP}:/etc/kubernetes/pki/* /etc/kubernetes/pki
+    scp -r root@${MASTER_IP}:/etc/kubernetes/pki/etcd/ca* /etc/kubernetes/pki/etcd
+    scp -r root@${MASTER_IP}:/etc/kubernetes/pki/etcd/client* /etc/kubernetes/pki/etcd
     #rm apiserver.crt
 
     cfssl print-defaults csr > config.json
