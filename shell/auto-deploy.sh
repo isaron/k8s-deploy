@@ -912,9 +912,9 @@ apiVersion: kubeadm.k8s.io/v1alpha2
 kind: MasterConfiguration
 kubernetesVersion: ${KUBE_VERSION}
 apiServerCertSANs:
-- "${KUBE_VIP}"
+- ${KUBE_VIP}
 api:
-    controlPlaneEndpoint: "${KUBE_VIP}:6443"
+    controlPlaneEndpoint: ${KUBE_VIP}:6443
 apiServerExtraArgs:
   advertise-address: ${LOCAL_IP}
   disable-admission-plugins: AlwaysPullImages
@@ -928,7 +928,7 @@ etcd:
         certFile: /etc/kubernetes/pki/etcd/client.pem
         keyFile: /etc/kubernetes/pki/etcd/client-key.pem
 networking:
-    podSubnet: "10.244.0.0/16"
+    podSubnet: 10.244.0.0/16
 EOF
 
     systemctl daemon-reload && systemctl start kubelet.service
