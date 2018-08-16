@@ -912,9 +912,9 @@ apiVersion: kubeadm.k8s.io/v1alpha2
 kind: MasterConfiguration
 kubernetesVersion: ${KUBE_VERSION}
 apiServerCertSANs:
-- ${LOCAL_IP}
+- ${KUBE_VIP}
 api:
-    controlPlaneEndpoint: ${LOCAL_IP}:6443
+    controlPlaneEndpoint: ${KUBE_VIP}:6443
 apiServerExtraArgs:
   advertise-address: ${LOCAL_IP}
   disable-admission-plugins: AlwaysPullImages
