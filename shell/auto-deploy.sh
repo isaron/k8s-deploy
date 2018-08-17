@@ -1067,16 +1067,16 @@ kubeProxy:
 EOF
 
     # 配置kubelet
-    kubeadm alpha phase certs all --config kubeadm-master.config
-    kubeadm alpha phase kubelet config write-to-disk --config kubeadm-master.config
-    kubeadm alpha phase kubelet write-env-file --config kubeadm-master.config
-    kubeadm alpha phase kubeconfig kubelet --config kubeadm-master.config
+    kubeadm alpha phase certs all --config kubeadm-config.yaml
+    kubeadm alpha phase kubelet config write-to-disk --config kubeadm-config.yaml
+    kubeadm alpha phase kubelet write-env-file --config kubeadm-config.yaml
+    kubeadm alpha phase kubeconfig kubelet --config kubeadm-config.yaml
     systemctl restart kubelet
 
     # 部署
-    kubeadm alpha phase kubeconfig all --config kubeadm-master.config
-    kubeadm alpha phase controlplane all --config kubeadm-master.config
-    kubeadm alpha phase mark-master --config kubeadm-master.config
+    kubeadm alpha phase kubeconfig all --config kubeadm-config.yaml
+    kubeadm alpha phase controlplane all --config kubeadm-config.yaml
+    kubeadm alpha phase mark-master --config kubeadm-config.yaml
 
     # systemctl daemon-reload && systemctl start kubelet.service
     # kubeadm init --config=config.yaml --feature-gates=CoreDNS=true
