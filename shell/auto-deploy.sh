@@ -987,7 +987,7 @@ apiServerCertSANs:
 - "127.0.0.1"
 api:
     advertiseAddress: ${LOCAL_IP}
-    controlPlaneEndpoint: ${KUBE_VIP}:8443
+    controlPlaneEndpoint: ${KUBE_VIP}:6443
 apiServerExtraArgs:
     endpoint-reconciler-type: lease
     disable-admission-plugins: AlwaysPullImages
