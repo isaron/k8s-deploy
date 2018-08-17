@@ -33,10 +33,65 @@ kube::set_env()
     # apt install ssh vim htop curl ntp ntpdate -y && systemctl stop ntp && ntpdate 172.30.80.88
     apt install ssh vim htop curl nethogs nfs-common -y
 
-    modprobe ip_vs ip_vs_wrr ip_vs_sh ip_vs_rr # enable ipvs by default
+    modprobe ip_vs ip_vs_wrr ip_vs_sh ip_vs_rr nf_conntrack_ipv4 # enable ipvs by default
 
     # echo "up route del default gw 192.168.52.2" >> /etc/network/interfaces
     # echo "up route add default gw 172.30.80.88" >> /etc/network/interfaces
+    
+    ln -fs /lib/systemd/system/rc-local.service /etc/systemd/system/rc-local.service
+
+cat > /etc/systemd/system/rc-local.service <<EOF
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+
+# This unit gets pulled automatically into multi-user.target by
+# systemd-rc-local-generator if /etc/rc.local is executable.
+[Unit]
+Description=/etc/rc.local Compatibility
+ConditionFileIsExecutable=/etc/rc.local
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/etc/rc.local start
+TimeoutSec=0
+RemainAfterExit=yes
+GuessMainPID=no
+
+[Install]
+WantedBy=multi-user.target
+Alias=rc-local.service
+
+EOF
+
+cat > /etc/rc.local <<EOF
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+modprobe ip_vs ip_vs_wrr ip_vs_sh ip_vs_rr nf_conntrack_ipv4
+
+ip addr add ${KUBE_VIP}/32 dev lo
+route add -host ${KUBE_VIP} lo
+
+exit 0
+
+EOF
+
+    chmod 755 /etc/rc.local
 
     kube::config_ntp
 
@@ -434,6 +489,8 @@ cat > /etc/rc.local <<EOF
 #
 # By default this script does nothing.
 
+modprobe ip_vs ip_vs_wrr ip_vs_sh ip_vs_rr nf_conntrack_ipv4
+
 ip addr add ${KUBE_VIP}/32 dev lo
 route add -host ${KUBE_VIP} lo
 
@@ -626,7 +683,7 @@ kube::copy_etcd_config()
 
     #local master_ip=$(etcdctl get ha_master)
     mkdir -p /etc/kubernetes/pki/etcd && cd /etc/kubernetes/pki/etcd
-    scp -r root@${MASTER_IP}:/etc/kubernetes/pki/etcd/ca* /etc/kubernetes/pki/etcd
+    scp -r root@${MASTER_IP}:/etc/kubernetes/pki/etcd/ca.* /etc/kubernetes/pki/etcd
     scp -r root@${MASTER_IP}:/etc/kubernetes/pki/etcd/client* /etc/kubernetes/pki/etcd
     #rm apiserver.crt
 
@@ -698,9 +755,13 @@ kube::copy_master_config()
 {
     # kube::get_env $@
 
-    scp root@${MASTER_IP}:/etc/kubernetes/pki/ca.* /etc/kubernetes/pki
-    scp root@${MASTER_IP}:/etc/kubernetes/pki/sa.* /etc/kubernetes/pki
-    scp root@${MASTER_IP}:/etc/kubernetes/pki/front-proxy-ca.* /etc/kubernetes/pki
+    scp root@${MASTER_IP}:/etc/kubernetes/pki/ca.crt /etc/kubernetes/pki
+    scp root@${MASTER_IP}:/etc/kubernetes/pki/ca.key /etc/kubernetes/pki
+    scp root@${MASTER_IP}:/etc/kubernetes/pki/sa.key /etc/kubernetes/pki
+    scp root@${MASTER_IP}:/etc/kubernetes/pki/sa.pub /etc/kubernetes/pki
+    scp root@${MASTER_IP}:/etc/kubernetes/pki/front-proxy-ca.crt /etc/kubernetes/pki
+    scp root@${MASTER_IP}:/etc/kubernetes/pki/front-proxy-ca.key /etc/kubernetes/pki
+    scp root@${MASTER_IP}:/etc/kubernetes/admin.conf /etc/kubernetes
     # rm apiserver.crt
 }
 
@@ -847,9 +908,9 @@ kube::config_master()
     # restart all kube-proxy pods to ensure that they load the new configmap
     kubectl delete pod -n kube-system -l k8s-app=kube-proxy
 
-    kubectl get cm -n kube-public cluster-info -o yaml > cluster-info-cm.yaml
-    sed -i 's#server:.*#server: https://172.30.80.30:6443#g' kube-proxy-cm.yaml
-    kubectl apply -f cluster-info-cm.yaml --force
+    # kubectl get cm -n kube-public cluster-info -o yaml > cluster-info-cm.yaml
+    # sed -i 's#server:.*#server: https://172.30.80.30:6443#g' kube-proxy-cm.yaml
+    # kubectl apply -f cluster-info-cm.yaml --force
 }
 
 kube::config_node()
@@ -857,9 +918,9 @@ kube::config_node()
     # kube::get_env $@
     # KUBE_VIP=172.30.80.30
 
-    # on master and node
-    sed -i 's#server:.*#server: https://172.30.80.30:6443#g' /etc/kubernetes/kubelet.conf
-    systemctl restart kubelet
+    # on node
+    # sed -i 's#server:.*#server: https://172.30.80.30:6443#g' /etc/kubernetes/kubelet.conf
+    # systemctl restart kubelet
     mkdir -p $HOME/.kube && scp root@172.30.80.31:/etc/kubernetes/admin.conf $HOME/.kube/config
 }
 
@@ -917,9 +978,16 @@ kind: MasterConfiguration
 kubernetesVersion: ${KUBE_VERSION}
 apiServerCertSANs:
 - ${KUBE_VIP}
+- ${MASTER_NODES[0]}
+- ${MASTER_NODES[1]}
+- ${MASTER_NODES[2]}
+- ${MASTERS[0]}
+- ${MASTERS[1]}
+- ${MASTERS[2]}
+- "127.0.0.1"
 api:
     advertiseAddress: ${LOCAL_IP}
-    controlPlaneEndpoint: ""
+    controlPlaneEndpoint: ${KUBE_VIP}:8443
 apiServerExtraArgs:
     endpoint-reconciler-type: lease
     disable-admission-plugins: AlwaysPullImages
@@ -932,14 +1000,88 @@ etcd:
         caFile: /etc/kubernetes/pki/etcd/ca.pem
         certFile: /etc/kubernetes/pki/etcd/client.pem
         keyFile: /etc/kubernetes/pki/etcd/client-key.pem
+controllerManagerExtraArgs:
+    node-monitor-grace-period: 10s
+    pod-eviction-timeout: 10s
 networking:
     podSubnet: 10.244.0.0/16
+kubeProxy:
+    config:
+        mode: ipvs
+        # mode: iptables
 EOF
 
     systemctl daemon-reload && systemctl start kubelet.service
     # kubeadm init --config=config.yaml --feature-gates=CoreDNS=true
     # kubeadm init --config=config.yaml
     kubeadm init --config kubeadm-config.yaml
+     #--ignore-preflight-errors=all
+    mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+}
+
+kube::init_replica()
+{
+    # kube::get_env $@
+
+    cd ~ && mkdir -p $(hostname)-deploy && cd $(hostname)-deploy
+
+# for k8s 1.11
+
+cat >kubeadm-config.yaml <<EOF
+apiVersion: kubeadm.k8s.io/v1alpha2
+kind: MasterConfiguration
+kubernetesVersion: ${KUBE_VERSION}
+apiServerCertSANs:
+- ${KUBE_VIP}
+- ${MASTER_NODES[0]}
+- ${MASTER_NODES[1]}
+- ${MASTER_NODES[2]}
+- ${MASTERS[0]}
+- ${MASTERS[1]}
+- ${MASTERS[2]}
+- "127.0.0.1"
+api:
+    advertiseAddress: ${LOCAL_IP}
+    controlPlaneEndpoint: ${KUBE_VIP}:8443
+apiServerExtraArgs:
+    endpoint-reconciler-type: lease
+    disable-admission-plugins: AlwaysPullImages
+etcd:
+    external:
+        endpoints:
+        - https://${MASTER_NODES[0]}:2379
+        - https://${MASTER_NODES[1]}:2379
+        - https://${MASTER_NODES[2]}:2379
+        caFile: /etc/kubernetes/pki/etcd/ca.pem
+        certFile: /etc/kubernetes/pki/etcd/client.pem
+        keyFile: /etc/kubernetes/pki/etcd/client-key.pem
+controllerManagerExtraArgs:
+    node-monitor-grace-period: 10s
+    pod-eviction-timeout: 10s
+networking:
+    podSubnet: 10.244.0.0/16
+kubeProxy:
+    config:
+        mode: ipvs
+        # mode: iptables
+EOF
+
+    # 配置kubelet
+    kubeadm alpha phase certs all --config kubeadm-master.config
+    kubeadm alpha phase kubelet config write-to-disk --config kubeadm-master.config
+    kubeadm alpha phase kubelet write-env-file --config kubeadm-master.config
+    kubeadm alpha phase kubeconfig kubelet --config kubeadm-master.config
+    systemctl restart kubelet
+
+    # 部署
+    kubeadm alpha phase kubeconfig all --config kubeadm-master.config
+    kubeadm alpha phase controlplane all --config kubeadm-master.config
+    kubeadm alpha phase mark-master --config kubeadm-master.config
+
+    # systemctl daemon-reload && systemctl start kubelet.service
+    # kubeadm init --config=config.yaml --feature-gates=CoreDNS=true
+    # kubeadm init --config=config.yaml
+    # kubeadm init --config kubeadm-config.yaml
      #--ignore-preflight-errors=all
     mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 }
@@ -1007,9 +1149,10 @@ kube::master_up()
     kube::set_label
 
     # show pods
-    # kubectl get pods --all-namespaces
+    kubectl get pods --all-namespaces
 
     # 更新配置使kube-proxy通过VIP访问apiserver
+    # don't need for v1.11
     # kube::config_master
 
     # 使master节点可以被调度
@@ -1034,11 +1177,13 @@ kube::replica_up()
 
     kube::copy_master_config
 
-    kube::init_master
+    # kube::init_master
+    kube::init_replica
 
     kube::set_label
 
     # 更新配置使kube-proxy通过VIP访问apiserver
+    # don't need for v1.11
     # kube::config_master
 
     kubectl taint nodes --all node-role.kubernetes.io/master-
@@ -1059,7 +1204,6 @@ kube::node_up()
 
     kubeadm $@
 
-    # 如果加入集群时没有指向VIP则需要配置，否则不需要
     kube::config_node
 
     kube::set_label_node
