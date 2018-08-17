@@ -31,6 +31,26 @@ done
 
 docker rmi coredns/coredns:1.1.2
 
+jximages=(
+    heapster:v1.3.0
+    heapster-amd64:v1.5.2
+    heapster-grafana-amd64:v4.4.3
+    heapster-influxdb-amd64:v1.3.3
+    kube-addon-manager:v8.6
+    addon-resizer:1.7
+)
+
+j=1
+for i in ${jximages[@]}
+do
+    echo $i
+    echo $j
+
+    docker rmi k8s.gcr.io/$i
+
+    let j+=1
+done
+
 # conduitimages=(
 #     controller:v0.5.0
 #     proxy:v0.5.0
