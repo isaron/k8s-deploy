@@ -33,7 +33,12 @@ kube::set_env()
     # apt install ssh vim htop curl ntp ntpdate -y && systemctl stop ntp && ntpdate 172.30.80.88
     apt install ssh vim htop curl nethogs nfs-common -y
 
-    modprobe ip_vs ip_vs_wrr ip_vs_sh ip_vs_rr nf_conntrack_ipv4 # enable ipvs by default
+    # enable ipvs by default
+    modprobe ip_vs
+    modprobe ip_vs_wrr
+    modprobe ip_vs_sh
+    modprobe ip_vs_rr
+    modprobe nf_conntrack_ipv4
 
     # echo "up route del default gw 192.168.52.2" >> /etc/network/interfaces
     # echo "up route add default gw 172.30.80.88" >> /etc/network/interfaces
@@ -82,7 +87,11 @@ cat > /etc/rc.local <<EOF
 #
 # By default this script does nothing.
 
-modprobe ip_vs ip_vs_wrr ip_vs_sh ip_vs_rr nf_conntrack_ipv4
+modprobe ip_vs
+modprobe ip_vs_wrr
+modprobe ip_vs_sh
+modprobe ip_vs_rr
+modprobe nf_conntrack_ipv4
 
 ip addr add ${KUBE_VIP}/32 dev lo
 route add -host ${KUBE_VIP} lo
@@ -489,7 +498,11 @@ cat > /etc/rc.local <<EOF
 #
 # By default this script does nothing.
 
-modprobe ip_vs ip_vs_wrr ip_vs_sh ip_vs_rr nf_conntrack_ipv4
+modprobe ip_vs
+modprobe ip_vs_wrr
+modprobe ip_vs_sh
+modprobe ip_vs_rr
+modprobe nf_conntrack_ipv4
 
 ip addr add ${KUBE_VIP}/32 dev lo
 route add -host ${KUBE_VIP} lo
