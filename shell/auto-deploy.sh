@@ -1071,7 +1071,7 @@ EOF
     kubeadm alpha phase kubelet config write-to-disk --config kubeadm-config.yaml
     kubeadm alpha phase kubelet write-env-file --config kubeadm-config.yaml
     kubeadm alpha phase kubeconfig kubelet --config kubeadm-config.yaml
-    systemctl restart kubelet
+    systemctl daemon-reload && systemctl start kubelet.service
 
     # 部署
     kubeadm alpha phase kubeconfig all --config kubeadm-config.yaml
