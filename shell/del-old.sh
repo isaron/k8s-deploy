@@ -31,25 +31,25 @@ done
 
 docker rmi coredns/coredns:1.1.2
 
-conduitimages=(
-    controller:v0.5.0
-    proxy:v0.5.0
-    proxy-init:v0.5.0
-    web:v0.5.0
-    grafana:v0.5.0
-)
+# conduitimages=(
+#     controller:v0.5.0
+#     proxy:v0.5.0
+#     proxy-init:v0.5.0
+#     web:v0.5.0
+#     grafana:v0.5.0
+# )
 
-j=1
-for i in ${conduitimages[@]}
-do
-    echo $i
-    echo $j
+# j=1
+# for i in ${conduitimages[@]}
+# do
+#     echo $i
+#     echo $j
 
-    docker rmi arborhuang/runconduit-$i
-    docker rmi gcr.io/runconduit/$i
+#     docker rmi arborhuang/runconduit-$i
+#     docker rmi gcr.io/runconduit/$i
 
-    let j+=1
-done
+#     let j+=1
+# done
 
 # spinnakerimages=(
 #     clouddriver:2.0.0-20180221152902
