@@ -4,4 +4,5 @@ images/
 etcd/
 certs/
 bin/
+mirror/
 nohup.out
