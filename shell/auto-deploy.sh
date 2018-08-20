@@ -244,9 +244,9 @@ kube::load_images()
         coredns_1.1.3
 
         heapster_v1.3.0
-        heapster-amd64_v1.5.2
-        heapster-grafana-amd64_v4.4.3
-        heapster-influxdb-amd64_v1.3.3
+        heapster-amd64_v1.5.4
+        heapster-grafana-amd64_v5.0.4
+        heapster-influxdb-amd64_v1.5.2
         kube-addon-manager_v8.6
         addon-resizer_1.7
     )
