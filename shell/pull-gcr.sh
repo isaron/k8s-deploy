@@ -104,7 +104,7 @@ docker save k8s.gcr.io/coredns:1.1.3 -o coredns:1.1.3.tar
 
 jximages=(
     heapster:v1.3.0
-    heapster-amd64:v1.5.5
+    heapster-amd64:v1.5.4
     heapster-grafana-amd64:v5.0.4
     heapster-influxdb-amd64:v1.5.2
     kube-addon-manager:v8.6
