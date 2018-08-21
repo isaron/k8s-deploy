@@ -25,7 +25,7 @@ podAnnotations:
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
 ##
 nodeSelector: 
-    node-type: mgr
+    node-type: master
 
 service:
   type: ClusterIP

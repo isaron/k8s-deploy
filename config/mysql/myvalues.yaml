@@ -40,6 +40,12 @@ imagePullPolicy: IfNotPresent
 nodeSelector: 
     node-type: master
 
+# tolerations: 
+# - key: "node-role.kubernetes.io/master"
+#   operator: "Equal"
+#   value: ""
+#   effect: "NoSchedule"
+
 livenessProbe:
   initialDelaySeconds: 30
   periodSeconds: 10

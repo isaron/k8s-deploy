@@ -83,9 +83,9 @@ keycloak:
     node-type: master
     # kubernetes.io/hostname: rdp-mgr1.k8s
   tolerations: 
-  - key: "master"
+  - key: "node-role.kubernetes.io/master"
     operator: "Equal"
-    value: "yes"
+    value: ""
     effect: "NoSchedule"
 
   livenessProbe:
