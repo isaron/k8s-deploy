@@ -20,4 +20,5 @@ spec:
   - jenkins.rdp.dev
   - nexus.rdp.dev
   - harbor.rdp.dev
+  - containers.rdp.dev
   
