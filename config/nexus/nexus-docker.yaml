@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  .dockercfg: ewogICJhdXRocyI6IHsKICAgICJjb250YWluZXJzLnJkcC5kZXYiOiB7CiAgICAgICJlbWFpbCI6ICJhZG1pbkByZHAuZGV2IiwKICAgICAgImF1dGgiOiAiWVdSdGFXNDZZV1J0YVc0eE1qTT0iCiAgICB9CiAgfQp9Cg==
+kind: Secret
+metadata:
+  name: nexus-docker
+type: kubernetes.io/dockercfg
