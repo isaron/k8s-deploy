@@ -1,4 +1,31 @@
 ---
+# Source: istio/charts/grafana/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+type: Opaque
+data:
+  username: "YWRtaW4="
+  password: "YWRtaW4xMjM="
+---
+# Source: istio/charts/kiali/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kiali
+  namespace: istio-system
+  labels:
+    app: kiali
+
+type: Opaque
+data:
+  username: "YWRtaW4="
+  passphrase: "YWRtaW4xMjM="
+
+---
 # Source: istio/charts/galley/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -181,6 +208,21 @@ data:
     sleep 5
     /kubectl apply -f ${pathToResourceYAML}
     
+
+---
+# Source: istio/charts/kiali/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kiali
+  namespace: istio-system
+  labels:
+    app: kiali
+data:
+  config.yaml: |
+    server:
+      port: 20001
+      static_content_root_directory: /opt/kiali/console
 
 ---
 # Source: istio/charts/mixer/templates/configmap.yaml
@@ -862,6 +904,19 @@ metadata:
   labels:
     app: ingress
     chart: ingress-1.0.0
+    heritage: Tiller
+    release: istio
+
+---
+# Source: istio/charts/kiali/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kiali-service-account
+  namespace: istio-system
+  labels:
+    app: kiali
+    chart: kiali-0.5.1
     heritage: Tiller
     release: istio
 
@@ -2183,6 +2238,75 @@ rules:
   verbs: ["get", "watch", "list"]
 
 ---
+# Source: istio/charts/kiali/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kiali
+  labels:
+    app: kiali
+    version: master
+rules:
+- apiGroups: ["","apps", "autoscaling"]
+  resources:
+  - configmaps
+  - namespaces
+  - nodes
+  - pods
+  - projects
+  - services
+  - endpoints
+  - deployments
+  - horizontalpodautoscalers
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups: ["config.istio.io"]
+  resources:
+  - rules
+  - circonuses
+  - deniers
+  - fluentds
+  - kubernetesenvs
+  - listcheckers
+  - memquotas
+  - opas
+  - prometheuses
+  - rbacs
+  - servicecontrols
+  - solarwindses
+  - stackdrivers
+  - statsds
+  - stdios
+  - apikeys
+  - authorizations
+  - checknothings
+  - kuberneteses
+  - listentries
+  - logentries
+  - metrics
+  - quotas
+  - reportnothings
+  - servicecontrolreports
+  - quotaspecs
+  - quotaspecbindings
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups: ["networking.istio.io"]
+  resources:
+  - virtualservices
+  - destinationrules
+  - serviceentries
+  - gateways
+  verbs:
+  - get
+  - list
+  - watch
+
+---
 # Source: istio/charts/mixer/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
@@ -2380,6 +2504,26 @@ subjects:
   - kind: ServiceAccount
     name: istio-ingress-service-account
     namespace: istio-system
+
+---
+# Source: istio/charts/kiali/templates/clusterrolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: istio-kiali-admin-role-binding-istio-system
+  labels:
+    app: kiali
+    chart: kiali-0.5.1
+    heritage: Tiller
+    release: istio
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kiali
+subjects:
+- kind: ServiceAccount
+  name: kiali-service-account
+  namespace: istio-system
 
 ---
 # Source: istio/charts/mixer/templates/clusterrolebinding.yaml
@@ -2620,6 +2764,24 @@ spec:
       name: https
       port: 443
 ---
+
+---
+# Source: istio/charts/kiali/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kiali
+  namespace: istio-system
+  labels:
+    app: kiali
+spec:
+  ports:
+  - name: tcp
+    protocol: TCP
+    port: 20001
+    name: http-kiali
+  selector:
+    app: kiali
 
 ---
 # Source: istio/charts/mixer/templates/service.yaml
@@ -3272,12 +3434,22 @@ spec:
           env:
           - name: GRAFANA_PORT
             value: "3000"
+          - name: GF_SECURITY_ADMIN_USER
+            valueFrom:
+              secretKeyRef:
+                name: grafana
+                key: username
+          - name: GF_SECURITY_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: grafana
+                key: password
           - name: GF_AUTH_BASIC_ENABLED
-            value: "false"
-          - name: GF_AUTH_ANONYMOUS_ENABLED
             value: "true"
-          - name: GF_AUTH_ANONYMOUS_ORG_ROLE
-            value: Admin
+          - name: GF_AUTH_ANONYMOUS_ENABLED
+            value: "false"
+          - name: GF_AUTH_DISABLE_LOGIN_FORM
+            value: "false"
           - name: GF_PATHS_DATA
             value: /data/grafana
           resources:
@@ -3449,6 +3621,77 @@ spec:
                 operator: In
                 values:
                 - s390x
+
+---
+# Source: istio/charts/kiali/templates/deployment.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kiali
+  namespace: istio-system
+  labels:
+    app: kiali
+    chart: kiali-0.5.1
+    release: istio
+    heritage: Tiller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kiali
+  template:
+    metadata:
+      name: kiali
+      labels:
+        app: kiali
+      annotations:
+        sidecar.istio.io/inject: "false"
+        scheduler.alpha.kubernetes.io/critical-pod: ""
+    spec:
+      serviceAccountName: kiali-service-account
+      containers:
+      - image: "docker.io/kiali/kiali:istio-release-1.0"
+        name: kiali
+        command:
+        - "/opt/kiali/kiali"
+        - "-config"
+        - "/kiali-configuration/config.yaml"
+        - "-v"
+        - "4"
+        env:
+        - name: ACTIVE_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: SERVER_CREDENTIALS_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: kiali
+              key: username
+        - name: SERVER_CREDENTIALS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kiali
+              key: passphrase
+        - name: PROMETHEUS_SERVICE_URL
+          value: http://prometheus:9090
+        - name: GRAFANA_DASHBOARD
+          value: istio-service-dashboard
+        - name: GRAFANA_VAR_SERVICE_SOURCE
+          value: var-service
+        - name: GRAFANA_VAR_SERVICE_DEST
+          value: var-service
+        volumeMounts:
+        - name: kiali-configuration
+          mountPath: "/kiali-configuration"
+        resources:
+          requests:
+            cpu: 10m
+          
+      volumes:
+      - name: kiali-configuration
+        configMap:
+          name: kiali
 
 ---
 # Source: istio/charts/mixer/templates/deployment.yaml
@@ -4280,6 +4523,170 @@ spec:
                 - s390x
 
 ---
+# Source: istio/charts/kiali/templates/ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kiali
+  namespace: istio-system
+  labels:
+    app: kiali
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+    ## Used to create an Ingress record.
+    - hosts: kiali.rdp.dev
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kiali
+              servicePort: 20001
+    - tls:
+      # Secrets must be manually created in the namespace.
+      - secretName: istio-ingress-metrics-certs
+        hosts:
+          - kiali.rdp.dev
+---
+# Source: istio/charts/servicegraph/templates/ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: istio-servicegraph
+  namespace: istio-system
+  labels:
+    app: servicegraph
+    chart: servicegraph-0.1.0
+    release: istio
+    heritage: Tiller
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+    - host: servicegraph.rdp.dev
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: servicegraph
+              servicePort: 8088
+    - tls:
+      # Secrets must be manually created in the namespace.
+      - secretName: istio-ingress-metrics-certs
+        hosts:
+          - servicegraph.rdp.dev
+---
+# Source: istio/charts/tracing/templates/ingress-jaeger.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jaeger-query
+  namespace: istio-system
+  labels:
+    app: jaeger
+    chart: tracing-0.1.0
+    release: istio
+    heritage: Tiller
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+    - host: jaeger.rdp.dev
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: jaeger-query
+              servicePort: 16686
+    - tls:
+      # Secrets must be manually created in the namespace.
+      - secretName: istio-ingress-metrics-certs
+        hosts:
+          - jaeger.rdp.dev
+---
+# Source: istio/charts/tracing/templates/ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: istio-tracing
+  namespace: istio-system
+  labels:
+    app: tracing
+    chart: tracing-0.1.0
+    release: istio
+    heritage: Tiller
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+    - host: tracing.rdp.dev
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: zipkin
+              servicePort: 9411
+    - tls:
+      # Secrets must be manually created in the namespace.
+      - secretName: istio-ingress-metrics-certs
+        hosts:
+          - tracing.rdp.dev
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: prometheus
+  namespace: istio-system
+  labels:
+    app: prometheus
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+    - host: prometheus.rdp.dev
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: prometheus
+              servicePort: 9090
+    - tls:
+      # Secrets must be manually created in the namespace.
+      - secretName: istio-ingress-metrics-certs
+        hosts:
+          - prometheus.rdp.dev
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: grafana
+  namespace: istio-system
+  labels:
+    app: grafana
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+    - host: grafana.rdp.dev
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: grafana
+              servicePort: 3000
+    - tls:
+      # Secrets must be manually created in the namespace.
+      - secretName: istio-ingress-metrics-certs
+        hosts:
+          - grafana.rdp.dev
+---
 # Source: istio/charts/pilot/templates/gateway.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -4297,6 +4704,80 @@ spec:
     hosts:
     - "*"
 
+---
+
+---
+# Source: istio/charts/telemetry-gateway/templates/gateway.yaml
+
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: istio-telemetry-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 15030
+      name: http2-prometheus
+      protocol: HTTP2
+    hosts:
+    - "*"
+  - port:
+      number: 15031
+      name: http2-grafana
+      protocol: HTTP2
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: grafana
+  namespace: istio-system
+spec:
+  host: grafana.istio-system.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: prometheus
+  namespace: istio-system
+spec:
+  host: prometheus.istio-system.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE      
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: telemetry-virtual-service
+  namespace: istio-system
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - istio-telemetry-gateway
+  http:
+  - match:
+    - port: 15030
+    route:
+    - destination:
+        host: prometheus.istio-system.svc.cluster.local
+        port:
+          number: 9090
+  - match:
+    - port: 15031
+    route:
+    - destination:
+        host: grafana.istio-system.svc.cluster.local
+        port:
+          number: 3000
 ---
 
 ---
@@ -4588,9 +5069,6 @@ webhooks:
 
 
 ---
-# Source: istio/charts/grafana/templates/secret.yaml
-
----
 # Source: istio/charts/pilot/templates/meshexpansion.yaml
 
 
@@ -4607,19 +5085,6 @@ webhooks:
 
 
 ---
-
----
-# Source: istio/charts/servicegraph/templates/ingress.yaml
-
----
-# Source: istio/charts/telemetry-gateway/templates/gateway.yaml
-
-
----
-# Source: istio/charts/tracing/templates/ingress-jaeger.yaml
-
----
-# Source: istio/charts/tracing/templates/ingress.yaml
 
 ---
 # Source: istio/templates/install-custom-resources.sh.tpl

@@ -1,0 +1,21 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: istio-ingress-metrics-certs
+  namespace: istio-system
+spec:
+  secretName: istio-ingress-metrics-certs
+  issuerRef:
+    name: ca-issuer
+    # We can reference ClusterIssuers by changing the kind here.
+    # The default value is Issuer (i.e. a locally namespaced Issuer)
+    kind: ClusterIssuer
+  commonName: rdp.dev
+  dnsNames:
+  - grafana.rdp.dev
+  - prometheus.rdp.dev
+  - kiali.rdp.dev
+  - servicegraph.rdp.dev
+  - jaeger.rdp.dev
+  - tracing.rdp.dev
+  
