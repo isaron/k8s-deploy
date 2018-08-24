@@ -12,18 +12,18 @@ metadata:
 spec:
   rules:
     ## Used to create an Ingress record.
-    - hosts: kiali.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: kiali
-              servicePort: 20001
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - kiali.rdp.dev
+  - host: kiali.rdp.dev
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: kiali
+            servicePort: 20001
+  tls:
+  # Secrets must be manually created in the namespace.
+  - secretName: istio-ingress-metrics-certs
+    hosts:
+      - kiali.rdp.dev
 ---
 # Source: istio/charts/servicegraph/templates/ingress.yaml
 apiVersion: extensions/v1beta1
@@ -41,18 +41,18 @@ metadata:
     # kubernetes.io/tls-acme: "true"
 spec:
   rules:
-    - host: servicegraph.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: servicegraph
-              servicePort: 8088
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - servicegraph.rdp.dev
+  - host: servicegraph.rdp.dev
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: servicegraph
+            servicePort: 8088
+  tls:
+  # Secrets must be manually created in the namespace.
+  - secretName: istio-ingress-metrics-certs
+    hosts:
+      - servicegraph.rdp.dev
 ---
 # Source: istio/charts/tracing/templates/ingress-jaeger.yaml
 apiVersion: extensions/v1beta1
@@ -70,18 +70,18 @@ metadata:
     # kubernetes.io/tls-acme: "true"
 spec:
   rules:
-    - host: jaeger.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: jaeger-query
-              servicePort: 16686
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - jaeger.rdp.dev
+  - host: jaeger.rdp.dev
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: jaeger-query
+            servicePort: 16686
+  tls:
+  # Secrets must be manually created in the namespace.
+  - secretName: istio-ingress-metrics-certs
+    hosts:
+      - jaeger.rdp.dev
 ---
 # Source: istio/charts/tracing/templates/ingress.yaml
 apiVersion: extensions/v1beta1
@@ -99,18 +99,18 @@ metadata:
     # kubernetes.io/tls-acme: "true"
 spec:
   rules:
-    - host: tracing.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: zipkin
-              servicePort: 9411
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - tracing.rdp.dev
+  - host: tracing.rdp.dev
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: zipkin
+            servicePort: 9411
+  tls:
+  # Secrets must be manually created in the namespace.
+  - secretName: istio-ingress-metrics-certs
+    hosts:
+      - tracing.rdp.dev
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -124,18 +124,18 @@ metadata:
     # kubernetes.io/tls-acme: "true"
 spec:
   rules:
-    - host: prometheus.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: prometheus
-              servicePort: 9090
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - prometheus.rdp.dev
+  - host: prometheus.rdp.dev
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: prometheus
+            servicePort: 9090
+  tls:
+  # Secrets must be manually created in the namespace.
+  - secretName: istio-ingress-metrics-certs
+    hosts:
+      - prometheus.rdp.dev
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -149,15 +149,15 @@ metadata:
     # kubernetes.io/tls-acme: "true"
 spec:
   rules:
-    - host: grafana.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: grafana
-              servicePort: 3000
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - grafana.rdp.dev
+  - host: grafana.rdp.dev
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: grafana
+            servicePort: 3000
+  tls:
+  # Secrets must be manually created in the namespace.
+  - secretName: istio-ingress-metrics-certs
+    hosts:
+      - grafana.rdp.dev
