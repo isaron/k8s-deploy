@@ -1,16 +1,4 @@
 ---
-# Source: istio/charts/grafana/templates/secret.yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: grafana
-  labels:
-    app: grafana
-type: Opaque
-data:
-  username: "YWRtaW4="
-  password: "YWRtaW4xMjM="
----
 # Source: istio/charts/kiali/templates/secrets.yaml
 apiVersion: v1
 kind: Secret
@@ -3434,22 +3422,12 @@ spec:
           env:
           - name: GRAFANA_PORT
             value: "3000"
-          - name: GF_SECURITY_ADMIN_USER
-            valueFrom:
-              secretKeyRef:
-                name: grafana
-                key: username
-          - name: GF_SECURITY_ADMIN_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: grafana
-                key: password
           - name: GF_AUTH_BASIC_ENABLED
-            value: "true"
+            value: "false"
           - name: GF_AUTH_ANONYMOUS_ENABLED
-            value: "false"
-          - name: GF_AUTH_DISABLE_LOGIN_FORM
-            value: "false"
+            value: "true"
+          - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+            value: Admin
           - name: GF_PATHS_DATA
             value: /data/grafana
           resources:
@@ -4523,170 +4501,6 @@ spec:
                 - s390x
 
 ---
-# Source: istio/charts/kiali/templates/ingress.yaml
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: kiali
-  namespace: istio-system
-  labels:
-    app: kiali
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-spec:
-  rules:
-    ## Used to create an Ingress record.
-    - hosts: kiali.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: kiali
-              servicePort: 20001
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - kiali.rdp.dev
----
-# Source: istio/charts/servicegraph/templates/ingress.yaml
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: istio-servicegraph
-  namespace: istio-system
-  labels:
-    app: servicegraph
-    chart: servicegraph-0.1.0
-    release: istio
-    heritage: Tiller
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-spec:
-  rules:
-    - host: servicegraph.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: servicegraph
-              servicePort: 8088
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - servicegraph.rdp.dev
----
-# Source: istio/charts/tracing/templates/ingress-jaeger.yaml
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: jaeger-query
-  namespace: istio-system
-  labels:
-    app: jaeger
-    chart: tracing-0.1.0
-    release: istio
-    heritage: Tiller
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-spec:
-  rules:
-    - host: jaeger.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: jaeger-query
-              servicePort: 16686
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - jaeger.rdp.dev
----
-# Source: istio/charts/tracing/templates/ingress.yaml
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: istio-tracing
-  namespace: istio-system
-  labels:
-    app: tracing
-    chart: tracing-0.1.0
-    release: istio
-    heritage: Tiller
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-spec:
-  rules:
-    - host: tracing.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: zipkin
-              servicePort: 9411
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - tracing.rdp.dev
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: prometheus
-  namespace: istio-system
-  labels:
-    app: prometheus
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-spec:
-  rules:
-    - host: prometheus.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: prometheus
-              servicePort: 9090
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - prometheus.rdp.dev
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: grafana
-  namespace: istio-system
-  labels:
-    app: grafana
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-spec:
-  rules:
-    - host: grafana.rdp.dev
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: grafana
-              servicePort: 3000
-    - tls:
-      # Secrets must be manually created in the namespace.
-      - secretName: istio-ingress-metrics-certs
-        hosts:
-          - grafana.rdp.dev
----
 # Source: istio/charts/pilot/templates/gateway.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -5067,6 +4881,9 @@ webhooks:
 ---
 # Source: istio/charts/grafana/templates/grafana-ports-mtls.yaml
 
+
+---
+# Source: istio/charts/grafana/templates/secret.yaml
 
 ---
 # Source: istio/charts/pilot/templates/meshexpansion.yaml
