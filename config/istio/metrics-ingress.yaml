@@ -104,8 +104,10 @@ spec:
       paths:
         - path: /
           backend:
-            serviceName: zipkin
-            servicePort: 9411
+            # serviceName: zipkin
+            # servicePort: 9411
+            serviceName: tracing
+            servicePort: 80
   tls:
   # Secrets must be manually created in the namespace.
   - secretName: istio-ingress-metrics-certs
