@@ -1,23 +1,33 @@
-{{- if .Values.ingress.enabled  }}
+{{- if .Values.service.ingress.enabled -}}
+{{- $releaseName := .Release.Name -}}
+{{- $serviceName := default "gitea" .Values.service.nameOverride -}}
+{{- $httpPort := .Values.service.httpPort -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "fullname" . }}ingress
-  namespace: tools
+  name: {{ template "gitea.gitea.fullname" . }}
   labels:
-    app: {{ template "fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    app: {{ template "gitea.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: {{ default "gitea" .Values.service.nameOverride }}
   annotations:
-{{ toYaml .Values.ingress.ingress_annotations | indent 4 }}
+    {{- range $key, $value := .Values.service.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
 spec:
   rules:
-  - host: {{ .Values.service.http.externalHost }}
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: {{ template "fullname" . }}-http
-          servicePort: {{ .Values.service.http.port }}
-{{- end }}
+    {{- range .Values.service.ingress.hosts }}
+    - host: {{ . }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ printf "%s-%s" $releaseName $serviceName | trunc 63 | trimSuffix "-" }}
+              servicePort: {{ $httpPort }}
+    {{- end -}}
+{{- if .Values.service.ingress.tls }}
+  tls:
+{{ toYaml .Values.service.ingress.tls | indent 4 }}
+{{- end -}}
+{{- end -}}
