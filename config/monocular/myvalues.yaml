@@ -101,14 +101,14 @@ ui:
   backendHostname: /api
   # e.g. API served on a different domain
   # backendHostname: http://monocular-api.local
-  nodeSelector: 
-    node-type: master
+  nodeSelector: {}
+    # node-type: master
     # kubernetes.io/hostname: rdp-mgr1.k8s
-  tolerations: 
-  - key: "node-role.kubernetes.io/master"
-    operator: "Equal"
-    value: ""
-    effect: "NoSchedule"
+  tolerations: []
+  # - key: "node-role.kubernetes.io/master"
+  #   operator: "Equal"
+  #   value: ""
+  #   effect: "NoSchedule"
   affinity: {}
 
 prerender:

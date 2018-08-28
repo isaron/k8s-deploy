@@ -1,8 +1,8 @@
 ## mysql image version
 ## ref: https://hub.docker.com/r/library/mysql/tags/
 ##
-image: mysql
-imageTag: 5.7.14
+image: "mysql"
+imageTag: "5.7.14"
 
 ## Specify password for root user
 ##
@@ -29,6 +29,20 @@ mysqlRootPassword: p@ssw0rd
 ##
 imagePullPolicy: IfNotPresent
 
+extraVolumes: |
+  # - name: extras
+  #   emptyDir: {}
+
+extraVolumeMounts: |
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
+
+extraInitContainers: |
+  # - name: do-something
+  #   image: busybox
+  #   command: ['do', 'something']
+
 # Optionally specify an array of imagePullSecrets.
 # Secrets must be manually created in the namespace.
 # ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
@@ -37,14 +51,7 @@ imagePullPolicy: IfNotPresent
 
 ## Node selector
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-nodeSelector: 
-    node-type: master
-
-# tolerations: 
-# - key: "node-role.kubernetes.io/master"
-#   operator: "Equal"
-#   value: ""
-#   effect: "NoSchedule"
+nodeSelector: {}
 
 livenessProbe:
   initialDelaySeconds: 30
@@ -73,6 +80,7 @@ persistence:
   # storageClass: "-"
   accessMode: ReadWriteOnce
   size: 8Gi
+  annotations: {}
 
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
@@ -83,12 +91,10 @@ resources:
     cpu: 100m
 
 # Custom mysql configuration files used to override default mysql settings
-configurationFiles: 
-  mysql.cnf: |-
-    [mysqld]
-    skip-host-cache
-    skip-name-resolve
-    sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+configurationFiles: {}
+#  mysql.cnf: |-
+#    [mysqld]
+#    skip-name-resolve
 #    ssl-ca=/ssl/ca.pem
 #    ssl-cert=/ssl/server-cert.pem
 #    ssl-key=/ssl/server-key.pem
@@ -136,3 +142,13 @@ ssl:
 #      -----BEGIN RSA PRIVATE KEY-----
 #      ...
 #      -----END RSA PRIVATE KEY-----
+
+## Populates the 'TZ' system timezone environment variable
+## ref: https://dev.mysql.com/doc/refman/5.7/en/time-zone-support.html
+##
+## Default: nil (mysql will use image's default timezone, normally UTC)
+## Example: 'Australia/Sydney'
+# timezone:
+
+# To be added to the database server pod(s)
+podAnnotations: {}
