@@ -45,7 +45,7 @@ api:
       - name: monocular
         url: https://helm.github.io/monocular
         source: https://github.com/helm/monocular/tree/master/charts
-      - name: stable-mirror
+      - name: mirror
         url: http://172.30.80.33:8080
         source: https://github.com/kubernetes/charts/tree/master/stable
       - name: chartmuseum
@@ -64,14 +64,14 @@ api:
     tillerNamespace: kube-system
     # Cache refresh interval in sec.
     cacheRefreshInterval: 3600
-  nodeSelector: 
-    node-type: master
+  nodeSelector: {}
+    # node-type: master
     # kubernetes.io/hostname: rdp-mgr1.k8s
-  tolerations: 
-  - key: "master"
-    operator: "Equal"
-    value: "yes"
-    effect: "NoSchedule"
+  tolerations: []
+  # - key: "master"
+  #   operator: "Equal"
+  #   value: "yes"
+  #   effect: "NoSchedule"
   affinity: {}
 ui:
   replicaCount: 2
@@ -128,14 +128,14 @@ prerender:
     requests:
       cpu: 100m
       memory: 128Mi
-  nodeSelector: 
-    node-type: master
+  nodeSelector: {}
+    # node-type: master
     # kubernetes.io/hostname: rdp-mgr1.k8s
-  tolerations: 
-  - key: "master"
-    operator: "Equal"
-    value: "yes"
-    effect: "NoSchedule"
+  tolerations: []
+  # - key: "master"
+  #   operator: "Equal"
+  #   value: "yes"
+  #   effect: "NoSchedule"
   affinity: {}
 
 ingress:
