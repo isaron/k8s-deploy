@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 api:
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: bitnami/monocular-api
     tag: v0.7.3
@@ -74,7 +74,7 @@ api:
   #   effect: "NoSchedule"
   affinity: {}
 ui:
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: bitnami/monocular-ui
     tag: v0.7.3
