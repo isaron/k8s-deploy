@@ -171,7 +171,7 @@ ingress:
 ## Chartmuseum Ingress annotations
 ##
   annotations:
-    kubernetes.io/ingress.class: istio
+    kubernetes.io/ingress.class: nginx
 #     kubernetes.io/tls-acme: "true"
 
 ## Chartmuseum Ingress hostnames
@@ -188,10 +188,10 @@ ingress:
 ## Chartmuseum Ingress TLS configuration
 ## Secrets must be manually created in the namespace
 ##
-  # tls:
-  # - secretName: ingress-certs
-  #   hosts:
-  #   - chartmuseum.rdp.dev
+  tls:
+  - secretName: ingress-certs
+    hosts:
+    - chartmuseum.rdp.dev
 
 # Adding secrets to tiller is not a great option, so If you want to use an existing
 # secret that contains the json file, you can use the following entries
