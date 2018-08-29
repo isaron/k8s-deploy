@@ -32,12 +32,12 @@ api:
   config:
     repos:
       # Official repositories
-      - name: stable
-        url: https://kubernetes-charts.storage.googleapis.com
-        source: https://github.com/kubernetes/charts/tree/master/stable
-      - name: incubator
-        url: https://kubernetes-charts-incubator.storage.googleapis.com
-        source: https://github.com/kubernetes/charts/tree/master/incubator
+      # - name: stable
+      #   url: https://kubernetes-charts.storage.googleapis.com
+      #   source: https://github.com/kubernetes/charts/tree/master/stable
+      # - name: incubator
+      #   url: https://kubernetes-charts-incubator.storage.googleapis.com
+      #   source: https://github.com/kubernetes/charts/tree/master/incubator
       # Add your own repository
       #- name: my-repo-name
       #  url: my-repository-url
@@ -49,8 +49,8 @@ api:
         url: http://172.30.80.33:8080
         source: https://github.com/kubernetes/charts/tree/master/stable
       - name: chartmuseum
-        url: http://chartmuseum:8080
-        source: https://gitea.rdp.dev/gitea/charts/tree/master
+        url: https://chartmuseum.rdp.dev
+        # source: https://gitea.rdp.dev/gitea/charts/tree/master
     cors:
       allowed_origins:
         - ""
