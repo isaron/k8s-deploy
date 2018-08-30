@@ -33,7 +33,7 @@ metadata:
   namespace: istio-system
   labels:
     app: servicegraph
-    chart: servicegraph-0.1.0
+    chart: servicegraph-1.0.1
     release: istio
     heritage: Tiller
   annotations:
@@ -62,7 +62,7 @@ metadata:
   namespace: istio-system
   labels:
     app: jaeger
-    chart: tracing-0.1.0
+    chart: tracing-1.0.1
     release: istio
     heritage: Tiller
   annotations:
@@ -91,7 +91,7 @@ metadata:
   namespace: istio-system
   labels:
     app: tracing
-    chart: tracing-0.1.0
+    chart: tracing-1.0.1
     release: istio
     heritage: Tiller
   annotations:

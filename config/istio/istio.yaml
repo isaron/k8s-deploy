@@ -35,7 +35,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio-galley
-    chart: galley-1.0.0
+    chart: galley-1.0.1
     release: istio
     heritage: Tiller
     istio: mixer
@@ -48,7 +48,7 @@ data:
       namespace: istio-system
       labels:
         app: istio-galley
-        chart: galley-1.0.0
+        chart: galley-1.0.1
         release: istio
         heritage: Tiller
     webhooks:
@@ -161,7 +161,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio-grafana
-    chart: grafana-0.1.0
+    chart: grafana-1.0.1
     release: istio
     heritage: Tiller
     istio: grafana
@@ -234,7 +234,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio-statsd-prom-bridge
-    chart: mixer-1.0.0
+    chart: mixer-1.0.1
     release: istio
     heritage: Tiller
     istio: mixer
@@ -250,7 +250,7 @@ metadata:
   namespace: istio-system
   labels:
     app: prometheus
-    chart: prometheus-0.1.0
+    chart: prometheus-1.0.1
     release: istio
     heritage: Tiller
 data:
@@ -491,7 +491,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio-security
-    chart: security-1.0.0
+    chart: security-1.0.1
     release: istio
     heritage: Tiller
     istio: security
@@ -540,7 +540,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio
-    chart: istio-1.0.0
+    chart: istio-1.0.1
     release: istio
     heritage: Tiller
 data:
@@ -628,7 +628,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio
-    chart: istio-1.0.0
+    chart: istio-1.0.1
     release: istio
     heritage: Tiller
     istio: sidecar-injector
@@ -638,7 +638,7 @@ data:
     template: |-
       initContainers:
       - name: istio-init
-        image: "docker.io/istio/proxy_init:1.0.0"
+        image: "docker.io/istio/proxy_init:1.0.1"
         args:
         - "-p"
         - [[ .MeshConfig.ProxyListenPort ]]
@@ -674,15 +674,14 @@ data:
           capabilities:
             add:
             - NET_ADMIN
-          privileged: true
-        restartPolicy: Always
+          restartPolicy: Always
       
       containers:
       - name: istio-proxy
         image: [[ if (isset .ObjectMeta.Annotations "sidecar.istio.io/proxyImage") -]]
         "[[ index .ObjectMeta.Annotations "sidecar.istio.io/proxyImage" ]]"
         [[ else -]]
-        docker.io/istio/proxyv2:1.0.0
+        docker.io/istio/proxyv2:1.0.1
         [[ end -]]
         args:
         - proxy
@@ -736,7 +735,6 @@ data:
           value: [[ or (index .ObjectMeta.Annotations "sidecar.istio.io/interceptionMode") .ProxyConfig.InterceptionMode.String ]]
         imagePullPolicy: IfNotPresent
         securityContext:
-          privileged: false
           readOnlyRootFilesystem: true
           [[ if eq (or (index .ObjectMeta.Annotations "sidecar.istio.io/interceptionMode") .ProxyConfig.InterceptionMode.String) "TPROXY" -]]
           capabilities:
@@ -785,7 +783,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio-galley
-    chart: galley-1.0.0
+    chart: galley-1.0.1
     heritage: Tiller
     release: istio
 
@@ -799,7 +797,7 @@ metadata:
   namespace: istio-system
   labels:
     app: egressgateway
-    chart: gateways-1.0.0
+    chart: gateways-1.0.1
     heritage: Tiller
     release: istio
 ---
@@ -810,7 +808,7 @@ metadata:
   namespace: istio-system
   labels:
     app: ingressgateway
-    chart: gateways-1.0.0
+    chart: gateways-1.0.1
     heritage: Tiller
     release: istio
 ---
@@ -824,7 +822,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio-grafana
-    chart: grafana-0.1.0
+    chart: grafana-1.0.1
     heritage: Tiller
     release: istio
 ---
@@ -834,7 +832,7 @@ metadata:
   name: istio-grafana-post-install-istio-system
   labels:
     app: istio-grafana
-    chart: grafana-0.1.0
+    chart: grafana-1.0.1
     heritage: Tiller
     release: istio
 rules:
@@ -848,7 +846,7 @@ metadata:
   name: istio-grafana-post-install-role-binding-istio-system
   labels:
     app: istio-grafana
-    chart: grafana-0.1.0
+    chart: grafana-1.0.1
     heritage: Tiller
     release: istio
 roleRef:
@@ -870,7 +868,7 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded
   labels:
     app: istio-grafana
-    chart: grafana-0.1.0
+    chart: grafana-1.0.1
     release: istio
     heritage: Tiller
 spec:
@@ -904,7 +902,7 @@ metadata:
   namespace: istio-system
   labels:
     app: ingress
-    chart: ingress-1.0.0
+    chart: ingress-1.0.1
     heritage: Tiller
     release: istio
 
@@ -917,7 +915,7 @@ metadata:
   namespace: istio-system
   labels:
     app: kiali
-    chart: kiali-0.5.1
+    chart: kiali-1.0.1
     heritage: Tiller
     release: istio
 
@@ -930,7 +928,7 @@ metadata:
   namespace: istio-system
   labels:
     app: mixer
-    chart: mixer-1.0.0
+    chart: mixer-1.0.1
     heritage: Tiller
     release: istio
 
@@ -943,7 +941,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio-pilot
-    chart: pilot-1.0.0
+    chart: pilot-1.0.1
     heritage: Tiller
     release: istio
 
@@ -977,7 +975,7 @@ metadata:
     "helm.sh/hook-weight": "1"
   labels:
     app: security
-    chart: security-1.0.0
+    chart: security-1.0.1
     heritage: Tiller
     release: istio
 ---
@@ -991,7 +989,7 @@ metadata:
     "helm.sh/hook-weight": "1"
   labels:
     app: security
-    chart: security-1.0.0
+    chart: security-1.0.1
     heritage: Tiller
     release: istio
 rules:
@@ -1009,7 +1007,7 @@ metadata:
     "helm.sh/hook-weight": "2"
   labels:
     app: security
-    chart: security-1.0.0
+    chart: security-1.0.1
     heritage: Tiller
     release: istio
 roleRef:
@@ -1032,7 +1030,7 @@ metadata:
     "helm.sh/hook-weight": "3"
   labels:
     app: security
-    chart: security-1.0.0
+    chart: security-1.0.1
     release: istio
     heritage: Tiller
 spec:
@@ -1067,7 +1065,7 @@ metadata:
   namespace: istio-system
   labels:
     app: security
-    chart: security-1.0.0
+    chart: security-1.0.1
     heritage: Tiller
     release: istio
 
@@ -1080,7 +1078,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio-sidecar-injector
-    chart: sidecarInjectorWebhook-1.0.0
+    chart: sidecarInjectorWebhook-1.0.1
     heritage: Tiller
     release: istio
 
@@ -2172,7 +2170,7 @@ metadata:
   name: istio-galley-istio-system
   labels:
     app: istio-galley
-    chart: galley-1.0.0
+    chart: galley-1.0.1
     heritage: Tiller
     release: istio
 rules:
@@ -2186,6 +2184,10 @@ rules:
   resources: ["deployments"]
   resourceNames: ["istio-galley"]
   verbs: ["get"]
+- apiGroups: ["*"]
+  resources: ["endpoints"]
+  resourceNames: ["istio-galley"]
+  verbs: ["get"]
 
 ---
 # Source: istio/charts/gateways/templates/clusterrole.yaml
@@ -2195,7 +2197,7 @@ kind: ClusterRole
 metadata:
   labels:
     app: gateways
-    chart: gateways-1.0.0
+    chart: gateways-1.0.1
     heritage: Tiller
     release: istio
   name: istio-egressgateway-istio-system
@@ -2209,7 +2211,7 @@ kind: ClusterRole
 metadata:
   labels:
     app: gateways
-    chart: gateways-1.0.0
+    chart: gateways-1.0.1
     heritage: Tiller
     release: istio
   name: istio-ingressgateway-istio-system
@@ -2226,7 +2228,7 @@ kind: ClusterRole
 metadata:
   labels:
     app: ingress
-    chart: ingress-1.0.0
+    chart: ingress-1.0.1
     heritage: Tiller
     release: istio
   name: istio-ingress-istio-system
@@ -2315,7 +2317,7 @@ metadata:
   name: istio-mixer-istio-system
   labels:
     app: mixer
-    chart: mixer-1.0.0
+    chart: mixer-1.0.1
     heritage: Tiller
     release: istio
 rules:
@@ -2346,7 +2348,7 @@ metadata:
   name: istio-pilot-istio-system
   labels:
     app: istio-pilot
-    chart: pilot-1.0.0
+    chart: pilot-1.0.1
     heritage: Tiller
     release: istio
 rules:
@@ -2408,7 +2410,7 @@ metadata:
   name: istio-citadel-istio-system
   labels:
     app: security
-    chart: security-1.0.0
+    chart: security-1.0.1
     heritage: Tiller
     release: istio
 rules:
@@ -2430,7 +2432,7 @@ metadata:
   name: istio-sidecar-injector-istio-system
   labels:
     app: istio-sidecar-injector
-    chart: sidecarInjectorWebhook-1.0.0
+    chart: sidecarInjectorWebhook-1.0.1
     heritage: Tiller
     release: istio
 rules:
@@ -2449,7 +2451,7 @@ metadata:
   name: istio-galley-admin-role-binding-istio-system
   labels:
     app: istio-galley
-    chart: galley-1.0.0
+    chart: galley-1.0.1
     heritage: Tiller
     release: istio
 roleRef:
@@ -2514,7 +2516,7 @@ metadata:
   name: istio-kiali-admin-role-binding-istio-system
   labels:
     app: kiali
-    chart: kiali-0.5.1
+    chart: kiali-1.0.1
     heritage: Tiller
     release: istio
 roleRef:
@@ -2534,7 +2536,7 @@ metadata:
   name: istio-mixer-admin-role-binding-istio-system
   labels:
     app: mixer
-    chart: mixer-1.0.0
+    chart: mixer-1.0.1
     heritage: Tiller
     release: istio
 roleRef:
@@ -2554,7 +2556,7 @@ metadata:
   name: istio-pilot-istio-system
   labels:
     app: istio-pilot
-    chart: pilot-1.0.0
+    chart: pilot-1.0.1
     heritage: Tiller
     release: istio
 roleRef:
@@ -2589,7 +2591,7 @@ metadata:
   name: istio-citadel-istio-system
   labels:
     app: security
-    chart: security-1.0.0
+    chart: security-1.0.1
     heritage: Tiller
     release: istio
 roleRef:
@@ -2609,7 +2611,7 @@ metadata:
   name: istio-sidecar-injector-admin-role-binding-istio-system
   labels:
     app: istio-sidecar-injector
-    chart: sidecarInjectorWebhook-1.0.0
+    chart: sidecarInjectorWebhook-1.0.1
     heritage: Tiller
     release: istio
 roleRef:
@@ -2649,7 +2651,7 @@ metadata:
   namespace: istio-system
   annotations:
   labels:
-    chart: gateways-1.0.0
+    chart: gateways-1.0.1
     release: istio
     heritage: Tiller
     app: istio-egressgateway
@@ -2674,7 +2676,7 @@ metadata:
   namespace: istio-system
   annotations:
   labels:
-    chart: gateways-1.0.0
+    chart: gateways-1.0.1
     release: istio
     heritage: Tiller
     app: istio-ingressgateway
@@ -2707,6 +2709,10 @@ spec:
       port: 8060
       targetPort: 8060
     -
+      name: tcp-dns-tls
+      port: 853
+      targetPort: 853
+    -
       name: http2-prometheus
       port: 15030
       targetPort: 15030
@@ -2726,7 +2732,7 @@ metadata:
   annotations:
   labels:
     app: grafana
-    chart: grafana-0.1.0
+    chart: grafana-1.0.1
     release: istio
     heritage: Tiller
 spec:
@@ -2747,7 +2753,7 @@ metadata:
   name: istio-ingress
   namespace: istio-system
   labels:
-    chart: ingress-1.0.0
+    chart: ingress-1.0.1
     release: istio
     heritage: Tiller
     istio: ingress
@@ -2793,7 +2799,7 @@ metadata:
   name: istio-policy
   namespace: istio-system
   labels:
-    chart: mixer-1.0.0
+    chart: mixer-1.0.1
     release: istio
     istio: mixer
 spec:
@@ -2814,7 +2820,7 @@ metadata:
   name: istio-telemetry
   namespace: istio-system
   labels:
-    chart: mixer-1.0.0
+    chart: mixer-1.0.1
     release: istio
     istio: mixer
 spec:
@@ -2842,7 +2848,7 @@ metadata:
   name: istio-statsd-prom-bridge
   namespace: istio-system
   labels:
-    chart: mixer-1.0.0
+    chart: mixer-1.0.1
     release: istio
     istio: statsd-prom-bridge
 spec:
@@ -2863,7 +2869,7 @@ metadata:
   name: istio-statsd-prom-bridge
   namespace: istio-system
   labels:
-    chart: mixer-1.0.0
+    chart: mixer-1.0.1
     release: istio
     istio: mixer
 spec:
@@ -2906,7 +2912,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio-pilot
-    chart: pilot-1.0.0
+    chart: pilot-1.0.1
     release: istio
     heritage: Tiller
 spec:
@@ -2973,7 +2979,7 @@ metadata:
   annotations:
   labels:
     app: servicegraph
-    chart: servicegraph-0.1.0
+    chart: servicegraph-1.0.1
     release: istio
     heritage: Tiller
 spec:
@@ -3010,7 +3016,7 @@ metadata:
   namespace: istio-system
   labels:
     app: galley
-    chart: galley-1.0.0
+    chart: galley-1.0.1
     release: istio
     heritage: Tiller
     istio: galley
@@ -3031,7 +3037,7 @@ spec:
       serviceAccountName: istio-galley-service-account
       containers:
         - name: validator
-          image: "docker.io/istio/galley:1.0.0"
+          image: "docker.io/istio/galley:1.0.1"
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 443
@@ -3043,7 +3049,7 @@ spec:
           - --caCertFile=/etc/istio/certs/root-cert.pem
           - --tlsCertFile=/etc/istio/certs/cert-chain.pem
           - --tlsKeyFile=/etc/istio/certs/key.pem
-          - --healthCheckInterval=2s
+          - --healthCheckInterval=1s
           - --healthCheckFile=/health
           - --webhook-config-file
           - /etc/istio/config/validatingwebhookconfiguration.yaml
@@ -3060,18 +3066,18 @@ spec:
                 - /usr/local/bin/galley
                 - probe
                 - --probe-path=/health
-                - --interval=4s
-            initialDelaySeconds: 4
-            periodSeconds: 4
+                - --interval=10s
+            initialDelaySeconds: 5
+            periodSeconds: 5
           readinessProbe:
             exec:
               command:
                 - /usr/local/bin/galley
                 - probe
                 - --probe-path=/health
-                - --interval=4s
-            initialDelaySeconds: 4
-            periodSeconds: 4
+                - --interval=10s
+            initialDelaySeconds: 5
+            periodSeconds: 5
           resources:
             requests:
               cpu: 10m
@@ -3126,8 +3132,7 @@ metadata:
   name: istio-egressgateway
   namespace: istio-system
   labels:
-    app: egressgateway
-    chart: gateways-1.0.0
+    chart: gateways-1.0.1
     release: istio
     heritage: Tiller
     app: istio-egressgateway
@@ -3145,8 +3150,8 @@ spec:
     spec:
       serviceAccountName: istio-egressgateway-service-account
       containers:
-        - name: egressgateway
-          image: "docker.io/istio/proxyv2:1.0.0"
+        - name: istio-proxy
+          image: "docker.io/istio/proxyv2:1.0.1"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
@@ -3175,7 +3180,7 @@ spec:
           - --controlPlaneAuthPolicy
           - NONE
           - --discoveryAddress
-          - istio-pilot.istio-system:8080
+          - istio-pilot:8080
           resources:
             requests:
               cpu: 10m
@@ -3263,8 +3268,7 @@ metadata:
   name: istio-ingressgateway
   namespace: istio-system
   labels:
-    app: ingressgateway
-    chart: gateways-1.0.0
+    chart: gateways-1.0.1
     release: istio
     heritage: Tiller
     app: istio-ingressgateway
@@ -3282,8 +3286,8 @@ spec:
     spec:
       serviceAccountName: istio-ingressgateway-service-account
       containers:
-        - name: ingressgateway
-          image: "docker.io/istio/proxyv2:1.0.0"
+        - name: istio-proxy
+          image: "docker.io/istio/proxyv2:1.0.1"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
@@ -3291,6 +3295,7 @@ spec:
             - containerPort: 31400
             - containerPort: 15011
             - containerPort: 8060
+            - containerPort: 853
             - containerPort: 15030
             - containerPort: 15031
           args:
@@ -3317,7 +3322,7 @@ spec:
           - --controlPlaneAuthPolicy
           - NONE
           - --discoveryAddress
-          - istio-pilot.istio-system:8080
+          - istio-pilot:8080
           resources:
             requests:
               cpu: 10m
@@ -3409,7 +3414,7 @@ metadata:
   namespace: istio-system
   labels:
     app: grafana
-    chart: grafana-0.1.0
+    chart: grafana-1.0.1
     release: istio
     heritage: Tiller
 spec:
@@ -3424,7 +3429,7 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: "docker.io/istio/grafana:1.0.0"
+          image: "docker.io/istio/grafana:1.0.1"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
@@ -3506,7 +3511,7 @@ metadata:
   namespace: istio-system
   labels:
     app: ingress
-    chart: ingress-1.0.0
+    chart: ingress-1.0.1
     release: istio
     heritage: Tiller
     istio: ingress
@@ -3523,7 +3528,7 @@ spec:
       serviceAccountName: istio-ingress-service-account
       containers:
         - name: ingress
-          image: "docker.io/istio/proxyv2:1.0.0"
+          image: "docker.io/istio/proxyv2:1.0.1"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
@@ -3632,7 +3637,7 @@ metadata:
   namespace: istio-system
   labels:
     app: kiali
-    chart: kiali-0.5.1
+    chart: kiali-1.0.1
     release: istio
     heritage: Tiller
 spec:
@@ -3703,7 +3708,7 @@ metadata:
   name: istio-policy
   namespace: istio-system
   labels:
-    chart: mixer-1.0.0
+    chart: mixer-1.0.1
     release: istio
     istio: mixer
 spec:
@@ -3761,7 +3766,7 @@ spec:
                 - s390x
       containers:
       - name: mixer
-        image: "docker.io/istio/mixer:1.0.0"
+        image: "docker.io/istio/mixer:1.0.1"
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9093
@@ -3786,7 +3791,7 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 5
       - name: istio-proxy
-        image: "docker.io/istio/proxyv2:1.0.0"
+        image: "docker.io/istio/proxyv2:1.0.1"
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9091
@@ -3833,7 +3838,7 @@ metadata:
   name: istio-telemetry
   namespace: istio-system
   labels:
-    chart: mixer-1.0.0
+    chart: mixer-1.0.1
     release: istio
     istio: mixer
 spec:
@@ -3858,7 +3863,7 @@ spec:
         emptyDir: {}
       containers:
       - name: mixer
-        image: "docker.io/istio/mixer:1.0.0"
+        image: "docker.io/istio/mixer:1.0.1"
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9093
@@ -3883,7 +3888,7 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 5
       - name: istio-proxy
-        image: "docker.io/istio/proxyv2:1.0.0"
+        image: "docker.io/istio/proxyv2:1.0.1"
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9091
@@ -3935,7 +3940,7 @@ metadata:
   # TODO: default template doesn't have this, which one is right ?
   labels:
     app: istio-pilot
-    chart: pilot-1.0.0
+    chart: pilot-1.0.1
     release: istio
     heritage: Tiller
     istio: pilot
@@ -3955,7 +3960,7 @@ spec:
       serviceAccountName: istio-pilot-service-account
       containers:
         - name: discovery
-          image: "docker.io/istio/pilot:1.0.0"
+          image: "docker.io/istio/pilot:1.0.1"
           imagePullPolicy: IfNotPresent
           args:
           - "discovery"
@@ -3964,9 +3969,9 @@ spec:
           - containerPort: 15010
           readinessProbe:
             httpGet:
-              path: /debug/endpointz
+              path: /ready
               port: 8080
-            initialDelaySeconds: 30
+            initialDelaySeconds: 5
             periodSeconds: 30
             timeoutSeconds: 5
           env:
@@ -3980,10 +3985,12 @@ spec:
               fieldRef:
                 apiVersion: v1
                 fieldPath: metadata.namespace
-          - name: PILOT_THROTTLE
-            value: "500"
           - name: PILOT_CACHE_SQUASH
             value: "5"
+          - name: GODEBUG
+            value: "gctrace=2"
+          - name: PILOT_PUSH_THROTTLE_COUNT
+            value: "100"
           - name: PILOT_TRACE_SAMPLING
             value: "100"
           resources:
@@ -3998,7 +4005,7 @@ spec:
             mountPath: /etc/certs
             readOnly: true
         - name: istio-proxy
-          image: "docker.io/istio/proxyv2:1.0.0"
+          image: "docker.io/istio/proxyv2:1.0.1"
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 15003
@@ -4044,6 +4051,7 @@ spec:
       - name: istio-certs
         secret:
           secretName: istio.istio-pilot-service-account
+          optional: true   
       affinity:      
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -4088,7 +4096,7 @@ metadata:
   namespace: istio-system
   labels:
     app: prometheus
-    chart: prometheus-0.1.0
+    chart: prometheus-1.0.1
     release: istio
     heritage: Tiller
 spec:
@@ -4178,7 +4186,7 @@ metadata:
   namespace: istio-system
   labels:
     app: security
-    chart: security-1.0.0
+    chart: security-1.0.1
     release: istio
     heritage: Tiller
     istio: citadel
@@ -4195,13 +4203,14 @@ spec:
       serviceAccountName: istio-citadel-service-account
       containers:
         - name: citadel
-          image: "docker.io/istio/citadel:1.0.0"
+          image: "docker.io/istio/citadel:1.0.1"
           imagePullPolicy: IfNotPresent
           args:
             - --append-dns-names=true
             - --grpc-port=8060
             - --grpc-hostname=citadel
             - --citadel-storage-namespace=istio-system
+            - --custom-dns-names=istio-pilot-service-account.istio-system:istio-pilot.istio-system,istio-ingressgateway-service-account.istio-system:istio-ingress.istio-system
             - --self-signed-ca=true
           resources:
             requests:
@@ -4250,7 +4259,7 @@ metadata:
   namespace: istio-system
   labels:
     app: servicegraph
-    chart: servicegraph-0.1.0
+    chart: servicegraph-1.0.1
     release: istio
     heritage: Tiller
 spec:
@@ -4265,7 +4274,7 @@ spec:
     spec:
       containers:
         - name: servicegraph
-          image: "docker.io/istio/servicegraph:1.0.0"
+          image: "docker.io/istio/servicegraph:1.0.1"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8088
@@ -4326,7 +4335,7 @@ metadata:
   namespace: istio-system
   labels:
     app: sidecarInjectorWebhook
-    chart: sidecarInjectorWebhook-1.0.0
+    chart: sidecarInjectorWebhook-1.0.1
     release: istio
     heritage: Tiller
     istio: sidecar-injector
@@ -4343,7 +4352,7 @@ spec:
       serviceAccountName: istio-sidecar-injector-service-account
       containers:
         - name: sidecar-injector-webhook
-          image: "docker.io/istio/sidecar_injector:1.0.0"
+          image: "docker.io/istio/sidecar_injector:1.0.1"
           imagePullPolicy: IfNotPresent
           args:
             - --caCertFile=/etc/istio/certs/root-cert.pem
@@ -4441,7 +4450,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio-tracing
-    chart: tracing-0.1.0
+    chart: tracing-1.0.1
     release: istio
     heritage: Tiller
 spec:
@@ -4633,10 +4642,10 @@ spec:
       kind: Deployment
       name: istio-egressgateway
     metrics:
-      - type: Resource
-        resource:
-          name: cpu
-          targetAverageUtilization: 60
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
 ---
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
@@ -4651,10 +4660,10 @@ spec:
       kind: Deployment
       name: istio-ingressgateway
     metrics:
-      - type: Resource
-        resource:
-          name: cpu
-          targetAverageUtilization: 60
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
 ---
 
 ---
@@ -4727,17 +4736,17 @@ kind: HorizontalPodAutoscaler
 metadata:
     name: istio-pilot
 spec:
-    maxReplicas: 1
+    maxReplicas: 5
     minReplicas: 1
     scaleTargetRef:
       apiVersion: apps/v1beta1
       kind: Deployment
       name: istio-pilot
     metrics:
-      - type: Resource
-        resource:
-          name: cpu
-          targetAverageUtilization: 55
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
 ---
 
 ---
@@ -4756,7 +4765,7 @@ items:
     labels:
       app: jaeger
       jaeger-infra: jaeger-service
-      chart: tracing-0.1.0
+      chart: tracing-1.0.1
       release: istio
       heritage: Tiller
   spec:
@@ -4775,7 +4784,7 @@ items:
     labels:
       app: jaeger
       jaeger-infra: collector-service
-      chart: tracing-0.1.0
+      chart: tracing-1.0.1
       release: istio
       heritage: Tiller
   spec:
@@ -4799,7 +4808,7 @@ items:
     labels:
       app: jaeger
       jaeger-infra: agent-service
-      chart: tracing-0.1.0
+      chart: tracing-1.0.1
       release: istio
       heritage: Tiller
   spec:
@@ -4834,7 +4843,7 @@ items:
     namespace: istio-system
     labels:
       app: jaeger
-      chart: tracing-0.1.0
+      chart: tracing-1.0.1
       release: istio
       heritage: Tiller
   spec:
@@ -4854,7 +4863,7 @@ items:
     annotations:
     labels:
       app: jaeger
-      chart: tracing-0.1.0
+      chart: tracing-1.0.1
       release: istio
       heritage: Tiller
   spec:
@@ -4875,7 +4884,7 @@ metadata:
   namespace: istio-system
   labels:
     app: istio-sidecar-injector
-    chart: sidecarInjectorWebhook-1.0.0
+    chart: sidecarInjectorWebhook-1.0.1
     release: istio
     heritage: Tiller
 webhooks:
@@ -5006,6 +5015,8 @@ spec:
       valueType: DURATION
     connection.mtls:
       valueType: BOOL
+    connection.requested_server_name:
+      valueType: STRING
     context.protocol:
       valueType: STRING
     context.timestamp:
@@ -5149,6 +5160,7 @@ spec:
     clientTraceId: request.headers["x-client-trace-id"] | ""
     latency: response.duration | "0ms"
     connection_security_policy: conditional((context.reporter.kind | "inbound") == "outbound", "unknown", conditional(connection.mtls | false, "mutual_tls", "none"))
+    requestedServerName: connection.requested_server_name | ""
     userAgent: request.useragent | ""
     responseTimestamp: response.time
     receivedBytes: request.total_size | 0
@@ -5187,6 +5199,7 @@ spec:
     protocol: context.protocol | "tcp"
     connectionDuration: connection.duration | "0ms"
     connection_security_policy: conditional((context.reporter.kind | "inbound") == "outbound", "unknown", conditional(connection.mtls | false, "mutual_tls", "none"))
+    requestedServerName: connection.requested_server_name | ""
     receivedBytes: connection.received.bytes | 0
     sentBytes: connection.sent.bytes | 0
     totalReceivedBytes: connection.received.bytes_total | 0
