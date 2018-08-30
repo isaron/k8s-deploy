@@ -21,4 +21,5 @@ spec:
   - nexus.rdp.dev
   - harbor.rdp.dev
   - containers.rdp.dev
+  - kubeapps.rdp.dev
   
