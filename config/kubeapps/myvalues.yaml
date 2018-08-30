@@ -28,7 +28,7 @@ apprepository:
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
   - name: chartmuseum
-    url: http://chartmuseum.default.svc.cluster.local:8080
+    url: https://chartmuseum.rdp.dev
   resources: {}
     # limits:
     #  cpu: 100m
