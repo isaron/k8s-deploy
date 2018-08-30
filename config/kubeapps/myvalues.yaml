@@ -17,16 +17,18 @@ apprepository:
     repository: lachlanevenson/k8s-kubectl
     tag: latest
   initialRepos:
-  - name: stable
-    url: https://kubernetes-charts.storage.googleapis.com
-  - name: incubator
-    url: https://kubernetes-charts-incubator.storage.googleapis.com
-  - name: svc-cat
-    url: https://svc-catalog-charts.storage.googleapis.com
+  # - name: stable
+  #   url: https://kubernetes-charts.storage.googleapis.com
+  # - name: incubator
+  #   url: https://kubernetes-charts-incubator.storage.googleapis.com
+  # - name: svc-cat
+  #   url: https://svc-catalog-charts.storage.googleapis.com
+  - name: mirror
+    url: http://172.30.80.33:8080
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
   - name: chartmuseum
-    url: https://chartmuseum.rdp.dev
+    url: http://chartmuseum.default.svc.cluster.local:8080
   resources: {}
     # limits:
     #  cpu: 100m
