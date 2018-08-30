@@ -49,7 +49,7 @@ api:
         url: http://172.30.80.33:8080
         source: https://github.com/kubernetes/charts/tree/master/stable
       - name: chartmuseum
-        url: https://chartmuseum.rdp.dev
+        url: http://chartmuseum.default.svc.cluster.local:8080
         source: https://gitea.rdp.dev/gitea/charts/tree/master
     cors:
       allowed_origins:
