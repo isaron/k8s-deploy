@@ -12,6 +12,7 @@ data:
   2222: default/{{ template "gitea.fullname" . }}:ssh
   app.ini: |-
     APP_NAME = {{ .Values.service.gitea.appName }}
+    RUN_USER = {{ .Values.service.gitea.runUser }}
     RUN_MODE = {{ .Values.service.gitea.runMode }}
 
     [repository.upload]

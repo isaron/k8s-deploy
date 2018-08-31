@@ -21,7 +21,7 @@ service:
   ## HTTP listen port.
   ## ref: https://docs.gitea.io/en-us/config-cheat-sheet
   ##
-  httpPort: 3000
+  httpPort: 80
 
   ## SSH listen port.
   ## ref: https://docs.gitea.io/en-us/config-cheat-sheet
@@ -40,11 +40,15 @@ service:
 
     ## Application name, can be your company or team name.
     ##
-    appName: 'Gitea'
+    appName: Gitea
+
+    ## Running Gitea with which, user git recommonded.
+    ##
+    runUser: git
 
     ## Either "dev", "prod" or "test".
     ##
-    runMode: 'prod'
+    runMode: prod
 
     ## Force every new repository to be private.
     ##
