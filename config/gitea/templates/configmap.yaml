@@ -15,20 +15,22 @@ data:
     RUN_USER = {{ .Values.service.gitea.runUser }}
     RUN_MODE = {{ .Values.service.gitea.runMode }}
 
+    [repository]
+    FORCE_PRIVATE = {{ .Values.service.gitea.forcePrivate }}
+    DISABLE_HTTP_GIT = {{ .Values.service.gitea.disableHttpGit }}
+
     [repository.upload]
     ENABLED = {{ .Values.service.gitea.repositoryUploadEnabled }}
     ALLOWED_TYPES = {{ .Values.service.gitea.repositoryUploadAllowedTypes }}
-    MAX_FILE_SIZE = {{ .Values.service.gitea.repositoryUploadMaxFileSize }}
+    FILE_MAX_SIZE = {{ .Values.service.gitea.repositoryUploadMaxFileSize }}
     MAX_FILES = {{ .Values.service.gitea.repositoryUploadMaxFiles }}
 
     [server]
-    PROTOCOL = http
+    PROTOCOL = {{ .Values.service.gitea.serverProtocol }}
     DOMAIN = {{ .Values.service.gitea.serverDomain }}
     ROOT_URL = {{ .Values.service.gitea.serverRootUrl }}
     LANDING_PAGE = {{ .Values.service.gitea.serverLandingPage }}
-    SSH_DOMAIN = {{ default .Values.service.gitea.serverDomain .Values.service.sshDomain }}
     SSH_PORT = {{ .Values.service.sshPort }}
-    SSH_LISTEN_PORT = {{ .Values.service.sshPort }}
 
     [service]
     ENABLE_CAPTCHA = {{ .Values.service.gitea.serviceEnableCaptcha }}
@@ -48,6 +50,9 @@ data:
     USER = {{ template "gitea.database.user" . }}
     PASSWD = {{ template "gitea.database.password" . }}
     SSL_MODE = {{ .Values.service.gitea.databaseSSLMode }}
+
+    [admin]
+    DISABLE_REGULAR_ORG_CREATION = {{ .Values.service.gitea.disableRegularOrgCreation }}
 
     [security]
     INSTALL_LOCK = true
@@ -76,4 +81,3 @@ data:
     [other]
     SHOW_FOOTER_BRANDING = {{ .Values.service.gitea.otherShowFooterBranding }}
     SHOW_FOOTER_VERSION = {{ .Values.service.gitea.otherShowFooterVersion }}
-    SHOW_FOOTER_TEMPLATE_LOAD_TIME = {{ .Values.service.gitea.otherShowFooterTemplateLoadTime }}

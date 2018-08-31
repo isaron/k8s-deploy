@@ -28,11 +28,6 @@ service:
   ##
   sshPort: 22
 
-  ## SSH_DOMAIN - Domain name to be exposed in SSH clone URL.
-  ## ref: https://docs.gitea.io/en-us/config-cheat-sheet
-  ##
-  sshDomain: gitea.rdp.dev
-
   ## Gitea configuration values
   ## ref: https://docs.gitea.io/en-us/config-cheat-sheet
   ##
@@ -110,6 +105,10 @@ service:
     ##
     cacheHost:
 
+    ## The protocol the server listens on. One of 'http', 'https', 'unix' or 'fcgi'.
+    ##
+    serverProtocol: http
+
     ## Enable this to use captcha validation for registration.
     ##
     serverDomain: gitea.rdp.dev
@@ -180,9 +179,8 @@ service:
     ##
     otherShowFooterVersion: true
 
-    ## Show time of template execution in the footer
-    ##
-    otherShowFooterTemplateLoadTime: true
+    # Disallow regular (non-admin) users from creating organizations.
+    disableRegularOrgCreation = false
 
     ## Change this value for your installation.
     ##
