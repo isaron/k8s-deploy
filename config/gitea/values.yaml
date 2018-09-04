@@ -184,7 +184,7 @@ service:
 
     ## Change this value for your installation.
     ##
-    securitySecretKey: "gitea"
+    securitySecretKey: "Z2l0ZWE="
 
     ## Number of repositories that are showed in one explore page
     ##
