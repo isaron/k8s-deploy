@@ -180,7 +180,7 @@ service:
     otherShowFooterVersion: true
 
     # Disallow regular (non-admin) users from creating organizations.
-    disableRegularOrgCreation = false
+    disableRegularOrgCreation: false
 
     ## Change this value for your installation.
     ##
