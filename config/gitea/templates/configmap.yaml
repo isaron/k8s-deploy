@@ -44,7 +44,7 @@ data:
     ENABLE_REVERSE_PROXY_AUTO_REGISTRATION = false
 
     [database]
-    DB_TYPE = {{ .Values.service.gitea.databaseType }}
+    DB_TYPE = {{ .Values.service.gitea.databaseType | quote }}
     HOST = {{ template "gitea.database.host" . }}
     NAME = {{ template "gitea.database.name" . }}
     USER = {{ template "gitea.database.user" . }}
@@ -56,7 +56,7 @@ data:
 
     [security]
     INSTALL_LOCK = true
-    SECRET_KEY = {{ default "" .Values.service.gitea.securitySecretKey | base64 -d -i }}
+    SECRET_KEY = {{ default "" .Values.service.gitea.securitySecretKey | b64enc | quote }}
 
     [ui]
     EXPLORE_PAGING_NUM = {{ .Values.service.gitea.uiExplorePagingNum }}
