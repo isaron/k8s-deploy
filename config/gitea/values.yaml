@@ -252,7 +252,7 @@ persistence:
   ##
   ## If you are using minikube, use "standard" as the name, see:
   ## https://github.com/kubernetes/minikube/issues/2256
-  # storageClass: "-"
+  storageClass: "managed-nfs-storage"
 
   ## Persistent Volume Access Mode.
   ##
