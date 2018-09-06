@@ -2,13 +2,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: nfs-client-provisioner
-  namespace: env
 ---
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   name: nfs-client-provisioner
-  namespace: env
 spec:
   replicas: 1
   strategy:
