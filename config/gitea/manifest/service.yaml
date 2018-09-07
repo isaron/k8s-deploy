@@ -13,4 +13,4 @@ spec:
       targetPort: 3000
   selector:
     name: gitea
-  type: ClusterIP
+  type: NodePort
