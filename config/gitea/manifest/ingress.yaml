@@ -17,7 +17,8 @@ spec:
   - host: gitea.rdp.dev
     http:
       paths:
-      - backend:
+      - path: /
+        backend:
           serviceName: gitea
           servicePort: 80
       - backend:
