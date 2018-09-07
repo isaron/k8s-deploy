@@ -107,7 +107,7 @@ master:
     storageClass: "managed-nfs-storage"
     ## Persistent Volume Claim annotations
     ##
-    annotations:
+    annotations: {}
     ## Persistent Volume Access Mode
     ##
     accessModes:
