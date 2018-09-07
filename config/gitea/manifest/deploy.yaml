@@ -34,7 +34,27 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
-          protocol: TCP
+        - containerPort: 22
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          # This pod takes a very long time to start up. Be cautious when
+          # lowering this value to avoid Pod death during startup.
+          initialDelaySeconds: 200
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 30
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
         volumeMounts:
         - name: gitea
           mountPath: "/data"
