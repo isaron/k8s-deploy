@@ -14,4 +14,3 @@ spec:
   selector:
     name: gitea
   type: ClusterIP
-  sessionAffinity: ClientIP
