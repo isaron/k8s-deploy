@@ -15,4 +15,4 @@ spec:
       targetPort: 22
   selector:
     name: gitea
-  type: NodePort
+  type: ClusterIP
