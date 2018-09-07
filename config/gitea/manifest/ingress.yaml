@@ -9,10 +9,10 @@ metadata:
     # certmanager.k8s.io/cluster-issuer: ClusterIssuer
     # nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
-  # tls:
-  # - hosts:
-  #   - gitea.rdp.dev
-  #   secretName: ingress-certs
+  tls:
+  - hosts:
+    - gitea.rdp.dev
+    secretName: ingress-certs
   rules:
   - host: gitea.rdp.dev
     http:
