@@ -8,7 +8,7 @@ metadata:
 spec:
   ports:
     - name: gitea
-      port: 80
+      port: 443
       targetPort: 3000
     - name: gitea-ssh
       port: 22

@@ -21,7 +21,7 @@ service:
   ## HTTP listen port.
   ## ref: https://docs.gitea.io/en-us/config-cheat-sheet
   ##
-  httpPort: 80
+  httpPort: 443
 
   ## SSH listen port.
   ## ref: https://docs.gitea.io/en-us/config-cheat-sheet
@@ -107,7 +107,7 @@ service:
 
     ## The protocol the server listens on. One of 'http', 'https', 'unix' or 'fcgi'.
     ##
-    serverProtocol: http
+    serverProtocol: https
 
     ## Enable this to use captcha validation for registration.
     ##
