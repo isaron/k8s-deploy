@@ -21,7 +21,7 @@ service:
   ## HTTP listen port.
   ## ref: https://docs.gitea.io/en-us/config-cheat-sheet
   ##
-  httpPort: 443
+  httpPort: 80
 
   ## SSH listen port.
   ## ref: https://docs.gitea.io/en-us/config-cheat-sheet
