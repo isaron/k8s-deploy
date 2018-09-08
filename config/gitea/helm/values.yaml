@@ -107,7 +107,7 @@ service:
 
     ## The protocol the server listens on. One of 'http', 'https', 'unix' or 'fcgi'.
     ##
-    serverProtocol: https
+    serverProtocol: http
 
     ## Enable this to use captcha validation for registration.
     ##
