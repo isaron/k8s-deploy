@@ -29,7 +29,7 @@ do
     let j+=1
 done
 
-docker rmi coredns/coredns:1.1.2
+docker rmi coredns/coredns:1.1.3
 
 jximages=(
     heapster:v1.3.0

@@ -42,7 +42,7 @@ kube::set_env()
 
     # echo "up route del default gw 192.168.52.2" >> /etc/network/interfaces
     # echo "up route add default gw 172.30.80.88" >> /etc/network/interfaces
-    
+
     ln -fs /lib/systemd/system/rc-local.service /etc/systemd/system/rc-local.service
 
 cat > /etc/systemd/system/rc-local.service <<EOF
@@ -241,7 +241,7 @@ kube::load_images()
         pause_3.1
         kubernetes-dashboard-amd64_v1.10.0
         cluster-autoscaler_v1.3.1
-        coredns_1.1.3
+        coredns_1.2.2
 
         heapster_v1.3.0
         heapster-amd64_v1.5.4

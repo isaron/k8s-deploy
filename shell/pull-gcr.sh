@@ -51,9 +51,9 @@ docker tag arborhuang/tiller:v2.10.0 gcr.io/kubernetes-helm/tiller:v2.10.0
 docker save gcr.io/kubernetes-helm/tiller:v2.10.0 -o tiller:v2.10.0.tar
 docker rmi arborhuang/tiller:v2.10.0
 
-docker pull coredns/coredns:1.1.3
-docker tag coredns/coredns:1.1.3 k8s.gcr.io/coredns:1.1.3
-docker save k8s.gcr.io/coredns:1.1.3 -o coredns:1.1.3.tar
+docker pull coredns/coredns:1.2.2
+docker tag coredns/coredns:1.2.2 k8s.gcr.io/coredns:1.2.2
+docker save k8s.gcr.io/coredns:1.2.2 -o coredns:1.2.2.tar
 
 # conduitimages=(
 #     controller:v0.5.0
