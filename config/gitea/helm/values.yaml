@@ -5,7 +5,7 @@
 ## Kubernetes configuration
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer
 ##
-serviceType: LoadBalancer
+serviceType: ClusterIP
 
 replicaCount: 1
 
@@ -269,7 +269,7 @@ postgresql:
 
   ### Install PostgreSQL dependency
   ##
-  install: false
+  install: true
 
   ### PostgreSQL User to create.
   ##
