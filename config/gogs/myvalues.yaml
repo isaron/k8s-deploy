@@ -41,7 +41,7 @@ service:
 
     ## Application name, can be your company or team name.
     ##
-    appName: 'Gogs'
+    appName: 'Gogs - Git Repo for RDP Dev (SSII)'
 
     ## Either "dev", "prod" or "test".
     ##
