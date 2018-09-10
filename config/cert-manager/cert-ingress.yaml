@@ -22,4 +22,5 @@ spec:
   - harbor.rdp.dev
   - containers.rdp.dev
   - kubeapps.rdp.dev
+  - gogs.rdp.dev
   
