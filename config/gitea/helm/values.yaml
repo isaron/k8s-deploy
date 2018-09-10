@@ -269,7 +269,7 @@ postgresql:
 
   ### Install PostgreSQL dependency
   ##
-  install: true
+  install: false
 
   ### PostgreSQL User to create.
   ##
