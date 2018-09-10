@@ -20,6 +20,3 @@ spec:
       - backend:
           serviceName: gitea
           servicePort: 3000
-      - backend:
-          serviceName: gitea-ssh
-          servicePort: 22
