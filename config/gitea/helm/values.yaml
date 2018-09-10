@@ -5,7 +5,7 @@
 ## Kubernetes configuration
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer
 ##
-serviceType: ClusterIP
+serviceType: LoadBalancer
 
 replicaCount: 1
 
@@ -115,7 +115,7 @@ service:
 
     ## Full public URL of Gitea server.
     ##
-    serverRootUrl: https://gitea.rdp.dev/
+    serverRootUrl: http://gitea.rdp.dev/
 
     ## Landing page for non-logged users, can be "home" or "explore"
     ##
@@ -205,7 +205,7 @@ service:
   ingress:
     ## Enable Ingress.
     ##
-    enabled: true
+    enabled: false
 
     ## Annotations.
     ##
