@@ -17,4 +17,4 @@ spec:
       targetPort: 22
   selector:
     name: gitea
-  type: ClusterIP
+  type: LoadBalancer
