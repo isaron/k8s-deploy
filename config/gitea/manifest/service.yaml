@@ -9,7 +9,7 @@ spec:
   ports:
     - name: gitea
       protocol: TCP
-      port: 3000
+      port: 80
       targetPort: 3000
     - name: gitea-ssh
       protocol: TCP
