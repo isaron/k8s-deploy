@@ -8,9 +8,11 @@ metadata:
 spec:
   ports:
     - name: gitea
-      port: 3000
+      protocol: TCP
+      port: 80
       targetPort: 3000
     - name: gitea-ssh
+      protocol: TCP
       port: 22
       targetPort: 22
   selector:
