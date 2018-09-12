@@ -23,7 +23,7 @@ Components to be deployed:
 - metallb
 - cert-manager
 - istio
-  - v1.0.1
+  - v1.0.2
 - conduit
   - v0.5.0
 - helm + draft
