@@ -789,6 +789,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: istio-grafana-pvc
+  namespace: istio-system
   labels:
     app: grafana
     chart: grafana-1.0.1
