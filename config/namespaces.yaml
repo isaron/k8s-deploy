@@ -7,22 +7,22 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: dev
+  name: develop
 ---
 
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: test
+  name: testing
 ---
 
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: pre
+  name: staging
 ---
 
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: prod
+  name: production
