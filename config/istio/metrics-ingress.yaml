@@ -29,7 +29,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: servicegraph
+  name: istio-servicegraph
   namespace: istio-system
   labels:
     app: servicegraph
@@ -87,7 +87,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: tracing
+  name: istio-tracing
   namespace: istio-system
   labels:
     app: tracing
