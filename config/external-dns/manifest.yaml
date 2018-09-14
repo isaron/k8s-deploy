@@ -55,8 +55,8 @@ spec:
         - --source=service
         - --source=ingress
         - --provider=pdns
-        - --pdns-server={{ pdns-api-url }}
-        - --pdns-api-key={{ pdns-http-api-key }}
-        - --txt-owner-id={{ owner-id-for-this-external-dns }}
+        - --pdns-server=http://172.30.80.89:8081
+        - --pdns-api-key=pdnsapi
+        - --txt-owner-id=external-dns
         - --log-level=debug
         - --interval=30s
