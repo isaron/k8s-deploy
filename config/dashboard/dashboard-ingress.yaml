@@ -8,12 +8,12 @@ metadata:
     # certmanager.k8s.io/cluster-issuer: ClusterIssuer
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/secure-backends: "true"
-    ingress.kubernetes.io/ssl-redirect: "false"
+    # ingress.kubernetes.io/ssl-redirect: "false"
 spec:
-  # tls:
-  # # - hosts:
-  # #   - dashboard.rdp.dev
-  # #   secretName: dashboard-ingress-secrets
+  tls:
+  - hosts:
+    - dashboard.rdp.dev
+    secretName: dashboard-ingress-secrets
   rules:
   - host: dashboard.rdp.dev
     http:
