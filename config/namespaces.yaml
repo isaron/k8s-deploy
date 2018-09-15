@@ -19,4 +19,4 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: prod
+  name: production
