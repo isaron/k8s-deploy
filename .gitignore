@@ -6,3 +6,4 @@ certs/
 bin/
 mirror/
 nohup.out
+kube/
