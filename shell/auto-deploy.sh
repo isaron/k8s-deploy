@@ -1271,6 +1271,9 @@ main()
     "c" | "config_node" )
         kube::config_node
         ;;
+    "l" | "load_images" )
+        kube::load_images
+        ;;
     "g" | "get_env" )
         kube::get_env $@
         ;;
@@ -1283,6 +1286,7 @@ main()
         echo "       $0 down            to tear all down ,inlude all data! so becarefull "
         echo "       $0 env             to setup environment "
         echo "       $0 config_node     to config nodes "
+        echo "       $0 load_images     to load docker images "
         echo "       $0 get_env         to get environment "
         echo "       unkown command $0 $@ "
         ;;
