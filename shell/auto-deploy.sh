@@ -1224,6 +1224,9 @@ kube::node_up()
 
 kube::tear_down()
 {
+    kubectl drain $(hostname) --delete-local-data --force --ignore-daemonsets
+    kubectl delete node $(hostname)
+    kubeadm reset -f
     systemctl daemon-reload && systemctl stop kubelet.service
      #etcd.service
     docker ps -aq|xargs -I '{}' docker stop {}
@@ -1231,7 +1234,7 @@ kube::tear_down()
     df |grep /var/lib/kubelet|awk '{ print $6 }'|xargs -I '{}' umount {}
     rm -rf /var/lib/kubelet && rm -rf /etc/kubernetes/ && rm -rf /var/lib/etcd
      #&& rm -rf /etc/systemd/system/kubelet.service.d
-    kubeadm reset -f
+    # kubeadm reset -f
     apt purge -y kubectl kubeadm kubelet kubernetes-cni
     # if [ ${KUBE_HA} == true ]
     # then
