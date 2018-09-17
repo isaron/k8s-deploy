@@ -1244,7 +1244,7 @@ kube::tear_down()
     #   rm -rf /etc/keepalived/keepalived.conf
     #   ip addr del ${KUBE_VIP} dev ${VIP_INTERFACE}
     # fi
-    rm -rf /var/lib/cni
+    rm -rf /var/lib/cni && rm -rf /etc/cni
     rm -rf ~/.kube
     # ip link del cni0
     service networking restart
