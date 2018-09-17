@@ -35,7 +35,7 @@ metadata:
     task: monitoring
     # For use as a Cluster add-on (https://github.com/kubernetes/kubernetes/tree/master/cluster/addons)
     # If you are NOT using this as an addon, you should comment out this line.
-    # kubernetes.io/cluster-service: 'true'
+    kubernetes.io/cluster-service: 'true'
     kubernetes.io/name: Heapster
   name: heapster
   namespace: kube-system
@@ -45,3 +45,29 @@ spec:
     targetPort: 8082
   selector:
     k8s-app: heapster
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: heapster
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:heapster
+subjects:
+- kind: ServiceAccount
+  name: heapster
+  namespace: kube-system
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: heapster-kubelet-api
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:kubelet-api-admin
+subjects:
+- kind: ServiceAccount
+  name: heapster
+  namespace: kube-system
