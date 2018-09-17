@@ -1226,8 +1226,8 @@ kube::node_up()
 
 kube::tear_down()
 {
-    kubectl drain $(hostname) --delete-local-data --force --ignore-daemonsets
-    kubectl delete node $(hostname)
+    # kubectl drain $(hostname) --delete-local-data --force --ignore-daemonsets
+    # kubectl delete node $(hostname)
     # kubeadm reset
     systemctl daemon-reload && systemctl stop kubelet.service
      #etcd.service
