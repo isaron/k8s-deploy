@@ -285,7 +285,7 @@ kube::install_bin()
     which kubeadm > /dev/null 2>&1
     i=$?
     set -e
-    if [ $i -e 0 ]; then
+    if [ $i -eq 0 ]; then
         apt purge kube* -y
     fi
     if [ $i -ne 0 ]; then
