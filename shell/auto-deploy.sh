@@ -302,7 +302,7 @@ kube::install_bin()
         # apt install -y kubelet kubeadm kubectl kubernetes-cni
         # apt install -y kubelet kubeadm kubectl
 
-        systemctl enable kubelet.service && systemctl start kubelet.service && rm -rf /etc/kubernetes
+        systemctl enable kubelet.service && rm -rf /etc/kubernetes
     fi
     # kube::config_cni
 }
