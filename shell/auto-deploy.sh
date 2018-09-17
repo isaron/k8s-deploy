@@ -1226,7 +1226,7 @@ kube::tear_down()
 {
     kubectl drain $(hostname) --delete-local-data --force --ignore-daemonsets
     kubectl delete node $(hostname)
-    kubeadm reset -f
+    kubeadm reset
     systemctl daemon-reload && systemctl stop kubelet.service
      #etcd.service
     docker ps -aq|xargs -I '{}' docker stop {}
