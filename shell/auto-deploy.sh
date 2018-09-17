@@ -942,7 +942,7 @@ kube::config_node()
 kube::set_label()
 {
   until kubectl get no | grep `hostname`; do sleep 1; done
-  kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=master
+#   kubectl label node `hostname` kubeadm.beta.kubernetes.io/role=master
 #   kubectl label node `hostname` node-role.kubernetes.io/master=""
   kubectl label node `hostname` node-type=master
   kubectl label node `hostname` node-role=mgr
