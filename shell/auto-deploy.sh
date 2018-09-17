@@ -1235,7 +1235,7 @@ kube::tear_down()
     rm -rf /var/lib/kubelet && rm -rf /etc/kubernetes/ && rm -rf /var/lib/etcd
      #&& rm -rf /etc/systemd/system/kubelet.service.d
     # kubeadm reset -f
-    apt purge -y kubectl kubeadm kubelet kubernetes-cni
+    apt purge -y kubectl kubeadm kubelet kubernetes-cni cri-tools
     # if [ ${KUBE_HA} == true ]
     # then
     #   apt purge -y keepalived
