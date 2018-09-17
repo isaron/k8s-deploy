@@ -6,7 +6,7 @@ dockerimages=(
     kube-controller-manager-amd64:v1.11.3
     kube-scheduler-amd64:v1.11.3
     kube-proxy-amd64:v1.11.3
-    # etcd-amd64:3.2.18
+    etcd-amd64:3.2.18
     pause-amd64:3.1
     coredns:1.1.3
     # k8s-dns-sidecar-amd64:1.14.10

@@ -239,6 +239,7 @@ kube::load_images()
         kube-proxy-amd64_v1.11.3
         pause-amd64_3.1
         pause_3.1
+        etcd-amd64_3.2.18
         kubernetes-dashboard-amd64_v1.10.0
         cluster-autoscaler_v1.3.1
         coredns_1.2.2
