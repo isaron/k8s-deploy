@@ -14,6 +14,7 @@ k8simages=(
     kubernetes-dashboard-amd64:v1.10.0
     cluster-autoscaler:v1.3.1
     defaultbackend:1.4
+    coredns:1.1.3
 )
 
 j=1

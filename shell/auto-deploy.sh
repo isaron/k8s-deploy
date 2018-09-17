@@ -242,6 +242,7 @@ kube::load_images()
         kubernetes-dashboard-amd64_v1.10.0
         cluster-autoscaler_v1.3.1
         coredns_1.2.2
+        coredns_1.1.3
 
         heapster_v1.3.0
         heapster-amd64_v1.5.4
