@@ -302,7 +302,7 @@ kube::install_bin()
 
         systemctl enable kubelet.service && systemctl start kubelet.service && rm -rf /etc/kubernetes
     fi
-    # kube::config_cni
+    kube::config_cni
 }
 
 kube::config_cni()
@@ -317,7 +317,7 @@ cat >/etc/cni/net.d/10-mynet.conf <<EOF
     "isGateway": true,
     "ipMasq": true,
     "ipam": {
-        "type": "host-local",
+        "type": "host-gw",
         "subnet": "10.244.0.0/16",
         "routes": [
             {"dst": "0.0.0.0/0"}
