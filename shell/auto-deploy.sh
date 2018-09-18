@@ -1001,7 +1001,7 @@ apiServerCertSANs:
 - ${MASTERS[2]}
 - "127.0.0.1"
 api:
-    controlPlaneEndpoint: ${MASTER_NODES[0]}:6443
+    controlPlaneEndpoint: ${KUBE_VIP}:6443
 etcd:
     external:
         endpoints:
@@ -1114,6 +1114,8 @@ kube::etcd_up()
 
     kube::install_etcd
 
+    [ ${KUBE_HA} == true ] && kube::config_loadbalancer
+
 }
 
 kube::master_up()
@@ -1130,7 +1132,7 @@ kube::master_up()
 
     # kube::install_etcd
 
-    [ ${KUBE_HA} == true ] && kube::config_loadbalancer $@
+    # [ ${KUBE_HA} == true ] && kube::config_loadbalancer $@
 
     # 存储master_ip，master02和master03需要用这个信息来copy配置
     #kube::save_master_ip
