@@ -514,6 +514,7 @@ exit 0
 EOF
 
     chmod 755 /etc/rc.local
+    systemctl daemon-reload && systemctl start rc-local.service
 
 cat >> /etc/sysctl.conf <<EOF
 net.ipv4.conf.all.arp_ignore = 1
@@ -1114,7 +1115,7 @@ kube::etcd_up()
 
     kube::install_etcd
 
-    [ ${KUBE_HA} == true ] && kube::config_loadbalancer
+    # [ ${KUBE_HA} == true ] && kube::config_loadbalancer
 
 }
 
@@ -1132,7 +1133,7 @@ kube::master_up()
 
     # kube::install_etcd
 
-    # [ ${KUBE_HA} == true ] && kube::config_loadbalancer $@
+    [ ${KUBE_HA} == true ] && kube::config_loadbalancer $@
 
     # 存储master_ip，master02和master03需要用这个信息来copy配置
     #kube::save_master_ip
