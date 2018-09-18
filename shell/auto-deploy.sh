@@ -1001,7 +1001,6 @@ apiServerCertSANs:
 - ${MASTERS[2]}
 - "127.0.0.1"
 api:
-    advertiseAddress: ${LOCAL_IP}
     controlPlaneEndpoint: ${KUBE_VIP}:6443
 apiServerExtraArgs:
     endpoint-reconciler-type: lease
