@@ -830,7 +830,7 @@ ExecStart=/usr/local/bin/etcd --name ${PEER_NAME} \
 WantedBy=multi-user.target
 EOF
 
-    systemctl daemon-reload && systemctl start etcd &
+    systemctl daemon-reload && systemctl start etcd && systemctl enable etcd
     # systemctl status etcd
     # sed -i s/"--initial-cluster-state new "/"--initial-cluster-state existing "/g /etc/systemd/system/etcd.service
     # systemctl daemon-reload && systemctl restart etcd
