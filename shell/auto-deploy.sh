@@ -1002,8 +1002,6 @@ apiServerCertSANs:
 - "127.0.0.1"
 api:
     controlPlaneEndpoint: ${KUBE_VIP}:6443
-apiServerExtraArgs:
-    endpoint-reconciler-type: lease
 etcd:
     external:
         endpoints:
@@ -1021,7 +1019,6 @@ networking:
 kubeProxy:
     config:
         mode: ipvs
-        # mode: iptables
 EOF
 
     # systemctl daemon-reload && systemctl start kubelet.service
@@ -1054,11 +1051,7 @@ apiServerCertSANs:
 - ${MASTERS[2]}
 - "127.0.0.1"
 api:
-    advertiseAddress: ${LOCAL_IP}
     controlPlaneEndpoint: ${KUBE_VIP}:6443
-apiServerExtraArgs:
-    endpoint-reconciler-type: lease
-    disable-admission-plugins: AlwaysPullImages
 etcd:
     external:
         endpoints:
@@ -1076,7 +1069,6 @@ networking:
 kubeProxy:
     config:
         mode: ipvs
-        # mode: iptables
 EOF
 
     # 配置kubelet
