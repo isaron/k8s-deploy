@@ -976,7 +976,7 @@ etcd:
   certFile: /etc/kubernetes/pki/etcd/client.pem
   keyFile: /etc/kubernetes/pki/etcd/client-key.pem
 networking:
-  podSubnet: 10.244.0.0/16
+  podSubnet: "10.244.0.0/16"
 apiServerCertSANs:
 - ${KUBE_VIP}
 kubernetesVersion: ${KUBE_VERSION}
@@ -1015,7 +1015,7 @@ controllerManagerExtraArgs:
     node-monitor-grace-period: 10s
     pod-eviction-timeout: 10s
 networking:
-    podSubnet: 10.244.0.0/16
+    podSubnet: "10.244.0.0/16"
 kubeProxy:
     config:
         mode: ipvs
