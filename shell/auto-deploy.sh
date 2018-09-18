@@ -993,13 +993,6 @@ kind: MasterConfiguration
 kubernetesVersion: ${KUBE_VERSION}
 apiServerCertSANs:
 - ${KUBE_VIP}
-- ${MASTER_NODES[0]}
-- ${MASTER_NODES[1]}
-- ${MASTER_NODES[2]}
-- ${MASTERS[0]}
-- ${MASTERS[1]}
-- ${MASTERS[2]}
-- "127.0.0.1"
 api:
     controlPlaneEndpoint: ${KUBE_VIP}:6443
 etcd:
