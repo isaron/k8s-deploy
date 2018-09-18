@@ -453,7 +453,7 @@ EOF
 
 kube::config_loadbalancer()
 {
-    kube::get_env $@
+    # kube::get_env $@
 
     modprobe ip_vs
     ln -fs /lib/systemd/system/rc-local.service /etc/systemd/system/rc-local.service
