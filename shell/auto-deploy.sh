@@ -993,6 +993,13 @@ kind: MasterConfiguration
 kubernetesVersion: ${KUBE_VERSION}
 apiServerCertSANs:
 - ${KUBE_VIP}
+- ${MASTER_NODES[0]}
+- ${MASTER_NODES[1]}
+- ${MASTER_NODES[2]}
+- ${MASTERS[0]}
+- ${MASTERS[1]}
+- ${MASTERS[2]}
+- "127.0.0.1"
 api:
     controlPlaneEndpoint: ${KUBE_VIP}:6443
 etcd:
@@ -1004,11 +1011,8 @@ etcd:
         caFile: /etc/kubernetes/pki/etcd/ca.pem
         certFile: /etc/kubernetes/pki/etcd/client.pem
         keyFile: /etc/kubernetes/pki/etcd/client-key.pem
-controllerManagerExtraArgs:
-    node-monitor-grace-period: 10s
-    pod-eviction-timeout: 10s
 networking:
-    podSubnet: "10.244.0.0/16"
+    podSubnet: 10.244.0.0/16
 kubeProxy:
     config:
         mode: ipvs
@@ -1054,9 +1058,6 @@ etcd:
         caFile: /etc/kubernetes/pki/etcd/ca.pem
         certFile: /etc/kubernetes/pki/etcd/client.pem
         keyFile: /etc/kubernetes/pki/etcd/client-key.pem
-controllerManagerExtraArgs:
-    node-monitor-grace-period: 10s
-    pod-eviction-timeout: 10s
 networking:
     podSubnet: 10.244.0.0/16
 kubeProxy:
