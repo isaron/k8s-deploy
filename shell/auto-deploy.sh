@@ -1001,7 +1001,7 @@ apiServerCertSANs:
 - ${MASTERS[2]}
 - "127.0.0.1"
 api:
-    controlPlaneEndpoint: ${KUBE_VIP}:6443
+    controlPlaneEndpoint: ${MASTER_NODES[0]}:6443
 etcd:
     external:
         endpoints:
