@@ -1004,7 +1004,6 @@ api:
     controlPlaneEndpoint: ${KUBE_VIP}:6443
 apiServerExtraArgs:
     endpoint-reconciler-type: lease
-    disable-admission-plugins: AlwaysPullImages
 etcd:
     external:
         endpoints:
