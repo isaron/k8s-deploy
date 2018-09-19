@@ -15,7 +15,7 @@ k8simages=(
     cluster-autoscaler:v1.3.1
     defaultbackend:1.4
     coredns:1.1.3
-    metrics-server-amd64:v0.3.0
+    metrics-server-amd64:v0.3.1
 )
 
 j=1

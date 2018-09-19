@@ -9,7 +9,7 @@ dockerimages=(
     etcd-amd64:3.2.18
     pause-amd64:3.1
     coredns:1.1.3
-    metrics-server-amd64:v0.3.0
+    metrics-server-amd64:v0.3.1
     # k8s-dns-sidecar-amd64:1.14.10
     # k8s-dns-kube-dns-amd64:1.14.10
     # k8s-dns-dnsmasq-nanny-amd64:1.14.10
