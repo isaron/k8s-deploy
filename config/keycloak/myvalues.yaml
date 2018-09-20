@@ -197,6 +197,7 @@ keycloak:
 
     annotations: 
       kubernetes.io/ingress.class: nginx
+      ingress.kubernetes.io/ssl-redirect: "false"
       # kubernetes.io/tls-acme: "true"
       ingress.kubernetes.io/affinity: cookie
 
