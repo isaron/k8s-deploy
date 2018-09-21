@@ -17,8 +17,6 @@ spec:
   - chartmuseum.rdp.dev
   - keycloak.rdp.dev
   - monocular.rdp.dev
-  - prometheus.rdp.dev
-  - gitea.rdp.dev
   - jenkins.rdp.dev
   - nexus.rdp.dev
   - harbor.rdp.dev
