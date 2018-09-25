@@ -629,8 +629,8 @@ cat > config.json <<EOF
     "CN": "$PEER_NAME",
     "hosts": [
         "127.0.0.1",
-        "k8s.rdp.dev",
-        "rdp.dev",
+        "k8s.ssii.com",
+        "ssii.com",
         "10.244.0.1",
         "10.96.0.1",
         "172.30.80.88",
@@ -715,8 +715,8 @@ cat > config.json <<EOF
     "CN": "$PEER_NAME",
     "hosts": [
         "127.0.0.1",
-        "k8s.rdp.dev",
-        "rdp.dev",
+        "k8s.ssii.com",
+        "ssii.com",
         "10.244.0.1",
         "10.96.0.1",
         "172.30.80.88",

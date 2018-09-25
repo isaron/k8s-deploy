@@ -21,7 +21,7 @@ kind: Service
 metadata:
   name: echo
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: echo.rdp.dev
+    external-dns.alpha.kubernetes.io/hostname: echo.ssii.com
 spec:
   selector:
     app: echo

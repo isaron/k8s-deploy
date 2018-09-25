@@ -10,17 +10,17 @@ spec:
     # We can reference ClusterIssuers by changing the kind here.
     # The default value is Issuer (i.e. a locally namespaced Issuer)
     kind: ClusterIssuer
-  commonName: rdp.dev
+  commonName: ssii.com
   organization:
   - RDP Dev CA
   dnsNames:
-  - chartmuseum.rdp.dev
-  - keycloak.rdp.dev
-  - monocular.rdp.dev
-  - jenkins.rdp.dev
-  - nexus.rdp.dev
-  - harbor.rdp.dev
-  - containers.rdp.dev
-  - kubeapps.rdp.dev
-  - gogs.rdp.dev
+  - chartmuseum.ssii.com
+  - keycloak.ssii.com
+  - monocular.ssii.com
+  - jenkins.ssii.com
+  - nexus.ssii.com
+  - harbor.ssii.com
+  - containers.ssii.com
+  - kubeapps.ssii.com
+  - gogs.ssii.com
   

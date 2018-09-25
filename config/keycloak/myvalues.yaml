@@ -204,12 +204,12 @@ keycloak:
 
     ## List of hosts for the ingress
     hosts:
-      - keycloak.rdp.dev
+      - keycloak.ssii.com
 
     ## TLS configuration
     tls: 
     - hosts:
-        - keycloak.rdp.dev
+        - keycloak.ssii.com
       secretName: keycloak-ingress-cert
 
   ## Persistence configuration

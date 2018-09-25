@@ -82,7 +82,7 @@ ingress:
   ## Must be provided if Ingress is enabled
   ##
   hosts:
-    - dashboard.rdp.dev
+    - dashboard.ssii.com
 
   ## Kubernetes Dashboard Ingress TLS configuration
   ## Secrets must be manually created in the namespace
@@ -90,7 +90,7 @@ ingress:
   tls:
     - secretName: dashboard-ingress-secrets
       hosts:
-        - dashboard.rdp.dev
+        - dashboard.ssii.com
 
 rbac:
   # Specifies whether RBAC resources should be created

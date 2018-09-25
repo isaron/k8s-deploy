@@ -12,10 +12,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - dashboard.rdp.dev
+    - dashboard.ssii.com
     secretName: dashboard-ingress-secrets
   rules:
-  - host: dashboard.rdp.dev
+  - host: dashboard.ssii.com
     http:
       paths:
       - path: /

@@ -17,13 +17,13 @@ metadata:
   # uid: a5c0566c-7abe-11e8-a07e-000c2972e7e0
 spec:
   # rules:
-  # - host: gitea-gitea.jx.rdp.dev
+  # - host: gitea-gitea.jx.ssii.com
   #   http:
   #     paths:
   #     - backend:
   #         serviceName: gitea-gitea
   #         servicePort: 80
-  # - host: gitea-gitea.jx.rdp.dev
+  # - host: gitea-gitea.jx.ssii.com
   #   http:
   #     paths:
   #     - backend:
@@ -34,7 +34,7 @@ spec:
   #         servicePort: 22
   tls:
   - hosts:
-    - gitea-gitea.jx.rdp.dev
+    - gitea-gitea.jx.ssii.com
     secretName: jx-ingress-certs
 # status:
 #   loadBalancer:

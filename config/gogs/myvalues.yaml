@@ -32,7 +32,7 @@ service:
   ## SSH_DOMAIN - Domain name to be exposed in SSH clone URL.
   ## ref: https://gogs.io/docs/advanced/configuration_cheat_sheet
   ##
-  sshDomain: gogs.rdp.dev
+  sshDomain: gogs.ssii.com
 
   ## Gogs configuration values
   ## ref: https://gogs.io/docs/advanced/configuration_cheat_sheet
@@ -109,11 +109,11 @@ service:
 
     ## Enable this to use captcha validation for registration.
     ##
-    serverDomain: gogs.rdp.dev
+    serverDomain: gogs.ssii.com
 
     ## Full public URL of Gogs server.
     ##
-    serverRootUrl: http://gogs.rdp.dev/
+    serverRootUrl: http://gogs.ssii.com/
 
     ## Landing page for non-logged users, can be "home" or "explore"
     ##
@@ -213,7 +213,7 @@ service:
     ## Must be provided if Ingress is enabled.
     ##
     hosts:
-      - gogs.rdp.dev
+      - gogs.ssii.com
 
     ## TLS configuration.
     ## Secrets must be manually created in the namespace.
@@ -221,7 +221,7 @@ service:
     tls:
       - secretName: ingress-certs
         hosts:
-          - gogs.rdp.dev
+          - gogs.ssii.com
 
   ## Service annotations.
   ## Allows attaching metadata to services for kubernetes components to act on.

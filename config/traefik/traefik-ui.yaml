@@ -21,7 +21,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-  - host: traefik-ui.ingress.rdp.dev
+  - host: traefik-ui.ingress.ssii.com
     http:
       paths:
       - path: /

@@ -55,7 +55,7 @@ Master:
   ServiceAnnotations: {}
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
   # Used to create Ingress record (should used with ServiceType: ClusterIP)
-  HostName: jenkins.rdp.dev
+  HostName: jenkins.ssii.com
   # NodePort: <to set explicitly, choose port between 30000-32767
   # Enable Kubernetes Liveness and Readiness Probes
   # ~ 2 minutes to allow Jenkins to restart when upgrading plugins. Set ReadinessTimeout to be shorter than LivenessTimeout.
@@ -129,7 +129,7 @@ Master:
     TLS:
       - secretName: ingress-certs
         hosts:
-          - jenkins.rdp.dev
+          - jenkins.ssii.com
 
 Agent:
   Enabled: true

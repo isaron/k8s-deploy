@@ -17,7 +17,7 @@ metadata:
   # uid: 30e7d6c2-7ab8-11e8-a07e-000c2972e7e0
 spec:
   # rules:
-  # - host: chartmuseum.jx.rdp.dev
+  # - host: chartmuseum.jx.ssii.com
   #   http:
   #     paths:
   #     - backend:
@@ -25,7 +25,7 @@ spec:
   #         servicePort: 8080
   tls:
   - hosts:
-    - chartmuseum.jx.rdp.dev
+    - chartmuseum.jx.ssii.com
     secretName: jx-ingress-certs
 # status:
 #   loadBalancer:

@@ -18,7 +18,7 @@ metadata:
   # uid: 313e1e56-7ab8-11e8-a07e-000c2972e7e0
 spec:
   # rules:
-  # - host: docker-registry.jx.rdp.dev
+  # - host: docker-registry.jx.ssii.com
   #   http:
   #     paths:
   #     - backend:
@@ -26,7 +26,7 @@ spec:
   #         servicePort: 5000
   tls:
   - hosts:
-    - docker-registry.jx.rdp.dev
+    - docker-registry.jx.ssii.com
     secretName: jx-ingress-certs
 # status:
 #   loadBalancer:

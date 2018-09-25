@@ -9,46 +9,46 @@ spec:
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer
-  commonName: jx.rdp.dev
+  commonName: jx.ssii.com
   dnsNames:
-  - chartmuseum.jx.rdp.dev
-  - docker-registry.jx.rdp.dev
-  - gitea-gitea.jx.rdp.dev
-  - jenkins.jx.rdp.dev
-  - monocular.jx.rdp.dev
-  - nexus.jx.rdp.dev
+  - chartmuseum.jx.ssii.com
+  - docker-registry.jx.ssii.com
+  - gitea-gitea.jx.ssii.com
+  - jenkins.jx.ssii.com
+  - monocular.jx.ssii.com
+  - nexus.jx.ssii.com
   acme:
     config:
     - http01:
         ingressClass: nginx
       domains:
-      - chartmuseum.jx.rdp.dev
-      - docker-registry.jx.rdp.dev
-      - gitea-gitea.jx.rdp.dev
-      - jenkins.jx.rdp.dev
-      - monocular.jx.rdp.dev
-      - nexus.jx.rdp.dev
+      - chartmuseum.jx.ssii.com
+      - docker-registry.jx.ssii.com
+      - gitea-gitea.jx.ssii.com
+      - jenkins.jx.ssii.com
+      - monocular.jx.ssii.com
+      - nexus.jx.ssii.com
     # - http01:
     #     ingress: chartmuseum
     #   domains:
-    #   - chartmuseum.jx.rdp.dev
+    #   - chartmuseum.jx.ssii.com
     # - http01:
     #     ingress: docker-registry
     #   domains:
-    #   - docker-registry.jx.rdp.dev
+    #   - docker-registry.jx.ssii.com
     # - http01:
     #     ingress: gitea-gitea
     #   domains:
-    #   - gitea-gitea.jx.rdp.dev
+    #   - gitea-gitea.jx.ssii.com
     # - http01:
     #     ingress: jenkins
     #   domains:
-    #   - jenkins.jx.rdp.dev
+    #   - jenkins.jx.ssii.com
     # - http01:
     #     ingress: monocular
     #   domains:
-    #   - monocular.jx.rdp.dev
+    #   - monocular.jx.ssii.com
     # - http01:
     #     ingress: nexus
     #   domains:
-    #   - nexus.jx.rdp.dev
+    #   - nexus.jx.ssii.com

@@ -18,7 +18,7 @@ metadata:
   # uid: 30ee20bb-7ab8-11e8-a07e-000c2972e7e0
 spec:
   # rules:
-  # - host: jenkins.jx.rdp.dev
+  # - host: jenkins.jx.ssii.com
   #   http:
   #     paths:
   #     - backend:
@@ -26,7 +26,7 @@ spec:
   #         servicePort: 8080
   tls:
   - hosts:
-    - jenkins.jx.rdp.dev
+    - jenkins.jx.ssii.com
     secretName: jx-ingress-certs
 # status:
 #   loadBalancer:

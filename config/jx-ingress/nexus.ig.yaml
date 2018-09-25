@@ -17,7 +17,7 @@ metadata:
   # uid: 319a33fb-7ab8-11e8-a07e-000c2972e7e0
 spec:
   # rules:
-  # - host: nexus.jx.rdp.dev
+  # - host: nexus.jx.ssii.com
   #   http:
   #     paths:
   #     - backend:
@@ -25,7 +25,7 @@ spec:
   #         servicePort: 80
   tls:
   - hosts:
-    - nexus.jx.rdp.dev
+    - nexus.jx.ssii.com
     secretName: jx-ingress-certs
 # status:
 #   loadBalancer:

@@ -19,7 +19,7 @@ metadata:
   # uid: 30f6e14b-7ab8-11e8-a07e-000c2972e7e0
 spec:
   # rules:
-  # - host: monocular.jx.rdp.dev
+  # - host: monocular.jx.ssii.com
   #   http:
   #     paths:
   #     - backend:
@@ -32,7 +32,7 @@ spec:
   #       path: /
   tls:
   - hosts:
-    - monocular.jx.rdp.dev
+    - monocular.jx.ssii.com
     secretName: jx-ingress-certs
 # status:
 #   loadBalancer:

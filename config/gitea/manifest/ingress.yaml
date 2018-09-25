@@ -11,10 +11,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - gitea.rdp.dev
+    - gitea.ssii.com
     secretName: ingress-certs
   rules:
-  - host: gitea.rdp.dev
+  - host: gitea.ssii.com
     http:
       paths:
       - backend:

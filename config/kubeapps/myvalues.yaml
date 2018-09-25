@@ -28,7 +28,7 @@ apprepository:
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
   - name: chartmuseum
-    url: https://chartmuseum.rdp.dev
+    url: https://chartmuseum.ssii.com
   resources: {}
     # limits:
     #  cpu: 100m
@@ -150,11 +150,11 @@ ingress:
     kubernetes.io/ingress.class: nginx
   path: /
   hosts:
-  - kubeapps.rdp.dev
+  - kubeapps.ssii.com
   tls: 
   - secretName: ingress-certs
     hosts:
-      - kubeapps.rdp.dev
+      - kubeapps.ssii.com
 
 mongodb:
   # Kubeapps uses MongoDB as a cache and persistence is not required

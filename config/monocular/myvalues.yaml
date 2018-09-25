@@ -49,8 +49,8 @@ api:
         url: http://172.30.80.33:8080
         source: https://github.com/kubernetes/charts/tree/master/stable
       - name: chartmuseum
-        url: https://chartmuseum.rdp.dev
-        source: https://gitea.rdp.dev/gitea/charts/tree/master
+        url: http://chartmuseum.ssii.com
+        source: https://gitea.ssii.com/gitea/charts/tree/master
     cors:
       allowed_origins:
         - ""
@@ -142,7 +142,7 @@ ingress:
   enabled: true
   hosts:
   # Wildcard
-  - monocular.rdp.dev
+  - monocular.ssii.com
   # - monocular.local
 
   ## Ingress annotations
@@ -162,4 +162,4 @@ ingress:
   tls:
     secretName: ingress-certs
     hosts:
-      - monocular.rdp.dev
+      - monocular.ssii.com
