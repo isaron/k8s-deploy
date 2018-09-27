@@ -48,10 +48,10 @@ docker save quay.io/coreos/flannel:v0.10.0-amd64 -o flannel:v0.10.0-amd64.tar
 docker pull quay.io/coreos/etcd:v3.2.18
 docker save quay.io/coreos/etcd:v3.2.18 -o etcd:v3.2.18.tar
 
-docker pull arborhuang/tiller:v2.10.0
-docker tag arborhuang/tiller:v2.10.0 gcr.io/kubernetes-helm/tiller:v2.10.0
-docker save gcr.io/kubernetes-helm/tiller:v2.10.0 -o tiller:v2.10.0.tar
-docker rmi arborhuang/tiller:v2.10.0
+docker pull arborhuang/tiller:v2.11.0
+docker tag arborhuang/tiller:v2.11.0 gcr.io/kubernetes-helm/tiller:v2.11.0
+docker save gcr.io/kubernetes-helm/tiller:v2.11.0 -o tiller:v2.11.0.tar
+docker rmi arborhuang/tiller:v2.11.0
 
 docker pull coredns/coredns:1.2.2
 docker tag coredns/coredns:1.2.2 k8s.gcr.io/coredns:1.2.2
