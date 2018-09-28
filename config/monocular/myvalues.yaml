@@ -45,6 +45,9 @@ api:
       - name: monocular
         url: https://helm.github.io/monocular
         source: https://github.com/helm/monocular/tree/master/charts
+      - name: bitnami
+        url: https://charts.bitnami.com/bitnami
+        source: https://github.com/bitnami/charts/tree/master/bitnami
       - name: mirror
         url: http://172.30.80.33:8080
         source: https://github.com/kubernetes/charts/tree/master/stable
