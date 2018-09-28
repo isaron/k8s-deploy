@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: automation-broker-apb
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: automation-broker-apb
+  namespace: automation-broker-apb
+
+---
+# Since the Broker APB will create CRDs and other privileged
+# k8s objects, we need elevated permissions
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: automation-broker-apb
+roleRef:
+  name: cluster-admin
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: automation-broker-apb
+  namespace: automation-broker-apb
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: automation-broker-apb
+  namespace: automation-broker-apb
+spec:
+  serviceAccount: automation-broker-apb
+  containers:
+    - name: apb
+      image: docker.io/automationbroker/automation-broker-apb:latest
+      args:
+        - "provision"
+        - "-e create_broker_namespace=true"
+        - "-e broker_sandbox_role=admin"
+        - "-e broker_dockerhub_tag=canary"
+        - "-e broker_helm_enabled=true"
+        - "-e broker_helm_url=https://kubernetes-charts.storage.googleapis.com"
+        - "-e wait_for_broker=true"
+      imagePullPolicy: IfNotPresent
+  restartPolicy: Never
+  
