@@ -96,6 +96,7 @@ Master:
     - git:3.9.1
     - ldap:1.2.0
     - keycloak:2.2.0
+    - blueocean:1.8.4
   # Used to approve a list of groovy functions in pipelines used the script-security plugin. Can be viewed under /scriptApproval
   # ScriptApproval:
   #   - "method groovy.json.JsonSlurperClassic parseText java.lang.String"
