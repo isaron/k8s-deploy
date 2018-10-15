@@ -1,8 +1,14 @@
 replicaCount: 1
+# By default deploymentStrategy is set to rollingUpdate with maxSurge of 25% and maxUnavailable of 25% . you can change type to `Recreate` or can uncomment `rollingUpdate` specification and adjust them to your usage.
+deploymentStrategy: {}
+  # rollingUpdate:
+  #   maxSurge: 25%
+  #   maxUnavailable: 25%
+  # type: RollingUpdate
 
 nexus:
   imageName: quay.io/travelaudience/docker-nexus
-  imageTag: 3.13.0
+  imageTag: 3.13.0_alpine_3.8.1
   imagePullPolicy: IfNotPresent
   env:
     - name: install4jAddVmParams
@@ -25,6 +31,8 @@ nexus:
   dockerPort: 5003
   nexusPort: 8081
   serviceType: NodePort
+  # annotations: {}
+  # labels: {}
   # securityContext:
   #   fsGroup: 2000
   livenessProbe:
@@ -82,12 +90,15 @@ persistence:
   # annotations:
   #  "helm.sh/resource-policy": keep
   # storageClass: "-"
-  storageSize: 1024Gi
+  storageSize: 8Gi
+  # If PersistentDisk already exists you can create a PV for it by including the 2 following keypairs.
+  # pdName: nexus-data-disk
+  # fsType: ext4
 
 nexusBackup:
   enabled: false
   imageName: quay.io/travelaudience/docker-nexus-backup
-  imageTag: 1.2.0
+  imageTag: 1.3.0
   imagePullPolicy: IfNotPresent
   env:
     targetBucket:
@@ -101,6 +112,9 @@ nexusBackup:
     # See comment above for information on setting the backup storageClass
     # storageClass: "-"
     storageSize: 8Gi
+    # If PersistentDisk already exists you can create a PV for it by including the 2 following keypairs.
+    # pdName: nexus-backup-disk
+    # fsType: ext4
 
 ingress:
   enabled: true
@@ -114,3 +128,11 @@ ingress:
   tls:
     enabled: true
     secretName: ingress-certs
+
+tolerations: []
+
+# # Enable configmap and add data in configmap
+config:
+  enabled: false
+  mountPath: /sonatype-nexus-conf
+  data:
