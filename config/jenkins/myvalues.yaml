@@ -90,9 +90,10 @@ Master:
     - workflow-aggregator:2.5
     - credentials-binding:1.16
     - git:3.9.1
-    - ldap:1.2.0
-    - keycloak:2.2.0
-    - matrix-auth:2.3
+    # - ldap:1.2.0
+    # - keycloak:2.2.0
+    # - blueocean:1.9.0
+    # - matrix-auth:2.3
   # Used to approve a list of groovy functions in pipelines used the script-security plugin. Can be viewed under /scriptApproval
   # ScriptApproval:
   #   - "method groovy.json.JsonSlurperClassic parseText java.lang.String"
