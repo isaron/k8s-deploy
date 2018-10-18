@@ -122,9 +122,9 @@ postgresql:
   # To use an external PostgreSQL instance, set enabled to false and uncomment
   # the line below:
   postgresServer: "172.30.80.103"
-  postgresUser: "sonarUser"
+  postgresUser: "sonaruser"
   postgresPassword: "p@ssw0rd"
-  postgresDatabase: "sonarDB"
+  postgresDatabase: "sonardb"
   # Specify the TCP port that PostgreSQL should use
   service:
     port: 5432
