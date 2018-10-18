@@ -92,14 +92,21 @@ persistence:
 # List of plugins to install.
 # For example:
 plugins:
- install:
+  install:
    - "https://github.com/AmadeusITGroup/sonar-stash/releases/download/1.5.0-rc1/sonar-stash-plugin-1.5.0-rc1.jar"
    - "https://github.com/SonarSource/sonar-ldap/releases/download/2.2-RC3/sonar-ldap-plugin-2.2.0.601.jar"
 # plugins:
   # install: []
   # resources: {}
+  resources:
   # We allow the plugins init container to have a separate resources declaration because
   # the initContainer does not take as much resources.
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
 # A custom sonar.properties file can be provided using a multiline YAML string.
 # For example:
