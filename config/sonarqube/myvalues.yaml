@@ -91,22 +91,35 @@ persistence:
 
 # List of plugins to install.
 # For example:
-# plugins:
-#  install:
-#    - "https://github.com/AmadeusITGroup/sonar-stash/releases/download/1.3.0/sonar-stash-plugin-1.3.0.jar"
-#    - "https://github.com/SonarSource/sonar-ldap/releases/download/2.2-RC3/sonar-ldap-plugin-2.2.0.601.jar"
 plugins:
-  install: []
-  resources: {}
+ install:
+   - "https://github.com/AmadeusITGroup/sonar-stash/releases/download/1.5.0-rc1/sonar-stash-plugin-1.5.0-rc1.jar"
+   - "https://github.com/SonarSource/sonar-ldap/releases/download/2.2-RC3/sonar-ldap-plugin-2.2.0.601.jar"
+# plugins:
+  # install: []
+  # resources: {}
   # We allow the plugins init container to have a separate resources declaration because
   # the initContainer does not take as much resources.
 
 # A custom sonar.properties file can be provided using a multiline YAML string.
 # For example:
-# sonarProperties: |
-#   sonar.forceAuthentication=true
-#   sonar.security.realm=LDAP
-#   ldap.url=ldap://ldap.ssii.com:389
+sonarProperties: |
+  # sonar.forceAuthentication=true
+  # LDAP configuration
+  # General Configuration
+  sonar.security.realm=LDAP
+  ldap.url=ldap://ldap.ssii.com:389
+    
+  # User Configuration
+  ldap.user.baseDn=ou=users,dc=rdp,dc=dev
+  ldap.user.request=(&(objectClass=inetOrgPerson)(uid={login}))
+  ldap.user.realNameAttribute=cn
+  ldap.user.emailAttribute=mail
+  
+  # Group Configuration
+  ldap.group.baseDn=ou=realmRoles,dc=rdp,dc=dev
+  ldap.group.request=(&(objectClass=groupOfUniqueNames)(member={dn}))
+  ldap.group.idAttribute=cn
 
 ## Configuration value to select database type
 ## Option to use "postgresql" or "mysql" database type, by default "postgresql" is chosen
