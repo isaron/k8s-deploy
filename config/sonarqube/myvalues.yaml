@@ -123,7 +123,7 @@ postgresql:
   # the line below:
   postgresServer: "172.30.80.103"
   postgresUser: "sonarUser"
-  postgresPassword: "sonarPass"
+  postgresPassword: "p@ssw0rd"
   postgresDatabase: "sonarDB"
   # Specify the TCP port that PostgreSQL should use
   service:
