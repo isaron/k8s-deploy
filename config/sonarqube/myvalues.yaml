@@ -125,7 +125,7 @@ sonarProperties: |
   
   # Group Configuration
   ldap.group.baseDn=ou=realmRoles,dc=rdp,dc=dev
-  ldap.group.request=(&(objectClass=groupOfNames)(member={uid}))
+  ldap.group.request=(&(objectClass=groupOfNames)(member="uid=${login},ou=users,dc=rdp,dc=dev"))
   ldap.group.idAttribute=cn
 
 ## Configuration value to select database type
