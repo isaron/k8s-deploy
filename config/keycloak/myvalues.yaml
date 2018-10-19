@@ -177,7 +177,7 @@ keycloak:
       certmanager.k8s.io/cluster-issuer: ca-issuer
       ingress.kubernetes.io/ssl-redirect: "false"
       # kubernetes.io/tls-acme: "true"
-      ingress.kubernetes.io/affinity: cookie
+      # ingress.kubernetes.io/affinity: cookie
 
     ## List of hosts for the ingress
     hosts:
