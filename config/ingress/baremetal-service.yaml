@@ -4,7 +4,8 @@ metadata:
   name: ingress-nginx
   namespace: kube-system
   labels:
-    app: ingress-nginx
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
 spec:
   externalTrafficPolicy: Local
   type: LoadBalancer
@@ -18,4 +19,5 @@ spec:
     targetPort: 443
     protocol: TCP
   selector:
-    app: ingress-nginx
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
