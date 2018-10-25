@@ -53,7 +53,7 @@ api:
         source: https://github.com/kubernetes/charts/tree/master/stable
       - name: chartmuseum
         url: http://chartmuseum.ssii.com
-        source: https://gitea.ssii.com/gitea/charts/tree/master
+        source: https://gitea.ssii.com/RDP/charts/tree/master
     cors:
       allowed_origins:
         - ""
