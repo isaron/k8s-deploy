@@ -4,7 +4,7 @@
 replicaCount: 1
 image:
   repository: sonarqube
-  tag: 6.7.3
+  tag: 6.7.5
   # If using a private repository, the name of the imagePullSecret to use
   # pullSecret: my-repo-secret
 service:
