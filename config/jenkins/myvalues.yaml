@@ -85,7 +85,7 @@ Master:
   JMXPort: 4000
   # List of plugins to be install during Jenkins master start
   InstallPlugins:
-    - kubernetes:1.13.0
+    - kubernetes:1.13.2
     - workflow-job:2.26
     - workflow-aggregator:2.6
     - credentials-binding:1.16
@@ -140,7 +140,8 @@ Master:
 Agent:
   Enabled: true
   Image: jenkins/jnlp-slave
-  ImageTag: 3.10-1
+  ImageTag: 3.26-1
+  # ImageTag: 3.26-1-alpine
   CustomJenkinsLabels: []
 # ImagePullSecret: jenkins
   Component: "jenkins-slave"
