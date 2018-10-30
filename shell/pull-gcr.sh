@@ -12,10 +12,13 @@ k8simages=(
     # k8s-dns-kube-dns-amd64:1.14.10
     # k8s-dns-dnsmasq-nanny-amd64:1.14.10
     kubernetes-dashboard-amd64:v1.10.0
-    cluster-autoscaler:v1.3.1
+    cluster-autoscaler:v1.3.3
     defaultbackend:1.4
-    coredns:1.1.3
+    # coredns:1.2.2
     metrics-server-amd64:v0.3.1
+    elasticsearch:v6.3.0
+    fluentd-elasticsearch:v2.2.0
+    kibana/kibana-oss:6.3.2
 )
 
 j=1
@@ -39,8 +42,8 @@ docker tag k8s.gcr.io/defaultbackend:1.4 gcr.io/google_containers/defaultbackend
 docker rm -f defaultbackend:1.4.tar
 docker save gcr.io/google_containers/defaultbackend:1.4 -o defaultbackend:1.4.tar
 
-docker pull quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.19.0
-docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.19.0 -o nginx-ingress-controller:0.19.0.tar
+docker pull quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.20.0
+docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.20.0 -o nginx-ingress-controller:0.20.0.tar
 
 docker pull quay.io/coreos/flannel:v0.10.0-amd64
 docker save quay.io/coreos/flannel:v0.10.0-amd64 -o flannel:v0.10.0-amd64.tar

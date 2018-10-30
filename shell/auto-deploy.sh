@@ -241,7 +241,7 @@ kube::load_images()
         pause_3.1
         etcd-amd64_3.2.18
         kubernetes-dashboard-amd64_v1.10.0
-        cluster-autoscaler_v1.3.1
+        cluster-autoscaler_v1.3.3
         coredns_1.2.2
         coredns_1.1.3
         metrics-server-amd64_v0.3.1
@@ -252,6 +252,10 @@ kube::load_images()
         heapster-influxdb-amd64_v1.5.2
         kube-addon-manager_v8.6
         addon-resizer_1.7
+
+        elasticsearch_v6.3.0
+        fluentd-elasticsearch_v2.2.0
+        kibana/kibana-oss_6.3.2
     )
 
     for i in "${!images0[@]}"; do
@@ -265,7 +269,7 @@ kube::load_images()
     images1=(
         defaultbackend_1.4
         tiller_v2.11.0
-        nginx-ingress-controller_0.19.0
+        nginx-ingress-controller_0.20.0
         flannel_v0.10.0-amd64
         docker-nexus_3.13.0
     )
