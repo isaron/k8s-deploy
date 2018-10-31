@@ -257,7 +257,7 @@ kube::load_images()
 
         elasticsearch_v6.3.0
         fluentd-elasticsearch_v2.2.0
-        kibana/kibana-oss_6.3.2
+        kibana-oss_6.3.2
     )
 
     for i in "${!images0[@]}"; do

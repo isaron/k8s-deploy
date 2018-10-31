@@ -19,7 +19,7 @@ dockerimages=(
     metrics-server-amd64:v0.3.1
     elasticsearch:v6.3.0
     fluentd-elasticsearch:v2.2.0
-    kibana/kibana-oss:6.3.2
+    kibana-oss:6.3.2
 )
 
 j=1
