@@ -85,13 +85,7 @@ keycloak:
             topologyKey: failure-domain.beta.kubernetes.io/zone
 
   nodeSelector: {}
-    # node-type: master
-    # kubernetes.io/hostname: rdp-mgr1.k8s
   tolerations: []
-  # - key: "node-role.kubernetes.io/master"
-  #   operator: "Equal"
-  #   value: ""
-  #   effect: "NoSchedule"
 
   ## Extra Annotations to be added to pod
   podAnnotations: {}
@@ -138,6 +132,8 @@ keycloak:
       /subsystem=infinispan/cache-container=keycloak/distributed-cache=authenticationSessions:write-attribute(name=owners, value=${env.CACHE_OWNERS:2})
       /subsystem=infinispan/cache-container=keycloak/distributed-cache=offlineSessions:write-attribute(name=owners, value=${env.CACHE_OWNERS:2})
       /subsystem=infinispan/cache-container=keycloak/distributed-cache=loginFailures:write-attribute(name=owners, value=${env.CACHE_OWNERS:2})
+
+      /subsystem=jgroups/channel=ee:write-attribute(name=stack, value=tcp)
 
     # Custom CLI script
     custom: ""
