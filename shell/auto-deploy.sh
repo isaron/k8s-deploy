@@ -256,7 +256,7 @@ kube::load_images()
         addon-resizer_1.7
 
         elasticsearch_v6.3.0
-        fluentd-elasticsearch_v2.2.0
+        fluentd-elasticsearch_v2.3.1
         kibana-oss_6.3.2
     )
 

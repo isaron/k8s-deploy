@@ -14,6 +14,7 @@ dockerimages=(
     kubernetes-dashboard-amd64:v1.8.3
     cluster-autoscaler:v1.3.1
     defaultbackend:1.4
+    fluentd-elasticsearch:v2.2.0
 )
 
 j=1
