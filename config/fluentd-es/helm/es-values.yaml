@@ -133,7 +133,7 @@ data:
     enabled: true
     accessMode: ReadWriteOnce
     name: data
-    size: "100Gi"
+    size: "30Gi"
     # storageClass: "ssd"
   terminationGracePeriodSeconds: 3600
   antiAffinity: "soft"
