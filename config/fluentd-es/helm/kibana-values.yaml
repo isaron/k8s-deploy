@@ -56,7 +56,7 @@ service:
 ingress:
   enabled: true
   hosts:
-    kibana.ssii.com
+    - kibana.ssii.com
     # - kibana.localhost.localdomain
     # - localhost.localdomain/kibana
   annotations:
