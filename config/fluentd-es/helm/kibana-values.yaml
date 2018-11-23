@@ -59,13 +59,17 @@ ingress:
     kibana.ssii.com
     # - kibana.localhost.localdomain
     # - localhost.localdomain/kibana
-  # annotations:
-  #   kubernetes.io/ingress.class: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: ca-issuer
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/secure-backends: "true"
+    ingress.kubernetes.io/ssl-redirect: "false"
   #   kubernetes.io/tls-acme: "true"
-  # tls:
-    # - secretName: chart-example-tls
-    #   hosts:
-    #     - chart-example.local
+  tls:
+    - secretName: kibana-ingress-secret
+      hosts:
+        - kibana.ssii.com
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -145,7 +149,7 @@ plugins:
   # set to true to enable plugins installation
   enabled: true
   # set to true to remove all kibana plugins before installation
-  reset: false
+  reset: true
   # Use <plugin_name,version,url> to add/upgrade plugin
   values:
     - elastalert-kibana-plugin,1.0.1,https://github.com/bitsensor/elastalert-kibana-plugin/releases/download/1.0.1/elastalert-kibana-plugin-1.0.1-6.4.2.zip
