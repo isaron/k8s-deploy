@@ -8,13 +8,13 @@ appVersion: "6.5.0"
 serviceAccounts:
   client:
     create: true
-    name: es-client
+    name: elasticsearch-client
   master:
     create: true
-    name: es-master
+    name: elasticsearch-master
   data:
     create: true
-    name: es-data
+    name: elasticsearch-data
 
 ## Specify if a Pod Security Policy for node-exporter must be created
 ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/
