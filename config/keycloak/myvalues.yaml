@@ -27,7 +27,7 @@ keycloak:
     runAsNonRoot: true
 
   ## The path keycloak will be served from. To serve keycloak from the root path, use two quotes (e.g. "").
-  basepath: ""
+  basepath: auth
 
   ## Additional init containers, e. g. for providing custom themes
   extraInitContainers: |
@@ -172,7 +172,7 @@ keycloak:
       kubernetes.io/ingress.class: nginx
       certmanager.k8s.io/cluster-issuer: ca-issuer
       # ingress.kubernetes.io/ssl-redirect: "false"
-      # nginx.ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/rewrite-target: /
       # kubernetes.io/tls-acme: "true"
       ingress.kubernetes.io/affinity: cookie
 
