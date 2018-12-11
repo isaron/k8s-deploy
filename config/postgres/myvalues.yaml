@@ -63,7 +63,7 @@ postgresqlUsername: postgres
 ## PostgreSQL password
 ## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#setting-the-root-password-on-first-run
 ##
-postgresqlPassword: p@ssw0rd
+postgresqlPassword: "p@ssw0rd"
 
 ## Create a database
 ## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-on-first-run
@@ -95,11 +95,6 @@ postgresqlDatabase: postgres
 #   my_init_script.sh:|
 #      #!/bin/sh
 #      echo "Do something."
-
-## Optional duration in seconds the pod needs to terminate gracefully.
-## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
-##
-# terminationGracePeriodSeconds: 30
 
 ## PostgreSQL service configuration
 service:
