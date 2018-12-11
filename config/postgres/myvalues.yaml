@@ -51,7 +51,7 @@ securityContext:
   runAsUser: 1001
 
 replication:
-  enabled: false
+  enabled: true
   user: repl_user
   password: repl_password
   slaveReplicas: 1
