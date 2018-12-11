@@ -47,8 +47,8 @@ volumePermissions:
 ##
 securityContext:
   enabled: true
-  fsGroup: 1001
-  runAsUser: 1001
+  fsGroup: 1000
+  runAsUser: 1000
 
 replication:
   enabled: false
