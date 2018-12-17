@@ -242,7 +242,7 @@ dashboard:
 mongodb:
   # Kubeapps uses MongoDB as a cache and persistence is not required
   persistence:
-    enabled: false
+    enabled: true
   # MongoDB credentials are handled by kubeapps to facilitate upgrades
   existingSecret: kubeapps-mongodb
   # https://github.com/kubeapps/kubeapps/issues/478#issuecomment-422979262
