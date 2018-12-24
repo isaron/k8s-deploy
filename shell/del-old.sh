@@ -2,10 +2,10 @@
 
 set -x
 dockerimages=(
-    kube-apiserver-amd64:v1.9.3
-    kube-controller-manager-amd64:v1.9.3
-    kube-scheduler-amd64:v1.9.3
-    kube-proxy-amd64:v1.9.3
+    kube-apiserver-amd64:v1.11.3
+    kube-controller-manager-amd64:v1.11.3
+    kube-scheduler-amd64:v1.11.3
+    kube-proxy-amd64:v1.11.3
     etcd-amd64:3.1.11
     pause-amd64:3.0
     k8s-dns-sidecar-amd64:1.14.7

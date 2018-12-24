@@ -7,7 +7,7 @@ MASTER_IP=172.30.80.31
 KUBE_HA=true
 
 KUBE_REPO_PREFIX=k8s.gcr.io
-KUBE_VERSION=v1.11.3
+KUBE_VERSION=v1.11.6
 ETCD_VERSION=v3.2.24
 
 MASTERS=(
@@ -235,10 +235,10 @@ kube::load_images()
     mkdir -p /tmp/k8s
 
     images0=(
-        kube-apiserver-amd64_v1.11.3
-        kube-controller-manager-amd64_v1.11.3
-        kube-scheduler-amd64_v1.11.3
-        kube-proxy-amd64_v1.11.3
+        kube-apiserver-amd64_v1.11.6
+        kube-controller-manager-amd64_v1.11.6
+        kube-scheduler-amd64_v1.11.6
+        kube-proxy-amd64_v1.11.6
         pause-amd64_3.1
         pause_3.1
         etcd-amd64_3.2.18
@@ -269,7 +269,7 @@ kube::load_images()
     done
 
     images1=(
-        defaultbackend_1.4
+        defaultbackend_1.5
         tiller_v2.11.0
         nginx-ingress-controller_0.20.0
         flannel_v0.10.0-amd64
@@ -1147,7 +1147,7 @@ kube::master_up()
     #kube::save_master_ip
 
     # 这里一定要带上--pod-network-cidr参数，不然后面的flannel网络会出问题
-    #kubeadm init --kubernetes-version=v1.11.3 --pod-network-cidr=10.244.0.0/16 $@
+    #kubeadm init --kubernetes-version=v1.11.6 --pod-network-cidr=10.244.0.0/16 $@
 
     kube::init_master
 
