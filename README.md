@@ -14,7 +14,7 @@ Components to be deployed:
   - k8s-dns-sidecar-amd64:1.14.10 (removed)
   - k8s-dns-kube-dns-amd64:1.14.10 (removed)
   - k8s-dns-dnsmasq-nanny-amd64:1.14.10 (removed)
-  - kubernetes-dashboard-amd64:v1.10.0
+  - kubernetes-dashboard-amd64:v1.10.1
   - cluster-autoscaler:v1.3.3
   - coredns:1.2.2 (replacing k8s-dns)
 - ingress-nginx
