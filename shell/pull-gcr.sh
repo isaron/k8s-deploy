@@ -17,7 +17,7 @@ k8simages=(
     # coredns:1.2.2
     metrics-server-amd64:v0.3.1
     elasticsearch:v6.3.0
-    fluentd-elasticsearch:v2.3.1
+    fluentd-elasticsearch:v2.3.2
     kibana-oss:6.3.2
 )
 
