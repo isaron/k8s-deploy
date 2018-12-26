@@ -4,9 +4,20 @@
 replicaCount: 1
 image:
   repository: sonarqube
-  tag: 6.7.5
+  tag: 6.7.6-community
   # If using a private repository, the name of the imagePullSecret to use
   # pullSecret: my-repo-secret
+# Starting 6.7.6 and 7.4 official sonarqube docker image, command is not required
+# anymore. For older images, uncomment the following lines.
+# command: [
+#   "sh",
+#   "-ce",
+#   "mkdir /scripts &&
+#   cp /tmp-script/startup.sh /scripts/startup.sh &&
+#   chmod 0755 /scripts/startup.sh &&
+#   /scripts/startup.sh
+#   "
+#   ]
 service:
   name: sonarqube
   type: ClusterIP
@@ -92,6 +103,10 @@ persistence:
 
 # List of plugins to install.
 # For example:
+# plugins:
+#  install:
+#    - "https://github.com/AmadeusITGroup/sonar-stash/releases/download/1.3.0/sonar-stash-plugin-1.3.0.jar"
+#    - "https://github.com/SonarSource/sonar-ldap/releases/download/2.2-RC3/sonar-ldap-plugin-2.2.0.601.jar"
 plugins:
   install:
    - "https://github.com/SonarSource/sonar-ldap/releases/download/2.2-RC3/sonar-ldap-plugin-2.2.0.601.jar"
