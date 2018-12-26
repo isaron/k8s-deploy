@@ -46,7 +46,8 @@ server:
 
   ## Additional GoCD server pod labels
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
 
   ## Affinity for assigning pods to specific nodes
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
@@ -288,7 +289,8 @@ agent:
 
   ## Additional GoCD agent pod labels
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
 
   ## Affinity for assigning pods to specific nodes
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/

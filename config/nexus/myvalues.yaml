@@ -15,8 +15,9 @@ nexus:
   env:
     - name: install4jAddVmParams
       value: "-Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
-  # nodeSelector:
+  nodeSelector:
   #   cloud.google.com/gke-nodepool: default-pool
+    beta.kubernetes.io/os: linux
   resources: 
     requests:
       ## Based on https://support.sonatype.com/hc/en-us/articles/115006448847#mem

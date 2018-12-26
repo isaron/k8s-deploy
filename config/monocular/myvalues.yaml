@@ -67,9 +67,10 @@ api:
     tillerNamespace: kube-system
     # Cache refresh interval in sec.
     cacheRefreshInterval: 3600
-  nodeSelector: {}
+  nodeSelector: 
     # node-type: master
     # kubernetes.io/hostname: rdp-mgr1.k8s
+    beta.kubernetes.io/os: linux
   tolerations: []
   # - key: "master"
   #   operator: "Equal"
@@ -104,9 +105,10 @@ ui:
   backendHostname: /api
   # e.g. API served on a different domain
   # backendHostname: http://monocular-api.local
-  nodeSelector: {}
+  nodeSelector: 
     # node-type: master
     # kubernetes.io/hostname: rdp-mgr1.k8s
+    beta.kubernetes.io/os: linux
   tolerations: []
   # - key: "node-role.kubernetes.io/master"
   #   operator: "Equal"
@@ -131,9 +133,10 @@ prerender:
     requests:
       cpu: 100m
       memory: 128Mi
-  nodeSelector: {}
+  nodeSelector: 
     # node-type: master
     # kubernetes.io/hostname: rdp-mgr1.k8s
+    beta.kubernetes.io/os: linux
   tolerations: []
   # - key: "master"
   #   operator: "Equal"

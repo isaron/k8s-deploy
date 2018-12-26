@@ -82,7 +82,8 @@ frontend:
     requests:
       cpu: 25m
       memory: 32Mi
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
   tolerations: []
   affinity: {}
 
@@ -122,7 +123,8 @@ apprepository:
     requests:
       cpu: 25m
       memory: 32Mi
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
   tolerations: []
   affinity: {}
 
@@ -133,7 +135,8 @@ hooks:
     registry: docker.io
     repository: bitnami/kubectl
     tag: 1.12.3-r13
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
   tolerations: []
   affinity: {}
 
@@ -162,7 +165,8 @@ tillerProxy:
     requests:
       cpu: 25m
       memory: 32Mi
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
   tolerations: []
   affinity: {}
 
@@ -195,7 +199,8 @@ chartsvc:
       port: 8080
     initialDelaySeconds: 0
     timeoutSeconds: 5
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
   tolerations: []
   affinity: {}
 
@@ -230,7 +235,8 @@ dashboard:
     requests:
       cpu: 25m
       memory: 32Mi
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
   tolerations: []
   affinity: {}
 
@@ -254,7 +260,8 @@ mongodb:
       cpu: 50m
       memory: 256Mi
 
-nodeSelector: {}
+nodeSelector: 
+  beta.kubernetes.io/os: linux
 
 tolerations: []
 

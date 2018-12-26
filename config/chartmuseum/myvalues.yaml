@@ -130,9 +130,10 @@ serviceAccount:
 
 securityContext: {}
 
-nodeSelector: {}
-    # node-type: master
-    # kubernetes.io/hostname: rdp-mgr1.k8s
+nodeSelector: 
+  # node-type: master
+  # kubernetes.io/hostname: rdp-mgr1.k8s
+  beta.kubernetes.io/os: linux
     
 tolerations: []
 # - key: "node-role.kubernetes.io/master"

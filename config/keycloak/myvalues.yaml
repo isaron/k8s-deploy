@@ -84,7 +84,8 @@ keycloak:
                     - test
             topologyKey: failure-domain.beta.kubernetes.io/zone
 
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
   tolerations: []
 
   ## Extra Annotations to be added to pod

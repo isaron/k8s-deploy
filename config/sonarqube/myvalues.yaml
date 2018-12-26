@@ -46,7 +46,8 @@ tolerations: []
 
 # Node labels for pod assignment
 # Ref: https://kubernetes.io/docs/user-guide/node-selection/
-nodeSelector: {}
+nodeSelector: 
+  beta.kubernetes.io/os: linux
 
 # hostAliases allows the modification of the hosts file inside a container
 hostAliases: []

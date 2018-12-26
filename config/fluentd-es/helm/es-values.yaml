@@ -73,7 +73,8 @@ client:
   heapSize: "512m"
   antiAffinity: "soft"
   nodeAffinity: {}
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
   tolerations: []
   resources:
     limits:
@@ -118,7 +119,8 @@ master:
     # storageClass: "ssd"
   antiAffinity: "soft"
   nodeAffinity: {}
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
   tolerations: []
   resources:
     limits:
@@ -152,7 +154,8 @@ data:
   terminationGracePeriodSeconds: 3600
   antiAffinity: "soft"
   nodeAffinity: {}
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
   tolerations: []
   resources:
     limits:

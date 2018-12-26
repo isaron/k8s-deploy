@@ -18,6 +18,7 @@ apiserver:
   annotations: {}
   # nodeSelector to apply to the apiserver pods
   nodeSelector: 
+    beta.kubernetes.io/os: linux
   # PodPreset is an optional feature and can be enabled by uncommenting the line below
   # featureGates: "PodPreset=true"
   aggregator:
@@ -134,6 +135,7 @@ controllerManager:
   annotations: {}
   # nodeSelector to apply to the controllerManager pods
   nodeSelector: 
+    beta.kubernetes.io/os: linux
   # healthcheck configures the readiness and liveliness probes for the controllerManager pod.
   healthcheck:
     enabled: true

@@ -67,7 +67,8 @@ tolerations: {}
   #   operator: Exists
   #   effect: NoSchedule
 
-nodeSelector: {}
+nodeSelector: 
+  beta.kubernetes.io/os: linux
 
 service: 
   type: ClusterIP

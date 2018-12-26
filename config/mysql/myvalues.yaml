@@ -51,7 +51,8 @@ extraInitContainers: |
 
 ## Node selector
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-nodeSelector: {}
+nodeSelector: 
+  beta.kubernetes.io/os: linux
 
 livenessProbe:
   initialDelaySeconds: 30
