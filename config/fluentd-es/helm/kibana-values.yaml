@@ -1,6 +1,6 @@
 image:
   repository: "docker.elastic.co/kibana/kibana-oss"
-  tag: "6.5.1"
+  tag: "6.5.3"
   pullPolicy: "IfNotPresent"
 
 commandline:
@@ -155,8 +155,8 @@ plugins:
   reset: true
   # Use <plugin_name,version,url> to add/upgrade plugin
   values:
-    # - elastalert-kibana-plugin,1.0.1,https://github.com/bitsensor/elastalert-kibana-plugin/releases/download/1.0.1/elastalert-kibana-plugin-1.0.1-6.5.1.zip
-    # - logtrail,0.1.30,https://github.com/sivasamyk/logtrail/releases/download/v0.1.30/logtrail-6.5.1-0.1.30.zip
+    - elastalert-kibana-plugin,1.0.1,https://github.com/bitsensor/elastalert-kibana-plugin/releases/download/1.0.1/elastalert-kibana-plugin-1.0.1-6.5.3.zip
+    - logtrail,0.1.30,https://github.com/sivasamyk/logtrail/releases/download/v0.1.30/logtrail-6.5.3-0.1.30.zip
     # - other_plugin
 
 persistentVolumeClaim:
@@ -183,3 +183,9 @@ securityContext:
   allowPrivilegeEscalation: false
   runAsUser: 1000
   fsGroup: 2000
+
+extraConfigMapMounts: []
+  # - name: logtrail-configs
+  #   configMap: kibana-logtrail
+  #   mountPath: /usr/share/kibana/plugins/logtrail/logtrail.json
+  #   subPath: logtrail.json
