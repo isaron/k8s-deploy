@@ -157,7 +157,7 @@ postgresql:
   enabled: false
   # To use an external PostgreSQL instance, set enabled to false and uncomment
   # the line below:
-  postgresServer: "172.30.80.103"
+  postgresServer: "172.30.80.101"
   postgresUser: "sonaruser"
   postgresPassword: "p@ssw0rd"
   postgresDatabase: "sonardb"
