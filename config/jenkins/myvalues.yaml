@@ -13,7 +13,7 @@ Master:
   Image: "jenkins/jenkins"
   ImageTag: "lts"
   ImagePullPolicy: "Always"
-# ImagePullSecret: jenkins
+# ImagePullSecret: nexus-docker
   Component: "jenkins-master"
   UseSecurity: true
   # SecurityRealm:
@@ -106,7 +106,7 @@ Master:
     - git:3.9.1
     # - ldap:1.2.0
     # - keycloak:2.2.0
-    # - blueocean:1.9.0
+    # - blueocean:1.10.1
     # - matrix-auth:2.3
     # - configuration-as-code:1.1
     # - sonar:2.8.1
@@ -162,7 +162,7 @@ Agent:
   ImageTag: 3.26-1
   # ImageTag: 3.26-1-alpine
   CustomJenkinsLabels: []
-# ImagePullSecret: jenkins
+# ImagePullSecret: nexus-docker
   Component: "jenkins-slave"
   Privileged: false
   resources:
