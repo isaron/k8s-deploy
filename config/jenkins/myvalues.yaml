@@ -159,8 +159,8 @@ Master:
 Agent:
   Enabled: true
   Image: jenkins/jnlp-slave
-  ImageTag: 3.26-1
-  # ImageTag: 3.26-1-alpine
+  ImageTag: 3.27-1
+  # ImageTag: 3.27-1-alpine
   CustomJenkinsLabels: []
 # ImagePullSecret: nexus-docker
   Component: "jenkins-slave"
