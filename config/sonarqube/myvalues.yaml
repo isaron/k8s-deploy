@@ -23,11 +23,12 @@ service:
   type: ClusterIP
   externalPort: 9000
   internalPort: 9000
-  annotations: {}
+  labels:
+  annotations:
   # May be used in example for internal load balancing in GCP:
   # cloud.google.com/load-balancer-type: Internal
-  # loadBalancerSourceRanges:
-  # - 0.0.0.0/0
+  loadBalancerSourceRanges:
+  - 0.0.0.0/0
   # loadBalancerIP: 1.2.3.4
 ingress:
   enabled: true
@@ -102,6 +103,11 @@ persistence:
   size: 10Gi
 
 # List of plugins to install.
+# For example:
+# plugins:
+#  install:
+#    - "https://github.com/AmadeusITGroup/sonar-stash/releases/download/1.3.0/sonar-stash-plugin-1.3.0.jar"
+#    - "https://github.com/SonarSource/sonar-ldap/releases/download/2.2-RC3/sonar-ldap-plugin-2.2.0.601.jar"
 plugins:
   install:
     - "https://github.com/SonarSource/sonar-ldap/releases/download/2.2-RC3/sonar-ldap-plugin-2.2.0.601.jar"
