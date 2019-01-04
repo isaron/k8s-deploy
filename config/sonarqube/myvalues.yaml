@@ -126,7 +126,7 @@ plugins:
 # A custom sonar.properties file can be provided using a multiline YAML string.
 # For example:
 sonarProperties: |
-  # sonar.forceAuthentication=true
+  sonar.forceAuthentication=true
   # LDAP configuration
   # General Configuration
   sonar.security.realm=LDAP
