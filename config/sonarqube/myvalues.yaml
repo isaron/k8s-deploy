@@ -131,8 +131,8 @@ sonarProperties: |
   # General Configuration
   sonar.security.realm=LDAP
   ldap.url=ldap://ldap.ssii.com:389
-  ldap.bindDn=cn=admin,dc=rdp,dc=dev
-  ldap.bindPassword=p@ssw0rd
+  # ldap.bindDn=cn=admin,dc=rdp,dc=dev
+  # ldap.bindPassword=p@ssw0rd
   ldap.authentication=simple
     
   # User Configuration
