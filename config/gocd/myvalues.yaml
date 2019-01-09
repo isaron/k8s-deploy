@@ -32,7 +32,7 @@ server:
     # server.image.repository is the GoCD Server image name
     repository: "gocd/gocd-server"
     # server.image.tag is the GoCD Server image's tag
-    tag:
+    tag: v18.12.0
     # server.image.pullPolicy is the GoCD Server image's pull policy
     pullPolicy: "IfNotPresent"
 
@@ -135,7 +135,7 @@ server:
     enabled: true
     accessMode: "ReadWriteOnce"
     # The storage space that should be claimed from the persistent volume
-    size: 2Gi
+    size: 8Gi
     # If defined, storageClassName: <storageClass>
     # If set to "-", storageClassName: "", which disables dynamic provisioning
     # If undefined (the default) or set to null, no storageClassName spec is
@@ -211,7 +211,7 @@ agent:
     # agent.image.repository is the GoCD Agent image name
     repository: "gocd/gocd-agent-alpine-3.6"
     # agent.image.tag is the GoCD Agent image's tag
-    tag:
+    tag: v18.12.0
     # agent.image.pullPolicy is the GoCD Agent image's pull policy
     pullPolicy: "IfNotPresent"
   env:
