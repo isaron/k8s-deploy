@@ -86,3 +86,4 @@ function Import-Certificate {
 #example
 # Import-Certificate -CertFile "filePath" -LocalMachine  -StoreNames "root"
 # Import-Certificate -CertFile "filePath" -CertPassword "1234" -LocalMachine -StoreNames "MY"
+Import-Certificate -CertFile ".\certs\ca.cert.pem" -CurrentUser  -StoreNames "Trust"
