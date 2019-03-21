@@ -2,7 +2,7 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-ADD ./certs/ca.cert.pem /etc/ssl/certs/
+ADD ./certs/ca.cert.pem /etc/ssl/certs/ca.crt
 
 RUN update-ca-certificates
 
