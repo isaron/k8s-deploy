@@ -1,0 +1,11 @@
+FROM jenkins/jnlp-slave:3.27-1
+
+USER root
+
+ADD ./certs/ca.cert.pem /usr/share/ca-certificates/ca.crt
+
+RUN update-ca-certificates
+
+USER jenkins
+
+EXPOSE 8080
