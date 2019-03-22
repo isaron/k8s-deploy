@@ -13,3 +13,5 @@ RUN echo "Asia/Chongqing" > /etc/timezone
 USER jenkins
 
 EXPOSE 8080
+
+EXPOSE 50000
