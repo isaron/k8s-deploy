@@ -10,10 +10,10 @@
 
 Master:
   Name: jenkins-master
-  Image: "jenkins/jenkins"
+  Image: "containers.ssii.com/jenkins/jenkins"
   ImageTag: "lts"
   ImagePullPolicy: "Always"
-# ImagePullSecret: nexus-docker
+  ImagePullSecret: nexus-docker
   Component: "jenkins-master"
   NumExecutors: 0
   # configAutoReload requires UseSecurity is set to true:
@@ -256,6 +256,11 @@ Master:
   # the jenkins config with the contents of the configMap every time the pod starts.
   OverwriteConfig: false
 
+  # By default, the Jobs Map is only used to set the initial jobs the first time
+  # that the chart is installed.  Setting `overwriteJobs` to `true` will overwrite
+  # the jenkins jobs configuration with the contents of Jobs every time the pod starts.
+  overwriteJobs: false
+
   ingress:
     enabled: true
     labels: {}
@@ -284,10 +289,10 @@ Master:
 
 Agent:
   Enabled: true
-  Image: jenkins/jnlp-slave
+  Image: containers.ssii.com/jenkins/jnlp-slave
   ImageTag: 3.27-1
   CustomJenkinsLabels: []
-# ImagePullSecret: nexus-docker
+  ImagePullSecret: nexus-docker
   Component: "jenkins-slave"
   Privileged: false
   resources:
