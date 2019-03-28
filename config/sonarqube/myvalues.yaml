@@ -3,28 +3,22 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: sonarqube
-  tag: 7.4-community
+  repository: containers.ssii.com/sonarqube
+  tag: 7.6-community
   # If using a private repository, the name of the imagePullSecret to use
-  # pullSecret: my-repo-secret
-# Starting 6.7.6 and 7.4 official sonarqube docker image, command is not required
-# anymore. For older images, uncomment the following lines.
-# command: [
-#   "sh",
-#   "-ce",
-#   "mkdir /scripts &&
-#   cp /tmp-script/startup.sh /scripts/startup.sh &&
-#   chmod 0755 /scripts/startup.sh &&
-#   /scripts/startup.sh
-#   "
-#   ]
+  pullSecret: nexus-docker
+
+# Set security context for sonarqube pod
+securityContext:
+  fsGroup: 999
+
 service:
   name: sonarqube
   type: ClusterIP
   externalPort: 9000
   internalPort: 9000
   labels:
-  annotations:
+  annotations: {}
   # May be used in example for internal load balancing in GCP:
   # cloud.google.com/load-balancer-type: Internal
   loadBalancerSourceRanges:
@@ -42,6 +36,11 @@ ingress:
     # kubernetes.io/tls-acme: "true"
     # This property allows for reports up to a certain size to be uploaded to SonarQube
     nginx.ingress.kubernetes.io/proxy-body-size: "8m"
+
+# Additional labels for Ingress manifest file
+  # labels:
+  #  traffic-type: external
+  #  traffic-type: internal
   tls:
   # Secrets must be manually created in the namespace.
   - secretName: sonar-ingress-cert
@@ -72,9 +71,11 @@ readinessProbe:
   initialDelaySeconds: 60
   periodSeconds: 30
   failureThreshold: 6
+  sonarWebContext: /
 livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 30
+  sonarWebContext: /
 
 # Set extra env variables. Like proxy settings.
 extraEnv: {}
@@ -92,6 +93,10 @@ resources: {}
 #  memory: 128Mi
 persistence:
   enabled: true
+  ## Specify an existing volume claim instead of creating a new one.
+  ## When using this option all following options like storageClass, accessMode and size are ignored.
+  # existingClaim:
+
   ## If defined, storageClassName: <storageClass>
   ## If set to "-", storageClassName: "", which disables dynamic provisioning
   ## If undefined (the default) or set to null, no storageClassName spec is
@@ -141,10 +146,10 @@ sonarProperties: |
   ldap.user.realNameAttribute=cn
   ldap.user.emailAttribute=mail
   
-  # Group Configuration
-  ldap.group.baseDn=ou=realmRoles,dc=rdp,dc=dev
-  ldap.group.request=(&(objectClass=groupOfNames)(member="uid=${login},ou=users,dc=rdp,dc=dev"))
-  ldap.group.idAttribute=cn
+# Kubernetes secret that contains the encryption key for the sonarqube instance.
+# The secret must contain the key 'sonar-secret.txt'.
+# The 'sonar.secretKeyPath' property will be set automatically.
+# sonarSecretKey: "settings-encryption-secret"
 
 ## Configuration value to select database type
 ## Option to use "postgresql" or "mysql" database type, by default "postgresql" is chosen
@@ -156,7 +161,7 @@ database:
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/postgresql/README.md
 postgresql:
   # Enable to deploy the PostgreSQL chart
-  enabled: false
+  enabled: true
   # To use an external PostgreSQL instance, set enabled to false and uncomment
   # the line below:
   postgresServer: "172.30.80.101"
@@ -176,6 +181,9 @@ mysql:
   # To use an external mySQL instance, set enabled to false and uncomment
   # the line below:
   # mysqlServer: ""
+  # To use an external secret for the password for an external mySQL instance,
+  # set enabled to false and provide the name of the secret on the line below:
+  # mysqlPasswordSecret: ""
   mysqlUser: "sonarUser"
   mysqlPassword: "sonarPass"
   mysqlDatabase: "sonarDB"
