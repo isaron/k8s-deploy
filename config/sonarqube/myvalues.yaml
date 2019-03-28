@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: containers.ssii.com/sonarqube
+  repository: containers.ssii.com/base/sonarqube
   tag: 7.6-community
   # If using a private repository, the name of the imagePullSecret to use
   pullSecret: nexus-docker
