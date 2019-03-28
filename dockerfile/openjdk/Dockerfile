@@ -2,7 +2,7 @@ FROM openjdk:11-jre-slim
 
 USER root
 
-ADD ./certs/ca.cert.pem /usr/share/ca-certificates/ca.crt
+COPY ./certs/ca.cert.pem /usr/share/ca-certificates/ca.crt
 
 RUN update-ca-certificates
 
