@@ -2,7 +2,7 @@ FROM sonarqube:7.6-community
 
 USER root
 
-COPY sonar.properties /opt/sonarqube/conf/
+COPY ./dockerfile/sonarqube/sonar.properties /opt/sonarqube/conf/
 
 RUN chown sonarqube:sonarqube /opt/sonarqube/conf/sonar.properties
 
