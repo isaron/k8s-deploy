@@ -6,7 +6,7 @@ COPY ./dockerfile/sonarqube/sonar.properties /opt/sonarqube/conf/
 
 RUN chown sonarqube:sonarqube /opt/sonarqube/conf/sonar.properties
 
-COPY ./certs/ca.cert.pem /usr/share/ca-certificates/ca.crt
+COPY ./certs/ca.cert.pem /usr/local/share/ca-certificates/ca.crt
 
 RUN update-ca-certificates
 
