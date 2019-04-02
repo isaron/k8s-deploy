@@ -61,11 +61,16 @@ nodeSelector:
   beta.kubernetes.io/os: linux
 
 # hostAliases allows the modification of the hosts file inside a container
-hostAliases: []
-# - ip: "192.168.1.10"
-#   hostnames:
-#   - "example.com"
-#   - "www.example.com"
+HostAliases: 
+  - ip: 172.30.80.90
+    hostnames:
+      - ldap.ssii.com
+      - gitea.ssii.com
+  - ip: 172.30.80.100
+    hostnames:
+      - nexus.ssii.com
+      - containers.ssii.com
+      - jenkins.ssii.com
 
 readinessProbe:
   initialDelaySeconds: 60
