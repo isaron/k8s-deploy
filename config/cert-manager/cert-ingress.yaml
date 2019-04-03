@@ -22,5 +22,5 @@ spec:
   - harbor.ssii.com
   - containers.ssii.com
   - kubeapps.ssii.com
-  - gogs.ssii.com
+  - gitea.ssii.com
   
