@@ -117,7 +117,7 @@ server:
   host: "drone.ssii.com"
 
   ## protocol should be http or https
-  protocol: http
+  protocol: https
 
   ## Initial admin user
   ## Leaving this blank may make it impossible to log into drone.
