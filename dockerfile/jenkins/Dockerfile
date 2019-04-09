@@ -10,8 +10,8 @@ RUN keytool -import -alias ssii.com -file /usr/local/share/ca-certificates/ca.cr
 
 RUN echo "Asia/Chongqing" > /etc/timezone
 
-USER jenkins
-
 EXPOSE 8080
 
 EXPOSE 50000
+
+USER jenkins

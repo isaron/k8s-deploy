@@ -10,6 +10,4 @@ RUN keytool -import -alias ssii.com -file /usr/local/share/ca-certificates/ca.cr
 
 RUN echo "Asia/Chongqing" > /etc/timezone
 
-RUN apt install resolvconf && mkdir -p /etc/resolvconf/resolv.conf.d && echo "nameserver 10.96.0.10" >> /etc/resolvconf/resolv.conf.d/base
-
 USER jenkins
