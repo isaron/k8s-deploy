@@ -10,6 +10,6 @@ RUN keytool -import -alias ssii.com -file /usr/local/share/ca-certificates/ca.cr
 
 RUN echo "Asia/Chongqing" > /etc/timezone
 
-RUN echo "nameserver 10.96.0.10" >> /etc/resove.conf
+RUN echo "nameserver 10.96.0.10" >> /etc/resolv.conf
 
 USER jenkins
