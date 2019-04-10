@@ -303,8 +303,8 @@ Agent:
       cpu: "200m"
       memory: "256Mi"
     limits:
-      cpu: "200m"
-      memory: "256Mi"
+      cpu: "1000m"
+      memory: "1024Mi"
   # You may want to change this to true while testing a new image
   AlwaysPullImage: true
   # Controls how slave pods are retained after the Jenkins build completes
