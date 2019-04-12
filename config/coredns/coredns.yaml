@@ -62,7 +62,7 @@ data:
           fallthrough in-addr.arpa ip6.arpa
         }
         prometheus :9153
-        forward . /etc/resolv.conf
+        # forward . /etc/resolv.conf
         cache 30
         loop
         reload
@@ -70,7 +70,7 @@ data:
     }
     ssii.com {
         errors
-        health
+        # health
         prometheus :9153
         # proxy ssii.com 172.30.80.89 172.30.80.88 {
         #   policy round_robin
