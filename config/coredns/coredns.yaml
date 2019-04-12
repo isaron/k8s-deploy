@@ -75,7 +75,7 @@ data:
         # proxy ssii.com 172.30.80.89 172.30.80.88 {
         #   policy round_robin
         # }
-        forward . 172.30.80.89:53
+        forward . /etc/resolv.conf
         cache 30
         loop
         reload
