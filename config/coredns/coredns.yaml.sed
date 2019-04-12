@@ -4,7 +4,7 @@ metadata:
   name: coredns
   namespace: kube-system
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
@@ -21,8 +21,14 @@ rules:
   verbs:
   - list
   - watch
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - get
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   annotations:
@@ -53,19 +59,19 @@ data:
           pods insecure
           upstream
           fallthrough in-addr.arpa ip6.arpa
-        }
+        }FEDERATIONS
         prometheus :9153
         proxy ssii.com 172.30.80.89 172.30.80.88 {
           policy round_robin
         }
-        proxy . /etc/resolv.conf {
-          except ssii.com
-        }
+        forward . UPSTREAMNAMESERVER
         cache 30
+        loop
         reload
-    }
+        loadbalance
+    }STUBDOMAINS
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: coredns
@@ -87,18 +93,30 @@ spec:
       labels:
         k8s-app: kube-dns
     spec:
+      priorityClassName: system-cluster-critical
       serviceAccountName: coredns
       tolerations:
         - key: "CriticalAddonsOnly"
           operator: "Exists"
+      nodeSelector:
+        beta.kubernetes.io/os: linux
       containers:
       - name: coredns
         image: coredns/coredns:1.3.1
         imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: 170Mi
+          requests:
+            cpu: 100m
+            memory: 70Mi
         args: [ "-conf", "/etc/coredns/Corefile" ]
         volumeMounts:
         - name: config-volume
           mountPath: /etc/coredns
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
         ports:
         - containerPort: 53
           name: dns
@@ -109,6 +127,14 @@ spec:
         - containerPort: 9153
           name: metrics
           protocol: TCP
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            add:
+            - NET_BIND_SERVICE
+            drop:
+            - all
+          readOnlyRootFilesystem: true
         livenessProbe:
           httpGet:
             path: /health
@@ -118,8 +144,15 @@ spec:
           timeoutSeconds: 5
           successThreshold: 1
           failureThreshold: 5
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
       dnsPolicy: Default
       volumes:
+        - name: tmp
+          emptyDir: {}
         - name: config-volume
           configMap:
             name: coredns
@@ -133,6 +166,7 @@ metadata:
   name: kube-dns
   namespace: kube-system
   annotations:
+    prometheus.io/port: "9153"
     prometheus.io/scrape: "true"
   labels:
     k8s-app: kube-dns
@@ -148,4 +182,7 @@ spec:
     protocol: UDP
   - name: dns-tcp
     port: 53
+    protocol: TCP
+  - name: metrics
+    port: 9153
     protocol: TCP
