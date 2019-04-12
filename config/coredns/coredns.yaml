@@ -55,9 +55,9 @@ data:
     cluster.local:53 {
         errors
         health
-        autopath @kubernetes
+        # autopath @kubernetes
         kubernetes cluster.local 10.244.0.0/16 {
-          pods verified
+          pods insecure
           upstream
           fallthrough in-addr.arpa ip6.arpa
         }
