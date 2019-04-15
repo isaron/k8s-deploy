@@ -52,11 +52,11 @@ metadata:
   namespace: kube-system
 data:
   Corefile: |
-    cluster.local:53 {
+    .:53 {
         errors
         health
         # autopath @kubernetes
-        kubernetes cluster.local 10.244.0.0/16 {
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
           pods insecure
           upstream
           fallthrough in-addr.arpa ip6.arpa
@@ -68,22 +68,23 @@ data:
         reload
         loadbalance
     }
-    ssii.com {
+    ssii.com:53 {
         errors
         # health
-        prometheus :9153
+        # prometheus :9153
         # proxy ssii.com 172.30.80.89 172.30.80.88 {
         #   policy round_robin
         # }
-        forward . /etc/resolv.conf
+        # forward . /etc/resolv.conf
+        forward . 172.30.80.89 172.30.80.88
         cache 30
         loop
         reload
         loadbalance
     }
-    . {
-      forward . 114.114.114.114:53
-    }
+    # . {
+    #   forward . 114.114.114.114:53
+    # }
 ---
 apiVersion: apps/v1
 kind: Deployment
