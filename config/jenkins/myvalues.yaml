@@ -337,7 +337,7 @@ Agent:
   # Max number of spawned agent
   ContainerCap: 10
   # Pod name
-  PodName: default
+  PodName: jenkins-slave
 
 Persistence:
   Enabled: true
