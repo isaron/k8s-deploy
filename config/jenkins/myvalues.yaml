@@ -375,6 +375,7 @@ NetworkPolicy:
 rbac:
   install: true
   serviceAccountName: jenkins
+  serviceAccountAnnotations: {}
   # Role reference
   roleRef: cluster-admin
   # Role kind (Role or ClusterRole)
