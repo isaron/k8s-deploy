@@ -58,7 +58,7 @@ Master:
   #   - name: http_proxy
   #     value: "http://192.168.64.1:3128"
   # Set min/max heap here if needed with:
-  # JavaOpts: "-Xms512m -Xmx512m"
+  JavaOpts: "-Xms512m -Xmx512m -Xdebug -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
   # JenkinsOpts: ""
   # JenkinsUrl: ""
   # If you set this prefix and use ingress controller then you might want to set the ingress path below
@@ -303,8 +303,8 @@ Agent:
       cpu: "200m"
       memory: "256Mi"
     limits:
-      cpu: "1000m"
-      memory: "1024Mi"
+      cpu: "2000m"
+      memory: "2048Mi"
   # You may want to change this to true while testing a new image
   AlwaysPullImage: true
   # Controls how slave pods are retained after the Jenkins build completes
