@@ -2,7 +2,6 @@ FROM jenkins/jnlp-slave:alpine
 
 USER root
 
-RUN mkdir 
 COPY ./bin/helm /usr/local/bin/helm
 RUN chmod +x /usr/local/bin/helm \
     && mkdir /home/jenkins/.kube
