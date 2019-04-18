@@ -8,7 +8,8 @@ RUN chmod +x /usr/local/bin/helm \
 COPY ./kube/kubeconf /home/jenkins/.kube/config
 
 COPY ./certs/ca.cert.pem /usr/local/share/ca-certificates/ca.crt
-RUN apk --update add update-ca-certificates \
+RUN apk --update upgrade \
+    && apk add curl ca-certificates \
     && update-ca-certificates \
     && keytool -import -alias ssii.com -file /usr/local/share/ca-certificates/ca.crt -keystore "$JAVA_HOME/jre/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt \
     && echo "Asia/Chongqing" > /etc/timezone \
