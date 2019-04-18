@@ -10,14 +10,18 @@ COPY ./kube/kubeconf /home/jenkins/.kube/config
 # COPY ca-cert-XXX.pem /etc/ssl/certs/
 # RUN cat ca-cert-XXX.pem >> /etc/ssl/certs/ca-certificates.crt
 COPY ./certs/ca.cert.pem /etc/ssl/certs/ca.crt
-RUN apk --update upgrade \
+RUN mkdir -p /etc/apk/repositories \
+    && echo 'https://mirrors.aliyun.com/alpine/v3.9/main' > /etc/apk/repositories \
+    && echo 'https://mirrors.aliyun.com/alpine/v3.9/community' > /etc/apk/repositories \
+    && apk --update upgrade \
     && apk add --no-cache ca-certificates \
     && update-ca-certificates \
     && keytool -import -alias ssii.com -file /etc/ssl/certs//ca.crt -keystore "$JAVA_HOME/jre/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt \
     && echo "Asia/Chongqing" > /etc/timezone \
     && rm -rf /var/lib/apt/lists/* \
     && rm /var/cache/apk/* \
-    && chown jenkins.jenkins /home/jenkins/.kube \
-    && helm init --client-only
+    && helm init --client-only \
+    && helm repo add --username admin --password admin123 chartmuseum https://chartmuseum.ssii.com \
+    && chown -R jenkins.jenkins /home/jenkins
 
 USER jenkins
