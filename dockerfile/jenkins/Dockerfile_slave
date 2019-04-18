@@ -9,7 +9,8 @@ COPY ./kube/kubeconf /home/jenkins/.kube/config
 
 # COPY ca-cert-XXX.pem /etc/ssl/certs/
 # RUN cat ca-cert-XXX.pem >> /etc/ssl/certs/ca-certificates.crt
-COPY ./certs/ca.cert.pem /usr/local/share/ca-certificates/ca.crt
+# COPY ./certs/ca.cert.pem /usr/local/share/ca-certificates/ca.crt
+COPY ./certs/ca.cert.pem /etc/ssl/certs/
 RUN apk --update upgrade \
     && apk add --no-cache ca-certificates \
     && update-ca-certificates \
