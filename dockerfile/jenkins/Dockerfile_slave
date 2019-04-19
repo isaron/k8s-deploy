@@ -5,7 +5,7 @@ USER root
 COPY ./bin/helm /usr/local/bin/helm
 COPY ./bin/helmrepo.tar.gz /home/jenkins
 RUN chmod +x /usr/local/bin/helm \
-    && tar -zxf /home/jenkins/helmrepo.tar.gz /home/jenkins/ \
+    && tar -zxf /home/jenkins/helmrepo.tar.gz /home/jenkins/. \
     && mkdir /home/jenkins/.kube
 COPY ./kube/kubeconf /home/jenkins/.kube/config
 
