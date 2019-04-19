@@ -14,7 +14,7 @@ COPY ./kube/kubeconf /home/jenkins/.kube/config
 # RUN cat ca-cert-XXX.pem >> /etc/ssl/certs/ca-certificates.crt
 COPY ./certs/ca.cert.pem /etc/ssl/certs/ca.crt
 RUN echo 'https://mirrors.aliyun.com/alpine/v3.9/main' > /etc/apk/repositories \
-    && echo 'https://mirrors.aliyun.com/alpine/v3.9/community' > /etc/apk/repositories \
+    && echo 'https://mirrors.aliyun.com/alpine/v3.9/community' >> /etc/apk/repositories \
     && apk --update upgrade \
     && apk add --no-cache ca-certificates \
     && update-ca-certificates \
