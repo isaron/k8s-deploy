@@ -23,8 +23,7 @@ RUN echo 'https://mirrors.aliyun.com/alpine/v3.9/main' > /etc/apk/repositories \
     && rm -rf /var/lib/apt/lists/* \
     && rm /var/cache/apk/* \
     && helm init --client-only \
-#    && helm repo add --username admin --password admin123 chartmuseum https://chartmuseum.ssii.com \
-#    && helm plugin install https://github.com/chartmuseum/helm-push \
+    && helm plugin install https://github.com/chartmuseum/helm-push \
     && chown -R jenkins.jenkins /home/jenkins
 
 USER jenkins
