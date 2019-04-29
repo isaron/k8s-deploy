@@ -18,7 +18,7 @@ RUN echo 'https://mirrors.aliyun.com/alpine/v3.9/main' > /etc/apk/repositories \
     && apk --update upgrade \
     && apk add --no-cache ca-certificates \
     && update-ca-certificates \
-    && keytool -import -alias ssii.com -file /etc/ssl/certs//ca.crt -keystore "$JAVA_HOME/jre/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt \
+    && keytool -import -alias ssii.com -file /etc/ssl/certs/ca.crt -keystore "$JAVA_HOME/jre/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt \
     && echo "Asia/Chongqing" > /etc/timezone \
     && rm -rf /var/lib/apt/lists/* \
     && rm /var/cache/apk/* \
