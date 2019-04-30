@@ -7,7 +7,7 @@ COPY ./bin/helmrepo.tar.gz /home/jenkins
 RUN chmod +x /usr/local/bin/helm \
     && tar -zxf /home/jenkins/helmrepo.tar.gz \
     && mv .helm /home/jenkins/. \
-    && rm /home/jenkins/helmrepo.tar.gz /home/jenkins/.helm/plugins/helm-push \
+    && rm /home/jenkins/helmrepo.tar.gz /home/jenkins/.helm/plugins/helm-push /home/jenkins/.helm/cache/archive/* \
     && helm plugin install https://github.com/chartmuseum/helm-push \
     && mkdir /home/jenkins/.kube
 COPY ./kube/kubeconf /home/jenkins/.kube/config
