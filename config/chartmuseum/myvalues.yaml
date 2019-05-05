@@ -69,7 +69,7 @@ env:
     # disable all routes prefixed with /api
     DISABLE_API: false
     # allow chart versions to be re-uploaded
-    ALLOW_OVERWRITE: false
+    ALLOW_OVERWRITE: true
     # absolute url for .tgzs in index.yaml
     CHART_URL:
     # allow anonymous GET operations when auth is used
