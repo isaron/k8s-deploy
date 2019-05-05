@@ -10,7 +10,6 @@ RUN chmod +x /usr/local/bin/helm \
     && rm /home/jenkins/helmrepo.tar.gz /home/jenkins/.helm/plugins/helm-push /home/jenkins/.helm/cache/archive/* \
     && helm plugin install https://github.com/chartmuseum/helm-push \
     && sed -i 's#\/root/#\/home\/jenkins\/#' .helm/repository/repositories.yaml \
-    && helm repo update \
     && mkdir /home/jenkins/.kube
 COPY ./kube/kubeconf /home/jenkins/.kube/config
 
@@ -27,6 +26,7 @@ RUN echo 'https://mirrors.aliyun.com/alpine/v3.9/main' > /etc/apk/repositories \
     && rm -rf /var/lib/apt/lists/* \
     && rm /var/cache/apk/* \
     && helm init --client-only \
-    && chown -R jenkins.jenkins /home/jenkins
+    && chown -R jenkins.jenkins /home/jenkins \
+    && helm repo update
 
 USER jenkins
