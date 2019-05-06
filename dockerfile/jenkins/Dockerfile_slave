@@ -24,8 +24,8 @@ RUN echo 'https://mirrors.aliyun.com/alpine/v3.9/main' > /etc/apk/repositories \
     && echo "Asia/Chongqing" > /etc/timezone \
     && rm -rf /var/lib/apt/lists/* \
     && rm /var/cache/apk/* \
-    && helm init --client-only \
     && chown -R jenkins.jenkins /home/jenkins \
+    && helm init --client-only \
     && helm repo update \
     && helm plugin install https://github.com/chartmuseum/helm-push
 
