@@ -3,11 +3,11 @@ FROM jenkins/jnlp-slave:alpine
 USER root
 
 COPY ./bin/helm /usr/local/bin/helm
-COPY ./bin/helmrepo.tar.gz /home/jenkins
+# COPY ./bin/helmrepo.tar.gz /home/jenkins
 RUN chmod +x /usr/local/bin/helm \
-    && tar -zxf /home/jenkins/helmrepo.tar.gz \
-    && mv .helm /home/jenkins/. \
-    && rm /home/jenkins/helmrepo.tar.gz \
+#    && tar -zxf /home/jenkins/helmrepo.tar.gz \
+#    && mv .helm /home/jenkins/. \
+#    && rm /home/jenkins/helmrepo.tar.gz \
     && mkdir /home/jenkins/.kube
 COPY ./kube/kubeconf /home/jenkins/.kube/config
 
@@ -29,5 +29,8 @@ USER jenkins
 
 RUN helm init --client-only \
     && helm plugin install https://github.com/chartmuseum/helm-push \
-    && PATH=$PATH:/home/jenkins/.helm/plugins/helm-push/bin/
-    
+#    && PATH=$PATH:/home/jenkins/.helm/plugins/helm-push/bin/ \
+    && helm repo add --username admin --password admin123 chartmuseum https://chartmuseum.ssii.com \
+    && helm repo add mirror http://172.30.80.33:8080/ \
+    && helm repo add bitnami https://charts.bitnami.com/bitnami \
+    && helm repo add svc-cat https://svc-catalog-charts.storage.googleapis.com
