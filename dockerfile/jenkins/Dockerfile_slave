@@ -33,5 +33,5 @@ RUN helm init --client-only \
     && helm repo add --username admin --password admin123 chartmuseum https://chartmuseum.ssii.com \
     && helm repo add mirror http://172.30.80.33:8080/ \
     && helm repo add bitnami https://charts.bitnami.com/bitnami \
-    && helm repo add svc-cat https://svc-catalog-charts.storage.googleapis.com \
+#    && helm repo add svc-cat https://svc-catalog-charts.storage.googleapis.com \
     && helm push --help
