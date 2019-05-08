@@ -5,7 +5,6 @@ USER root
 COPY ./bin/helm /usr/local/bin/helm
 RUN chmod +x /usr/local/bin/helm \
     && mkdir -p /home/jenkins/.kube /home/jenkins/.helm
-VOLUME [ "/home/jenkins/.kube", "/home/jenkins/.helm" ]
 COPY ./kube/kubeconf /home/jenkins/.kube/config
 
 COPY ./certs/ca.cert.pem /etc/ssl/certs/ca.crt
@@ -28,3 +27,8 @@ RUN PATH=$PATH:/home/jenkins/bin \
     && helm repo add --username admin --password admin123 chartmuseum https://chartmuseum.ssii.com \
     && helm repo add mirror http://172.30.80.33:8080/ \
     && helm repo add bitnami https://charts.bitnami.com/bitnami
+
+USER root
+VOLUME [ "/home/jenkins/.kube", "/home/jenkins/.helm" ]
+
+USER jenkins
