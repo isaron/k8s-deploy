@@ -2,13 +2,13 @@ FROM jenkins/jnlp-slave:alpine
 
 USER root
 
-ENV KUBECONFIG /opt/kube/config
-ENV HELM_HOME /opt/helm
-
 COPY ./bin/helm /usr/local/bin/helm
 RUN chmod +x /usr/local/bin/helm \
     && mkdir -p /opt/kube /opt/helm
 COPY ./kube/kubeconf /opt/kube/config
+
+ENV KUBECONFIG /opt/kube/config
+ENV HELM_HOME /opt/helm
 
 COPY ./certs/ca.cert.pem /etc/ssl/certs/ca.crt
 RUN echo 'https://mirrors.aliyun.com/alpine/v3.9/main' > /etc/apk/repositories \
