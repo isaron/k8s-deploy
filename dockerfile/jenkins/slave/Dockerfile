@@ -24,7 +24,7 @@ RUN echo 'https://mirrors.aliyun.com/alpine/v3.9/main' > /etc/apk/repositories \
     && helm plugin install https://github.com/chartmuseum/helm-push \
     && helm repo add --username admin --password admin123 chartmuseum https://chartmuseum.ssii.com \
     && helm repo add mirror http://172.30.80.33:8080/ \
-    && helm repo add bitnami https://charts.bitnami.com/bitnami \
+    # && helm repo add bitnami https://charts.bitnami.com/bitnami \
     && helm repo remove stable \
     && chown -R jenkins.jenkins /home/jenkins /opt/kube /opt/helm
 
