@@ -136,7 +136,7 @@ ingress:
     # # NOTE: Can't use 'false' due to https://github.com/jetstack/kube-lego/issues/173.
     kubernetes.io/ingress.allow-http: true
     kubernetes.io/ingress.class: nginx
-    ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
     # kubernetes.io/ingress.global-static-ip-name: ""
     # kubernetes.io/tls-acme: true
     nginx.ingress.kubernetes.io/proxy-body-size: 1024m

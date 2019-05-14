@@ -5,7 +5,7 @@ metadata:
     certmanager.k8s.io/cluster-issuer: ClusterIssuer
     # fabric8.io/generated-by: exposecontroller
     # kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.nginx.ingress.kubernetes.io/ssl-redirect: "false"
   # creationTimestamp: 2018-06-28T09:46:54Z
   # generation: 2
   # labels:
