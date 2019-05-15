@@ -67,7 +67,7 @@ env:
     # disable Prometheus metrics
     DISABLE_METRICS: true
     # disable all routes prefixed with /api
-    DISABLE_API: false
+    DISABLE_API: true
     # allow chart versions to be re-uploaded
     ALLOW_OVERWRITE: true
     # absolute url for .tgzs in index.yaml
@@ -106,9 +106,9 @@ env:
   # Stores Enviromnt Variable to secret key name mappings
   existingSecretMappings:
     # username for basic http authentication
-    BASIC_AUTH_USER: 
+    BASIC_AUTH_USER:
     # password for basic http authentication
-    BASIC_AUTH_PASS: 
+    BASIC_AUTH_PASS:
     # GCP service account json file
     GOOGLE_CREDENTIALS_JSON:
     # Redis requirepass server configuration
