@@ -163,9 +163,9 @@ postgresql:
   # instance, set enabled to false and provide the name of the secret on the
   # line below:
   # postgresPasswordSecret: ""
-  postgresUser: "sonarUser"
-  postgresPassword: "sonarPass"
-  postgresDatabase: "sonarDB"
+  postgresUser: "sonaruser"
+  postgresPassword: "p@ssw0rd"
+  postgresDatabase: "sonardb"
   # Specify the TCP port that PostgreSQL should use
   service:
     port: 5432
