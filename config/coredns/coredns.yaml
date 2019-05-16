@@ -63,9 +63,9 @@ data:
           fallthrough in-addr.arpa ip6.arpa
         }
         prometheus :9153
-        forward . /etc/resolv.conf {
-          except ssii.com
-        }
+        # forward . /etc/resolv.conf {
+        #   except ssii.com
+        # }
         # grpc . /etc/resolv.conf {
         #   except ssii.com
         # }
@@ -74,7 +74,7 @@ data:
         reload
         loadbalance
     }
-    ssii.com:53 {
+    ssii.com {
         errors
         # health
         # prometheus :9153
