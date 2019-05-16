@@ -52,7 +52,7 @@ metadata:
   namespace: kube-system
 data:
   Corefile: |
-    cluster.local:53 {
+    .:53 {
         errors
         health
         ready
@@ -63,6 +63,7 @@ data:
           fallthrough in-addr.arpa ip6.arpa
         }
         prometheus :9153
+        forward . 172.30.80.89 172.30.80.88
         # forward . /etc/resolv.conf {
         #   except ssii.com
         # }
@@ -74,20 +75,20 @@ data:
         reload
         loadbalance
     }
-    ssii.com {
-        errors
-        # health
-        # prometheus :9153
-        forward . 172.30.80.89
-        # grpc . 172.30.80.89 172.30.80.88
-        cache 30
-        # loop
-        reload
-        # loadbalance
-    }
-    . {
-      forward . 114.114.114.114
-    }
+    # ssii.com:53 {
+    #     errors
+    #     # health
+    #     # prometheus :9153
+    #     forward . 172.30.80.89
+    #     # grpc . 172.30.80.89 172.30.80.88
+    #     cache 30
+    #     # loop
+    #     reload
+    #     # loadbalance
+    # }
+    # . {
+    #   forward . 114.114.114.114
+    # }
 ---
 apiVersion: apps/v1
 kind: Deployment
