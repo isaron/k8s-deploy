@@ -63,9 +63,10 @@ data:
           fallthrough in-addr.arpa ip6.arpa
         }
         prometheus :9153
-        forward . /etc/resolv.conf {
-          except ssii.com
-        }
+        forward . /etc/resolv.conf
+        # forward . /etc/resolv.conf {
+        #   except ssii.com
+        # }
         # grpc . /etc/resolv.conf {
         #   except ssii.com
         # }
