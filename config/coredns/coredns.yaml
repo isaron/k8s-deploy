@@ -65,9 +65,9 @@ data:
         forward . /etc/resolv.conf {
           except ssii.com
         }
-        grpc . /etc/resolv.conf {
-          except ssii.com
-        }
+        # grpc . /etc/resolv.conf {
+        #   except ssii.com
+        # }
         cache 30
         loop
         reload
@@ -82,7 +82,7 @@ data:
         # }
         # forward . /etc/resolv.conf
         forward . 172.30.80.89 172.30.80.88
-        grpc . 172.30.80.89 172.30.80.88
+        # grpc . 172.30.80.89 172.30.80.88
         cache 30
         # loop
         # reload
