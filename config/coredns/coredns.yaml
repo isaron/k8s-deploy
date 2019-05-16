@@ -81,8 +81,8 @@ data:
         #   policy round_robin
         # }
         # forward . /etc/resolv.conf
-        forward . 172.30.80.89
-        grpc . 172.30.80.89
+        forward . 172.30.80.89 172.30.80.88
+        grpc . 172.30.80.89 172.30.80.88
         cache 30
         # loop
         # reload
