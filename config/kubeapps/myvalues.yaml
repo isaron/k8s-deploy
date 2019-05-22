@@ -312,9 +312,9 @@ authProxy:
     repository: bitnami/keycloak-gatekeeper
     tag: 2.3.0-r1
   # Mandatory parametes
-  discoveryURL: http://keycloak.ssii.com/auth/realms/env
+  discoveryURL: http://keycloak.ssii.com/auth/realms/master
   clientID: kubeapps
-  clientSecret: d4128f66-7fee-4c50-8f50-362680e2dd82
+  clientSecret: 1ea127d6-2e5e-4085-a29d-8c55491e5fb5
   # Additional flags for Keycloak-Gatekeeper
   additionalFlags:
     # - --skip-openid-provider-tls-verify
