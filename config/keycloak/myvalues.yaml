@@ -71,10 +71,10 @@ keycloak:
   password: p@ssw0rd
 
   # Specifies an existing secret to be used for the admin password
-  existingSecret: ""
+  existingSecret: keycloak-secret
 
   # The key in the existing secret that stores the password
-  existingSecretKey: password
+  existingSecretKey: keycloak_password
 
   ## Allows the specification of additional environment variables for Keycloak
   extraEnv: |
