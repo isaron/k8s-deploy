@@ -311,7 +311,7 @@ authProxy:
     repository: bitnami/keycloak-gatekeeper
     tag: 2.3.0-r1
   # Mandatory parametes
-  discoveryURL: https://keycloak.ssii.com/auth/realms/env
+  discoveryURL: http://keycloak.ssii.com/auth/realms/env
   clientID: kubeapps
   clientSecret: d4128f66-7fee-4c50-8f50-362680e2dd82
   # Additional flags for Keycloak-Gatekeeper
