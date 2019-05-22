@@ -305,7 +305,7 @@ testImage:
 # ref: https://github.com/kubeapps/kubeapps/blob/master/docs/user/using-an-OIDC-provider.md
 authProxy:
   # Set to true to enable the OIDC proxy
-  enabled: true
+  enabled: false
   # Image used for the proxy
   image:
     registry: docker.io
