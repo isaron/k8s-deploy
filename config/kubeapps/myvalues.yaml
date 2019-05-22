@@ -116,10 +116,6 @@ apprepository:
   #   url: https://svc-catalog-charts.storage.googleapis.com
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
-  - name: mirror
-    url: http://172.30.80.33:8080
-  - name: chartmuseum
-    url: http://chartmuseum.ssii.com
   # Additional repositories
   # - name: chartmuseum
   #   url: https://chartmuseum.default:8080
@@ -129,6 +125,11 @@ apprepository:
   #   # It should start with -----BEGIN CERTIFICATE----- or
   #   # -----BEGIN RSA PRIVATE KEY-----
   #   caCert:
+  - name: mirror
+    url: http://172.30.80.33:8080
+  - name: chartmuseum
+    url: https://chartmuseum.ssii.com
+    caCert: chartmuseum-cert
   # https://github.com/kubeapps/kubeapps/issues/478#issuecomment-422979262
   resources:
     limits:
