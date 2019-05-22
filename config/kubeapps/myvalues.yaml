@@ -108,12 +108,12 @@ apprepository:
     repository: bitnami/kubeapps-chart-repo
     tag: 1.4.0-r1
   initialRepos:
-  - name: stable
-    url: https://kubernetes-charts.storage.googleapis.com
-  - name: incubator
-    url: https://kubernetes-charts-incubator.storage.googleapis.com
-  - name: svc-cat
-    url: https://svc-catalog-charts.storage.googleapis.com
+  # - name: stable
+  #   url: https://kubernetes-charts.storage.googleapis.com
+  # - name: incubator
+  #   url: https://kubernetes-charts-incubator.storage.googleapis.com
+  # - name: svc-cat
+  #   url: https://svc-catalog-charts.storage.googleapis.com
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
   - name: mirror
