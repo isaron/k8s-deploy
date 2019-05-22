@@ -304,16 +304,16 @@ testImage:
 # ref: https://github.com/kubeapps/kubeapps/blob/master/docs/user/using-an-OIDC-provider.md
 authProxy:
   # Set to true to enable the OIDC proxy
-  enabled: false
+  enabled: true
   # Image used for the proxy
   image:
     registry: docker.io
     repository: bitnami/keycloak-gatekeeper
     tag: 2.3.0-r1
   # Mandatory parametes
-  discoveryURL:
-  clientID:
-  clientSecret:
+  discoveryURL: https://keycloak.ssii.com/auth/realms/env
+  clientID: kubeapps
+  clientSecret: d4128f66-7fee-4c50-8f50-362680e2dd82
   # Additional flags for Keycloak-Gatekeeper
   additionalFlags:
     # - --skip-openid-provider-tls-verify
