@@ -17,7 +17,7 @@ spec:
     - host: kiali.ssii.com
       http:
         paths:
-          - path: /kiali
+          - path: /
             backend:
               serviceName: kiali
               servicePort: 20001
@@ -46,7 +46,7 @@ spec:
     - host: prometheus.ssii.com
       http:
         paths:
-          - path: /prometheus
+          - path: /
             backend:
               serviceName: prometheus
               servicePort: 9090
@@ -75,7 +75,7 @@ spec:
   - host: tracing.ssii.com
     http:
       paths:
-        - path: /jaeger
+        - path: /
           backend:
             serviceName: tracing
             servicePort: 80
@@ -104,7 +104,7 @@ spec:
   - host: grafana.ssii.com
     http:
       paths:
-        - path: /grafana
+        - path: /
           backend:
             serviceName: grafana
             servicePort: 3000
