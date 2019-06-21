@@ -58,9 +58,10 @@ spec:
         - --source=ingress
         - --source=istio-gateway
         - --istio-ingress-gateway=istio-system/istio-ingressgateway # load balancer service to be used; can be specified multiple times. Omit to use the default (istio-system/istio-ingressgateway)
-        - --domain-filter=external-dns-test.my-org.com # will make ExternalDNS see only the hosted zones matching provided domain, omit to process all available hosted zones
-        - --provider=aws
-        - --policy=upsert-only # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
-        - --aws-zone-type=public # only look at public hosted zones (valid values are public, private or no value for both)
+        - --domain-filter=ssii.com # will make ExternalDNS see only the hosted zones matching provided domain, omit to process all available hosted zones
+        - --provider=pdns
+        # - --policy=upsert-only # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
+        - --pdns-server=http://172.30.80.89:8081
+        - --pdns-api-key=pdnsapi
         - --registry=txt
-        - --txt-owner-id=my-identifier
+        - --txt-owner-id=external-dns

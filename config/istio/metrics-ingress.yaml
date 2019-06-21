@@ -6,82 +6,55 @@ metadata:
   namespace: istio-system
   labels:
     app: kiali
+    chart: kiali
+    heritage: Tiller
+    release: istio
   annotations:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
 spec:
   rules:
-    ## Used to create an Ingress record.
-  - host: kiali.ssii.com
-    http:
-      paths:
-        - path: /
-          backend:
-            serviceName: kiali
-            servicePort: 20001
+    - host: kiali.ssii.com
+      http:
+        paths:
+          - path: /kiali
+            backend:
+              serviceName: kiali
+              servicePort: 20001
   tls:
-  # Secrets must be manually created in the namespace.
   - secretName: istio-ingress-metrics-certs
     hosts:
       - kiali.ssii.com
+
 ---
-# Source: istio/charts/servicegraph/templates/ingress.yaml
+# Source: istio/charts/prometheus/templates/ingress.yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: istio-servicegraph
+  name: prometheus
   namespace: istio-system
   labels:
-    app: servicegraph
-    chart: servicegraph-1.0.1
-    release: istio
+    app: prometheus
+    chart: prometheus
     heritage: Tiller
+    release: istio
   annotations:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
 spec:
   rules:
-  - host: servicegraph.ssii.com
-    http:
-      paths:
-        - path: /
-          backend:
-            serviceName: servicegraph
-            servicePort: 8088
+    - host: prometheus.ssii.com
+      http:
+        paths:
+          - path: /prometheus
+            backend:
+              serviceName: prometheus
+              servicePort: 9090
   tls:
-  # Secrets must be manually created in the namespace.
   - secretName: istio-ingress-metrics-certs
     hosts:
-      - servicegraph.ssii.com
----
-# Source: istio/charts/tracing/templates/ingress-jaeger.yaml
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: jaeger-query
-  namespace: istio-system
-  labels:
-    app: jaeger
-    chart: tracing-1.0.1
-    release: istio
-    heritage: Tiller
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-spec:
-  rules:
-  - host: jaeger.ssii.com
-    http:
-      paths:
-        - path: /
-          backend:
-            serviceName: jaeger-query
-            servicePort: 16686
-  tls:
-  # Secrets must be manually created in the namespace.
-  - secretName: istio-ingress-metrics-certs
-    hosts:
-      - jaeger.ssii.com
+      - prometheus.ssii.com
+
 ---
 # Source: istio/charts/tracing/templates/ingress.yaml
 apiVersion: extensions/v1beta1
@@ -90,10 +63,10 @@ metadata:
   name: istio-tracing
   namespace: istio-system
   labels:
-    app: tracing
-    chart: tracing-1.0.1
-    release: istio
+    app: jaeger
+    chart: tracing
     heritage: Tiller
+    release: istio
   annotations:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
@@ -102,41 +75,17 @@ spec:
   - host: tracing.ssii.com
     http:
       paths:
-        - path: /
+        - path: /jaeger
           backend:
-            serviceName: zipkin
-            servicePort: 9411
+            serviceName: tracing
+            servicePort: 80
   tls:
-  # Secrets must be manually created in the namespace.
   - secretName: istio-ingress-metrics-certs
     hosts:
       - tracing.ssii.com
+
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: prometheus
-  namespace: istio-system
-  labels:
-    app: prometheus
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-spec:
-  rules:
-  - host: prometheus.ssii.com
-    http:
-      paths:
-        - path: /
-          backend:
-            serviceName: prometheus
-            servicePort: 9090
-  tls:
-  # Secrets must be manually created in the namespace.
-  - secretName: istio-ingress-metrics-certs
-    hosts:
-      - prometheus.ssii.com
----
+# Source: istio/charts/grafana/templates/ingress.yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -144,6 +93,9 @@ metadata:
   namespace: istio-system
   labels:
     app: grafana
+    chart: grafana
+    heritage: Tiller
+    release: istio
   annotations:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
@@ -152,12 +104,11 @@ spec:
   - host: grafana.ssii.com
     http:
       paths:
-        - path: /
+        - path: /grafana
           backend:
             serviceName: grafana
             servicePort: 3000
   tls:
-  # Secrets must be manually created in the namespace.
   - secretName: istio-ingress-metrics-certs
     hosts:
       - grafana.ssii.com

@@ -15,7 +15,5 @@ spec:
   - grafana.ssii.com
   - prometheus.ssii.com
   - kiali.ssii.com
-  - servicegraph.ssii.com
-  - jaeger.ssii.com
   - tracing.ssii.com
   
