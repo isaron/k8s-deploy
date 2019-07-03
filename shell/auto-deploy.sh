@@ -245,7 +245,7 @@ kube::load_images()
         kubernetes-dashboard-amd64_v1.10.1
         cluster-autoscaler_v1.3.3
         coredns_1.2.2
-        coredns_1.1.3
+        # coredns_1.1.3
         metrics-server-amd64_v0.3.1
 
         heapster_v1.3.0
@@ -270,7 +270,7 @@ kube::load_images()
 
     images1=(
         defaultbackend_1.5
-        tiller_v2.11.0
+        tiller_v2.13.1
         nginx-ingress-controller_0.20.0
         flannel_v0.10.0-amd64
         docker-nexus_3.13.0
