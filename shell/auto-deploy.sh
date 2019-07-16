@@ -1027,11 +1027,35 @@ kubeProxy:
         mode: ipvs
 EOF
 
+# for k8s 1.15
+
+cat >kubeadm-config15.yaml  <<EOF
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: ${KUBE_VERSION}
+controlPlaneEndpoint: "${KUBE_VIP}:6443"
+etcd:
+    external:
+        endpoints:
+        - https://${MASTER_NODES[0]}:2379
+        - https://${MASTER_NODES[1]}:2379
+        - https://${MASTER_NODES[2]}:2379
+        caFile: /etc/kubernetes/pki/etcd/ca.pem
+        certFile: /etc/kubernetes/pki/etcd/client.pem
+        keyFile: /etc/kubernetes/pki/etcd/client-key.pem
+networking:
+    podSubnet: 10.244.0.0/16
+EOF
+
     # systemctl daemon-reload && systemctl start kubelet.service
     # kubeadm init --config=config.yaml --feature-gates=CoreDNS=true
     # kubeadm init --config=config.yaml
     kubeadm init --config kubeadm-config.yaml
      #--ignore-preflight-errors=all
+
+    # for k8s 1.15
+    # kubeadm init --config=kubeadm-config.yaml --upload-certs
+
     mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 }
 
