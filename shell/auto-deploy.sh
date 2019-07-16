@@ -1265,6 +1265,7 @@ kube::tear_down()
     # fi
     rm -rf /var/lib/cni && rm -rf /etc/cni
     rm -rf ~/.kube
+    rm -rf /tmp/*
     # ip link del cni0
     service networking restart
     curl -L http://172.30.80.88:8000/shell/del-old.sh -o del-old.sh
