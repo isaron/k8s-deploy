@@ -273,7 +273,6 @@ kube::load_images()
         tiller_v2.13.1
         nginx-ingress-controller_0.20.0
         flannel_v0.10.0-amd64
-        docker-nexus_3.13.0
     )
 
     for i in "${!images1[@]}"; do
