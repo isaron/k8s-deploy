@@ -13,7 +13,7 @@ k8simages=(
     # k8s-dns-dnsmasq-nanny-amd64:1.14.10
     kubernetes-dashboard-amd64:v1.10.1
     cluster-autoscaler:v1.3.3
-    defaultbackend:1.5
+    defaultbackend:1.4
     # coredns:1.2.2
     metrics-server-amd64:v0.3.1
     elasticsearch:v6.3.0
@@ -38,9 +38,9 @@ done
 docker tag k8s.gcr.io/pause-amd64:3.1 k8s.gcr.io/pause:3.1
 docker save k8s.gcr.io/pause:3.1 -o pause:3.1.tar
 
-docker tag k8s.gcr.io/defaultbackend:1.5 gcr.io/google_containers/defaultbackend:1.5
-docker rm -f defaultbackend:1.5.tar
-docker save gcr.io/google_containers/defaultbackend:1.5 -o defaultbackend:1.5.tar
+docker tag k8s.gcr.io/defaultbackend:1.4 gcr.io/google_containers/defaultbackend:1.4
+docker rm -f defaultbackend:1.4.tar
+docker save gcr.io/google_containers/defaultbackend:1.4 -o defaultbackend:1.4.tar
 
 docker pull quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.20.0
 docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.20.0 -o nginx-ingress-controller:0.20.0.tar

@@ -269,7 +269,7 @@ kube::load_images()
     done
 
     images1=(
-        defaultbackend_1.5
+        defaultbackend_1.4
         tiller_v2.13.1
         nginx-ingress-controller_0.20.0
         flannel_v0.10.0-amd64
