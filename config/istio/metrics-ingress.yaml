@@ -1,5 +1,5 @@
 # Source: istio/charts/kiali/templates/ingress.yaml
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: kiali
@@ -28,7 +28,7 @@ spec:
 
 ---
 # Source: istio/charts/prometheus/templates/ingress.yaml
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: prometheus
@@ -57,7 +57,7 @@ spec:
 
 ---
 # Source: istio/charts/tracing/templates/ingress.yaml
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: istio-tracing
@@ -86,7 +86,7 @@ spec:
 
 ---
 # Source: istio/charts/grafana/templates/ingress.yaml
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: grafana
