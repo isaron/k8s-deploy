@@ -271,8 +271,11 @@ kube::load_images()
     images1=(
         defaultbackend_1.4
         tiller_v2.13.1
-        nginx-ingress-controller_0.20.0
+        nginx-ingress-controller_0.25.0
         flannel_v0.10.0-amd64
+        cert-manager-controller_v0.8.1
+        cert-manager-webhook_v0.8.1
+        external-dns_latest
     )
 
     for i in "${!images1[@]}"; do
