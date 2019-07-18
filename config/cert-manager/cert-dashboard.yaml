@@ -2,7 +2,7 @@ apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
   name: dashboard-ingress-secrets
-  namespace: kube-system
+  namespace: kubernetes-dashboard
 spec:
   secretName: dashboard-ingress-secrets
   issuerRef:
@@ -13,4 +13,3 @@ spec:
   commonName: ssii.com
   dnsNames:
   - dashboard.ssii.com
-  
