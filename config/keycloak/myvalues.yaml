@@ -1,8 +1,15 @@
 init:
   image:
     repository: alpine
-    tag: 3.8
+    tag: 3.9
     pullPolicy: IfNotPresent
+  resources: {}
+    # limits:
+    #   cpu: "10m"
+    #   memory: "32Mi"
+    # requests:
+    #   cpu: "10m"
+    #   memory: "32Mi"
 
 clusterDomain: cluster.local
 
@@ -11,7 +18,7 @@ keycloak:
 
   image:
     repository: jboss/keycloak
-    tag: 5.0.0
+    tag: 6.0.1
     pullPolicy: IfNotPresent
 
     ## Optionally specify an array of imagePullSecrets.
@@ -27,6 +34,8 @@ keycloak:
   #      - "my.host.com"
 
   enableServiceLinks: false
+
+  restartPolicy: Always
 
   serviceAccount:
     # Specifies whether a service account should be created
@@ -50,9 +59,6 @@ keycloak:
 
   ## Additional sidecar containers, e. g. for a database proxy, such as Google's cloudsql-proxy
   extraContainers: |
-
-  ## Custom script that is run before Keycloak is started.
-  preStartScript:
 
   ## lifecycleHooks defines the container lifecycle hooks
   lifecycleHooks: |
@@ -98,8 +104,7 @@ keycloak:
       requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
             matchLabels:
-              app:  {{ template "keycloak.name" . }}
-              release: "{{ .Release.Name }}"
+              {{- include "keycloak.selectorLabels" . | nindent 10 }}
             matchExpressions:
               - key: role
                 operator: NotIn
@@ -111,8 +116,7 @@ keycloak:
           podAffinityTerm:
             labelSelector:
               matchLabels:
-                app:  {{ template "keycloak.name" . }}
-                release: "{{ .Release.Name }}"
+                {{- include "keycloak.selectorLabels" . | nindent 12 }}
               matchExpressions:
                 - key: role
                   operator: NotIn
@@ -120,7 +124,7 @@ keycloak:
                     - test
             topologyKey: failure-domain.beta.kubernetes.io/zone
 
-  nodeSelector: 
+  nodeSelector:
     beta.kubernetes.io/os: linux
   priorityClassName: ""
   tolerations: []
@@ -150,14 +154,12 @@ keycloak:
   ## WildFly CLI configurations. They all end up in the file 'keycloak.cli' configured in the configmap which is
   ## executed on server startup.
   cli:
+    enabled: true
     nodeIdentifier: |
       {{ .Files.Get "scripts/node-identifier.cli" }}
 
     logging: |
       {{ .Files.Get "scripts/logging.cli" }}
-
-    reverseProxy: |
-      {{ .Files.Get "scripts/reverse-proxy.cli" }}
 
     ha: |
       {{ .Files.Get "scripts/ha.cli" }}
@@ -167,6 +169,13 @@ keycloak:
 
     # Custom CLI script
     custom: |
+
+  ## Custom startup scripts to run before Keycloak starts up
+  startupScripts: {}
+    # mystartup.sh: |
+    #   #!/bin/sh
+    #
+    #   echo 'Hello from my custom startup script!'
 
   ## Add additional volumes and mounts, e. g. for custom themes
   extraVolumes: |
@@ -204,7 +213,7 @@ keycloak:
     enabled: true
     path: /
 
-    annotations: 
+    annotations:
       kubernetes.io/ingress.class: nginx
       certmanager.k8s.io/cluster-issuer: ca-issuer
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
@@ -220,7 +229,7 @@ keycloak:
       - keycloak.ssii.com
 
     ## TLS configuration
-    tls: 
+    tls:
     - hosts:
         - keycloak.ssii.com
       secretName: keycloak-ingress-cert
@@ -275,16 +284,16 @@ keycloak:
 postgresql:
   ### PostgreSQL User to create.
   ##
-  postgresUser: keycloak
+  postgresqlUsername: keycloak
 
   ## PostgreSQL Password for the new user.
   ## If not set, a random 10 characters password will be used.
   ##
-  postgresPassword: p@ssw0rd
+  postgresqlPassword: p@ssw0rd
 
   ## PostgreSQL Database to create.
   ##
-  postgresDatabase: keycloak
+  postgresqlDatabase: keycloak
 
   ## Persistent Volume Storage configuration.
   ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes
