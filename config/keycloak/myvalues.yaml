@@ -274,7 +274,7 @@ keycloak:
     existingSecretKey: keycloak_password
 
     dbName: keycloak
-    dbHost: 172.30.80.101
+    dbHost: 172.30.80.102
     dbPort: 5432
     dbUser: keycloak
 
