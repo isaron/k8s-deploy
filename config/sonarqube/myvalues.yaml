@@ -158,7 +158,7 @@ postgresql:
   enabled: false
   # To use an external PostgreSQL instance, set enabled to false and uncomment
   # the line below:
-  postgresServer: "172.30.80.101"
+  postgresServer: "172.30.80.102"
   # To use an external secret for the password for an external PostgreSQL
   # instance, set enabled to false and provide the name of the secret on the
   # line below:
