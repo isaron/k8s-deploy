@@ -81,8 +81,8 @@ master:
   # When setting runAsUser to a different value than 0 also set fsGroup to the same value:
   # runAsUser: <defaults to 0>
   # fsGroup: <will be omitted in deployment if runAsUser is 0>
-  runAsUser: 1000
-  fsGroup: 1000
+  # runAsUser: 1000
+  # fsGroup: 1000
   servicePort: 8080
   targetPort: 8080
   # For minikube, set this to NodePort, elsewhere use LoadBalancer
@@ -314,15 +314,15 @@ master:
 
   # master.hostAliases allows for adding entries to Pod /etc/hosts:
   # https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
-  hostAliases: 
-  - ip: 172.30.80.90
-    hostnames:
-      - gitea.ssii.com
-  - ip: 172.30.80.100
-    hostnames:
-      - nexus.ssii.com
-      - containers.ssii.com
-      - sonar.ssii.com
+  hostAliases: []
+  # - ip: 172.30.80.90
+  #   hostnames:
+  #     - gitea.ssii.com
+  # - ip: 172.30.80.100
+  #   hostnames:
+  #     - nexus.ssii.com
+  #     - containers.ssii.com
+  #     - sonar.ssii.com
 
   # Expose Prometheus metrics
   prometheus:
