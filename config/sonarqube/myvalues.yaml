@@ -4,7 +4,7 @@
 replicaCount: 1
 image:
   repository: containers.ssii.com/base/sonarqube
-  tag: 7.7-community
+  tag: 7.9-community
   # If using a private repository, the name of the imagePullSecret to use
   pullSecret: nexus-docker
 
@@ -91,6 +91,9 @@ extraEnv: {}
   # If an ingress *path* is defined, it should be reflected here
   # sonar.web.context: /sonarqube
 
+# Set annotations for pods
+annotations: {}
+
 resources: {}
 # We usually recommend not to specify default resources and to leave this as a conscious
 # choice for the user. This also increases chances charts run on environments with little
@@ -104,6 +107,9 @@ resources: {}
 #  memory: 128Mi
 persistence:
   enabled: true
+  ## Set annotations on pvc
+  annotations: {}
+
   ## Specify an existing volume claim instead of creating a new one.
   ## When using this option all following options like storageClass, accessMode and size are ignored.
   # existingClaim:
@@ -133,17 +139,22 @@ plugins:
   # We allow the plugins init container to have a separate resources declaration because
   # the initContainer does not take as much resources.
 
-# A custom sonar.properties file can be provided using a multiline YAML string.
+# A custom sonar.properties file can be provided via dictionary.
 # For example:
-# sonarProperties: |
-#   sonar.forceAuthentication=true
-#   sonar.security.realm=LDAP
-#   ldap.url=ldaps://organization.com
+# sonarProperties:
+#   sonar.forceAuthentication: true
+#   sonar.security.realm: LDAP
+#   ldap.url: ldaps://organization.com
 
 # Kubernetes secret that contains the encryption key for the sonarqube instance.
 # The secret must contain the key 'sonar-secret.txt'.
 # The 'sonar.secretKeyPath' property will be set automatically.
 # sonarSecretKey: "settings-encryption-secret"
+
+customCerts:
+  ## Enable to override the default cacerts with your own one
+  enabled: false
+  secretName: my-cacerts
 
 ## Configuration value to select database type
 ## Option to use "postgresql" or "mysql" database type, by default "postgresql" is chosen
@@ -158,7 +169,7 @@ postgresql:
   enabled: false
   # To use an external PostgreSQL instance, set enabled to false and uncomment
   # the line below:
-  postgresServer: "172.30.80.101"
+  postgresServer: "172.30.80.102"
   # To use an external secret for the password for an external PostgreSQL
   # instance, set enabled to false and provide the name of the secret on the
   # line below:
