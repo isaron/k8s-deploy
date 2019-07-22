@@ -158,14 +158,17 @@ master:
 
   # List of plugins to be install during Jenkins master start
   installPlugins:
-    - kubernetes:1.16.0
-    - workflow-job:2.32
+    - kubernetes:1.17.2
+    - workflow-job:2.33
     - workflow-aggregator:2.6
     - credentials-binding:1.19
-    - git:3.10.0
+    - git:3.10.1
+    - matrix-auth:2.4.2
+    - ldap:1.20
+    - blueocean:1.17.0
 
   # Enable to always override the installed plugins with the values of 'master.installPlugins' on upgrade or redeployment.
-  # overwritePlugins: true
+  overwritePlugins: true
   # Enable HTML parsing using OWASP Markup Formatter Plugin (antisamy-markup-formatter), useful with ghprb plugin.
   # The plugin is not installed by default, please update master.installPlugins.
   enableRawHtmlMarkupFormatter: false
