@@ -315,9 +315,12 @@ authProxy:
   enabled: true
   # Image used for the proxy
   image:
-    registry: docker.io
-    repository: bitnami/keycloak-gatekeeper
-    tag: 2.3.0-r1
+    # registry: docker.io
+    # repository: bitnami/keycloak-gatekeeper
+    # tag: 2.3.0-r1
+    registry: containers.ssii.com
+    repository: keycloak/gatekeeper
+    tag: 6.0.1
   # Mandatory parametes
   discoveryURL: https://keycloak.ssii.com/auth/realms/rdp
   clientID: kubeapps
