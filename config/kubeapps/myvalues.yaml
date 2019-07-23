@@ -312,15 +312,15 @@ testImage:
 # ref: https://github.com/kubeapps/kubeapps/blob/master/docs/user/using-an-OIDC-provider.md
 authProxy:
   # Set to true to enable the OIDC proxy
-  enabled: true
+  enabled: false
   # Image used for the proxy
   image:
-    # registry: docker.io
-    # repository: bitnami/keycloak-gatekeeper
-    # tag: 2.3.0-r1
-    registry: containers.ssii.com
-    repository: keycloak/gatekeeper
-    tag: 6.0.1
+    registry: docker.io
+    repository: bitnami/keycloak-gatekeeper
+    tag: 2.3.0-r1
+    # registry: containers.ssii.com
+    # repository: keycloak/gatekeeper
+    # tag: 6.0.1
   # Mandatory parametes
   discoveryURL: https://keycloak.ssii.com/auth/realms/rdp
   clientID: kubeapps
