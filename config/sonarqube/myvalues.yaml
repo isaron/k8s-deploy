@@ -173,7 +173,7 @@ persistence:
 
 customCerts:
   ## Enable to override the default cacerts with your own one
-  enabled: true
+  enabled: false
   secretName: ingress-certs
 
 ## Configuration value to select database type
