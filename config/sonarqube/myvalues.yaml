@@ -150,7 +150,7 @@ persistence:
     # LDAP configuration
     # General Configuration
     sonar.security.realm: LDAP
-    ldap.url: ldap://ldap.ssii.com:389
+    ldap.url: ldap://172.30.80.89:389
     ldap.bindDn: cn=admin,dc=rdp,dc=dev
     ldap.bindPassword: p@ssw0rd
     ldap.authentication: simple
@@ -173,8 +173,8 @@ persistence:
 
 customCerts:
   ## Enable to override the default cacerts with your own one
-  enabled: false
-  secretName: my-cacerts
+  enabled: true
+  secretName: ingress-certs
 
 ## Configuration value to select database type
 ## Option to use "postgresql" or "mysql" database type, by default "postgresql" is chosen
