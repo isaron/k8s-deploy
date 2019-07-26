@@ -165,7 +165,7 @@ master:
     - git:3.10.1
     - matrix-auth:2.4.2
     - ldap:1.20
-    - blueocean:1.17.0
+    - blueocean:1.18.0
     - script-security:1.61
 
   # Enable to always override the installed plugins with the values of 'master.installPlugins' on upgrade or redeployment.
@@ -319,6 +319,9 @@ master:
   # master.hostAliases allows for adding entries to Pod /etc/hosts:
   # https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
   hostAliases: 
+  - ip: 172.30.80.89
+    hostnames:
+      - ldap.ssii.com
   - ip: 172.30.80.90
     hostnames:
       - gitea.ssii.com
@@ -327,6 +330,8 @@ master:
       - nexus.ssii.com
       - containers.ssii.com
       - sonar.ssii.com
+      - chartmuseum.ssii.com
+      - kubeapps.ssii.com
 
   # Expose Prometheus metrics
   prometheus:
