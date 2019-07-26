@@ -357,10 +357,10 @@ agent:
   privileged: false
   resources:
     requests:
-      cpu: "200m"
-      memory: "256Mi"
+      cpu: "400m"
+      memory: "512Mi"
     limits:
-      cpu: "2000m"
+      cpu: "1000m"
       memory: "2048Mi"
   # You may want to change this to true while testing a new image
   alwaysPullImage: true
