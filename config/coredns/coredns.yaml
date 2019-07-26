@@ -56,9 +56,10 @@ data:
         errors
         health
         ready
-        # autopath @kubernetes
+        autopath @kubernetes
         kubernetes cluster.local in-addr.arpa ip6.arpa {
-          pods insecure
+          # pods insecure
+          pods verified
           upstream
           fallthrough in-addr.arpa ip6.arpa
         }
@@ -75,17 +76,17 @@ data:
         reload
         loadbalance
     }
-    # ssii.com:53 {
-    #     errors
-    #     # health
-    #     # prometheus :9153
-    #     forward . 172.30.80.89
-    #     # grpc . 172.30.80.89 172.30.80.88
-    #     cache 30
-    #     # loop
-    #     reload
-    #     # loadbalance
-    # }
+    ssii.com:53 {
+        errors
+        # health
+        # prometheus :9153
+        forward . 172.30.80.89
+        # grpc . 172.30.80.89 172.30.80.88
+        cache 30
+        # loop
+        reload
+        # loadbalance
+    }
     # . {
     #   forward . 114.114.114.114
     # }
