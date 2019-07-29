@@ -4,7 +4,7 @@
 replicaCount: 1
 image:
   repository: containers.ssii.com/base/sonarqube
-  tag: 7.9-community
+  tag: 7.8-community
   # If using a private repository, the name of the imagePullSecret to use
   pullSecret: nexus-docker
 
