@@ -6,7 +6,7 @@ COPY ./bin/helm /usr/local/bin/helm
 RUN chmod +x /usr/local/bin/helm \
     && mkdir -p /opt/kube /opt/helm/repository
 COPY ./kube/kubeconf /opt/kube/config
-COPY ./dockerfile/jenkins/slave/repository.yaml /opt/helm/repository/repository.yaml
+COPY ./dockerfile/jenkins/slave/repositories.yaml /opt/helm/repository/repositories.yaml
 
 ENV KUBECONFIG /opt/kube/config
 ENV HELM_HOME /opt/helm
