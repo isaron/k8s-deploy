@@ -1038,6 +1038,9 @@ apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: ${KUBE_VERSION}
 controlPlaneEndpoint: "${KUBE_VIP}:6443"
+controllerManagerExtraArgs:
+    node-monitor-grace-period: 10s
+    pod-eviction-timeout: 10s
 etcd:
     external:
         endpoints:
@@ -1049,6 +1052,9 @@ etcd:
         keyFile: /etc/kubernetes/pki/etcd/client-key.pem
 networking:
     podSubnet: 10.244.0.0/16
+kubeProxy:
+    config:
+        mode: ipvs
 EOF
 
     # systemctl daemon-reload && systemctl start kubelet.service
