@@ -27,6 +27,7 @@ RUN echo 'https://mirrors.aliyun.com/alpine/v3.9/main' > /etc/apk/repositories \
     # && helm repo add mirror http://172.30.80.33:8080/ \
     # && helm repo add bitnami https://charts.bitnami.com/bitnami \
     # && helm repo remove stable \
+    # && helm repo update \
     && chown -R jenkins.jenkins /home/jenkins /opt/kube /opt/helm
 
 USER jenkins
