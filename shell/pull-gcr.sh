@@ -47,11 +47,15 @@ docker tag arborhuang/quay-nginx-ingress-controller:0.25.0 quay.io/kubernetes-in
 docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.25.0 -o nginx-ingress-controller:0.25.0.tar
 docker rmi arborhuang/quay-nginx-ingress-controller:0.25.0
 
-docker pull quay.io/coreos/flannel:v0.11.0-amd64
+docker pull arborhuang/flannel:v0.11.0-amd64
+docker tag arborhuang/flannel:v0.11.0-amd64 quay.io/coreos/flannel:v0.11.0-amd64
 docker save quay.io/coreos/flannel:v0.11.0-amd64 -o flannel:v0.11.0-amd64.tar
+docker rmi arborhuang/flannel:v0.11.0-amd64
 
-docker pull quay.io/coreos/etcd:v3.2.18
+docker pull arborhuang/etcd:v3.2.18
+docker tag arborhuang/etcd:v3.2.18 quay.io/coreos/etcd:v3.2.18
 docker save quay.io/coreos/etcd:v3.2.18 -o etcd:v3.2.18.tar
+docker rmi arborhuang/etcd:v3.2.18
 
 docker pull arborhuang/tiller:v2.14.2
 docker tag arborhuang/tiller:v2.14.2 gcr.io/kubernetes-helm/tiller:v2.14.2
