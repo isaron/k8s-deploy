@@ -52,10 +52,8 @@ docker tag arborhuang/flannel:v0.11.0-amd64 quay.io/coreos/flannel:v0.11.0-amd64
 docker save quay.io/coreos/flannel:v0.11.0-amd64 -o flannel:v0.11.0-amd64.tar
 docker rmi arborhuang/flannel:v0.11.0-amd64
 
-docker pull arborhuang/etcd-amd64:v3.2.18
-docker tag arborhuang/etcd-amd64:v3.2.18 quay.io/coreos/etcd:v3.2.18
-docker save quay.io/coreos/etcd:v3.2.18 -o etcd:v3.2.18.tar
-docker rmi arborhuang/etcd-amd64:v3.2.18
+# docker pull quay.io/coreos/etcd:v3.2.18
+# docker save quay.io/coreos/etcd:v3.2.18 -o etcd:v3.2.18.tar
 
 docker pull arborhuang/tiller:v2.14.2
 docker tag arborhuang/tiller:v2.14.2 gcr.io/kubernetes-helm/tiller:v2.14.2
