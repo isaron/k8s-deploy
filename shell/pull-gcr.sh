@@ -42,8 +42,10 @@ docker tag k8s.gcr.io/defaultbackend:1.4 gcr.io/google_containers/defaultbackend
 docker rm -f defaultbackend:1.4.tar
 docker save gcr.io/google_containers/defaultbackend:1.4 -o defaultbackend:1.4.tar
 
-docker pull quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.20.0
-docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.20.0 -o nginx-ingress-controller:0.20.0.tar
+docker pull arborhuang/quay-nginx-ingress-controller:0.25.0
+docker tag arborhuang/quay-nginx-ingress-controller:0.25.0 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.25.0
+docker save quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.25.0 -o nginx-ingress-controller:0.25.0.tar
+docker rmi arborhuang/quay-nginx-ingress-controller:0.25.0
 
 docker pull quay.io/coreos/flannel:v0.11.0-amd64
 docker save quay.io/coreos/flannel:v0.11.0-amd64 -o flannel:v0.11.0-amd64.tar
