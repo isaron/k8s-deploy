@@ -279,7 +279,7 @@ kube::load_images()
         docker-nexus_3.15.2
         docker-nexus-proxy_2.4.0_8u191
         sealed-secrets-controller_v0.8.1
-        nfs-client-provisioner_latest.tar
+        nfs-client-provisioner_latest
     )
 
     for i in "${!images1[@]}"; do
