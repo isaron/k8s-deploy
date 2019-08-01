@@ -278,6 +278,7 @@ kube::load_images()
         external-dns_latest
         docker-nexus_3.15.2
         docker-nexus-proxy_2.4.0_8u191
+        sealed-secrets-controller_v0.8.1
     )
 
     for i in "${!images1[@]}"; do
