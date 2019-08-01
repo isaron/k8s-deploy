@@ -58,6 +58,9 @@ docker rmi arborhuang/flannel:v0.11.0-amd64
 # docker pull quay.io/bitnami/sealed-secrets-controller:v0.8.1
 # docker save quay.io/bitnami/sealed-secrets-controller:v0.8.1 -o sealed-secrets-controller_v0.8.1.tar
 
+# docker pull quay.io/external_storage/nfs-client-provisioner:latest
+# docker save quay.io/external_storage/nfs-client-provisioner:latest -o nfs-client-provisioner_latest.tar
+
 docker pull arborhuang/tiller:v2.14.2
 docker tag arborhuang/tiller:v2.14.2 gcr.io/kubernetes-helm/tiller:v2.14.2
 docker save gcr.io/kubernetes-helm/tiller:v2.14.2 -o tiller:v2.14.2.tar
