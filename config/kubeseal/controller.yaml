@@ -139,7 +139,7 @@ spec:
         - controller
         env: []
         image: quay.io/bitnami/sealed-secrets-controller:v0.8.1
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
             path: /healthz
