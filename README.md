@@ -80,30 +80,38 @@ Check if all correct.
 2. Deploy external etcd cluster
 Suggest deploy etcd cluster on the same master servers. On all masters:
 ```
-curl -L http://$HTTP_SERVER/shell/auto-deploy.sh | bash -s etcd --api-advertise-addresses=$KUBE_VIP --etcd-endpoints=https://${ETCD_NODES[0]}:2379,https://${ETCD_NODES[1]}:2379,https://${ETCD_NODES[2]}:2379
+curl -L http://$HTTP_SERVER/shell/auto-deploy.sh | bash -s etcd \
+    --api-advertise-addresses=$KUBE_VIP \
+    --etcd-endpoints=https://${ETCD_NODES[0]}:2379,https://${ETCD_NODES[1]}:2379,https://${ETCD_NODES[2]}:2379
 ```
 Wait etcd service active on all masters, etcd cluster could be ready.
 
 3. Deploy the first master
 On the first master:
 ```
-curl -L http://$HTTP_SERVER/shell/auto-deploy.sh | bash -s master --api-advertise-addresses=$KUBE_VIP --etcd-endpoints=https://${ETCD_NODES[0]}:2379,https://${ETCD_NODES[1]}:2379,https://${ETCD_NODES[2]}:2379
+curl -L http://$HTTP_SERVER/shell/auto-deploy.sh | bash -s master \
+    --api-advertise-addresses=$KUBE_VIP \
+    --etcd-endpoints=https://${ETCD_NODES[0]}:2379,https://${ETCD_NODES[1]}:2379,https://${ETCD_NODES[2]}:2379
 ```
-When ready, record the `token` from deploy log.
+When ready, record the `token` `sha256` from deploy log.
 
 4. Deploy other masters
 On other masters:
 ```
-curl -L http://$HTTP_SERVER/shell/auto-deploy.sh | bash -s reploca --api-advertise-addresses=$KUBE_VIP --etcd-endpoints=https://${ETCD_NODES[0]}:2379,https://${ETCD_NODES[1]}:2379,https://${ETCD_NODES[2]}:2379
+curl -L http://$HTTP_SERVER/shell/auto-deploy.sh | bash -s reploca \
+    --api-advertise-addresses=$KUBE_VIP \
+    --etcd-endpoints=https://${ETCD_NODES[0]}:2379,https://${ETCD_NODES[1]}:2379,https://${ETCD_NODES[2]}:2379
 ```
 When all masters ready, the HA is okay.
 
 5. Deploy nodes
 On all nodes:
 ```
-curl -L http://$HTTP_SERVER/shell/auto-deploy.sh | bash -s reploca --api-advertise-addresses=$KUBE_VIP --token <token> --discovery-token-ca-cert-hash sha256:<sha256>
+curl -L http://$HTTP_SERVER/shell/auto-deploy.sh | bash -s node \
+    --api-advertise-addresses=$KUBE_VIP \
+    --token <token> --discovery-token-ca-cert-hash sha256:<sha256>
 ```
-The `token` `sha256` are recorded at setp 3.
+Replace the `token` `sha256` recorded at setp 3.
 
 6. Check cluster
 - view k8s cluster info
