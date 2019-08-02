@@ -67,8 +67,8 @@ Always, it's a good idea that make a global planning before doing something.
 #### Base deploy
 0. Define some 
 ```
-HTTP_SERVER: the http-server's IP address or FQDN 
-KUBE_VIP: the vip address of k8s masters
+HTTP_SERVER=<HTTP_SERVER>   # the http-server's IP address or FQDN 
+KUBE_VIP=<KUBE_VIP>         # the vip address of k8s masters
 ```
 1. Setup environment for master/nodes.
 ```
