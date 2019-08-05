@@ -276,8 +276,8 @@ kube::load_images()
         cert-manager-controller_v0.8.1
         cert-manager-webhook_v0.8.1
         external-dns_latest
-        docker-nexus_3.15.2
-        docker-nexus-proxy_2.4.0_8u191
+        docker-nexus_3.17.0
+        docker-nexus-proxy_2.5.0
         sealed-secrets-controller_v0.8.1
         nfs-client-provisioner_latest
     )
