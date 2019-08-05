@@ -53,6 +53,7 @@ spec:
       containers:
       - name: external-dns
         image: registry.opensource.zalan.do/teapot/external-dns:latest
+        imagePullPolicy: IfNotPresent
         args:
         - --source=service
         - --source=ingress
