@@ -22,12 +22,12 @@ Current supported k8s version: v1.11.6
     - pdns
     - lvs + keepalived
     - coredns:1.5.2 (replacing k8s-dns)
-    - flannel
+    - flannel/traefik
     - ingress-nginx:0.25.0
     - metallb
     - external-dns
 - storage
-    - nfs-client-provision
+    - nfs-client
     - postgresql
     - mariadb/mysql
 - security
@@ -49,17 +49,21 @@ Current supported k8s version: v1.11.6
     - habor + dragonfly
     - nexus
     - jenkins/gocd
-    - gogs/gitea
+    - gogs/gitea/drone
     - helm + draft
     - kubeapps
     - chartmuseum
     - sonarqube
+    - spinnaker
+- service catalog
+    - svc-cat
+    - automation-broker
 - other tools
     - netflix suite
 
 ### Deploy process and steps:
 #### Plan
-Always, it's a good idea that make a global planning before doing something. 
+Always, it's a good idea that make a whole planning before doing something. 
 #### Prepare
 1. Prepare server's os, here the oses based on Ubuntu 16.04 LTS. And define server's IP, DNS, other os configs could be modified by shells as later setps.
 2. Setup a http-server to locate files such as `config`, `certs`, `docker images`, `debs` and some bins like `cfssl` etc. 
@@ -128,12 +132,21 @@ route -n
 ```
 #### Deploy other k8s apps
 1. Setup netwoks
+
 2. Setup storage
+
 3. Setup secrurity
+
 4. Setup metrics
-5. Setup devops infra tools
+
+5. Setup devops infra
+
 6. Setup service mesh
+
 7. Setup other tools
 
+
 ### Future planning
-It's a better solution if using Ansible playbook to reduce manual operation. And it would be the goal that building the deploy process as a service.
+It's a better solution if using Ansible playbook to reduce manual operation. 
+
+And it would be the goal that building the deploy process as a service.
