@@ -48,7 +48,7 @@ Current supported k8s version: v1.11.6
 - devops infra
     - habor + dragonfly
     - nexus
-    - jenkins/gocd
+    - jenkins/gocd/drone
     - gogs/gitea/drone
     - helm + draft
     - kubeapps
