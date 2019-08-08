@@ -248,12 +248,19 @@ agent:
     hostPath:
       path: /drone-cache
       type: Directory
+  - name: ca-pemstore
+    configMap:
+      name: ca-pemstore
 
   ## Volume mount into agent container
   volumeMounts:
   - name: docker-config
     mountPath: /root/.docker
     readOnly: true
+  - name: ca-pemstore
+    mountPath: /etc/ssl/certs/ca-cert.pem
+    subPath: ca-cert.pem
+    readOnly: false
 
   ## CPU and memory limits for drone agent
   ##
@@ -324,6 +331,10 @@ dind:
     readOnly: true
   - name: persistent-data
     mountPath: /mnt/drone-cache
+  - name: ca-pemstore
+    mountPath: /etc/ssl/certs/ca-cert.pem
+    subPath: ca-cert.pem
+    readOnly: false
 
   ## CPU and memory limits for dind
   ##
