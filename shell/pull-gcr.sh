@@ -19,6 +19,7 @@ k8simages=(
     elasticsearch:v6.3.0
     fluentd-elasticsearch:v2.3.2
     kibana-oss:6.3.2
+    cluster-proportional-autoscaler-amd64:1.6.0
 )
 
 j=1

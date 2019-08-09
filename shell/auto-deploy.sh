@@ -247,6 +247,7 @@ kube::load_images()
         coredns_1.2.2
         # coredns_1.1.3
         metrics-server-amd64_v0.3.1
+        cluster-proportional-autoscaler-amd64_1.6.0
 
         heapster_v1.3.0
         heapster-amd64_v1.5.4
