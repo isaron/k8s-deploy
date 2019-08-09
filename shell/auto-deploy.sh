@@ -255,9 +255,9 @@ kube::load_images()
         kube-addon-manager_v8.6
         addon-resizer_1.7
 
-        elasticsearch_v6.3.0
-        fluentd-elasticsearch_v2.3.2
-        kibana-oss_6.3.2
+        # elasticsearch_v6.3.0
+        # fluentd-elasticsearch_v2.3.2
+        # kibana-oss_6.3.2
     )
 
     for i in "${!images0[@]}"; do
@@ -280,6 +280,9 @@ kube::load_images()
         docker-nexus-proxy_2.5.0
         sealed-secrets-controller_v0.8.1
         nfs-client-provisioner_latest
+        elasticsearch-oss_6.7.0
+        kibana-oss_6.7.0
+        fluentd_v2.7.0
     )
 
     for i in "${!images1[@]}"; do
