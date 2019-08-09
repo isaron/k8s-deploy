@@ -165,7 +165,7 @@ master:
     - git:3.11.0
     - matrix-auth:2.4.2
     - ldap:1.20
-    - blueocean:1.18.0
+    - blueocean:1.18.1
     - script-security:1.61
 
   # Enable to always override the installed plugins with the values of 'master.installPlugins' on upgrade or redeployment.
