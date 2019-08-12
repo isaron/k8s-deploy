@@ -188,7 +188,7 @@ spec:
     spec:
       containers:
         - name: kubernetes-dashboard
-          image: kubernetesui/dashboard:v2.0.0-beta2
+          image: kubernetesui/dashboard:v2.0.0-beta3
           imagePullPolicy: Always
           ports:
             - containerPort: 8443
@@ -274,8 +274,14 @@ spec:
               port: 8000
             initialDelaySeconds: 30
             timeoutSeconds: 30
+          volumeMounts:
+          - mountPath: /tmp
+            name: tmp-volume
       serviceAccountName: kubernetes-dashboard
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}
