@@ -281,8 +281,8 @@ kube::load_images()
         docker-nexus-proxy_2.5.0
         sealed-secrets-controller_v0.8.1
         nfs-client-provisioner_latest
-        elasticsearch-oss_6.7.0
-        kibana-oss_6.7.0
+        elasticsearch_v7.2.0
+        kibana-oss_7.2.0
         fluentd_v2.7.0
     )
 
