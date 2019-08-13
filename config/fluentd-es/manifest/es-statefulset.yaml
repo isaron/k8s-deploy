@@ -60,6 +60,15 @@ spec:
     matchLabels:
       k8s-app: elasticsearch-logging
       version: v7.2.0
+  volumeClaimTemplates:
+  - metadata:
+      name: elasticsearch-logging
+      annotations: {}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 30Gi
   template:
     metadata:
       labels:
@@ -92,9 +101,9 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-      volumes:
-      - name: elasticsearch-logging
-        emptyDir: {}
+      # volumes:
+      # - name: elasticsearch-logging
+      #   emptyDir: {}
       # Elasticsearch requires vm.max_map_count to be at least 262144.
       # If your OS already sets up this number to a higher value, feel free
       # to remove this init container.
