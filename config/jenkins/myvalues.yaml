@@ -17,7 +17,7 @@ master:
   # Used for label app.kubernetes.io/component
   componentName: "jenkins-master"
   image: "containers.ssii.com/jenkins/jenkins"
-  tag: "lts"
+  tag: "lts-alpine"
   imagePullPolicy: "Always"
   imagePullSecretName: "nexus-docker"
   # Optionally configure lifetime for master-container
