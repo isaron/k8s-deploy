@@ -239,15 +239,15 @@ agent:
       defaultMode: 420
       items:
       - key: .dockerconfigjson
-        path: config.json
+        path: ./.docker/config.json
       secretName: drone-docker-config
   - name: persistent-data
     persistentVolumeClaim:
       claimName: drone-agent-pvc
-  - name: cache
-    hostPath:
-      path: /drone-cache
-      type: Directory
+  # - name: cache
+  #   hostPath:
+  #     path: /drone-cache
+  #     type: Directory
   - name: ca-pemstore
     configMap:
       name: ca-pemstore
