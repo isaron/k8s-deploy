@@ -126,7 +126,7 @@ server:
   ## Leaving this blank may make it impossible to log into drone.
   ## Set to a valid oauth user from your git/oauth server
   ## For more complex user creation you can use env variables below instead.
-  adminUser:
+  adminUser: admin
 
   ## Configures Drone to authenticate when cloning public repositories. This is only required
   ## when your source code management system (e.g. GitHub Enterprise) has private mode enabled.
@@ -195,7 +195,8 @@ server:
   ## Node labels for pod assignment
   ## ref: https://kubernetes.io/docs/user-guide/node-selection
   ##
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
 
   ## Node taints to tolerate
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -291,7 +292,8 @@ agent:
   ## Node labels for pod assignment
   ## ref: https://kubernetes.io/docs/user-guide/node-selection
   ##
-  nodeSelector: {}
+  nodeSelector: 
+    beta.kubernetes.io/os: linux
 
   ## Node taints to tolerate
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
