@@ -126,7 +126,7 @@ server:
   ## Leaving this blank may make it impossible to log into drone.
   ## Set to a valid oauth user from your git/oauth server
   ## For more complex user creation you can use env variables below instead.
-  adminUser: admin
+  adminUser: gitea
 
   ## Configures Drone to authenticate when cloning public repositories. This is only required
   ## when your source code management system (e.g. GitHub Enterprise) has private mode enabled.
@@ -206,11 +206,18 @@ server:
   ## additional siecar containers, e. g. for a database proxy, such as Google's cloudsql-proxy.
   ## ex: https://github.com/kubernetes/charts/tree/master/stable/keycloak
   ##
-  extraContainers: |
+  extraContainers: 
+  - name: ca-pemstore
+    mountPath: /etc/ssl/certs/ca-cert.pem
+    subPath: ca-cert.pem
+    readOnly: false
 
   ## additional volumes, e. g. for secrets used in an extraContainers.
   ##
-  extraVolumes: |
+  extraVolumes: 
+  - name: ca-pemstore
+    configMap:
+      name: ca-pemstore
 
 agent:
   ## Drone agent configuration.
