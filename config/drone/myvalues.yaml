@@ -206,18 +206,18 @@ server:
   ## additional siecar containers, e. g. for a database proxy, such as Google's cloudsql-proxy.
   ## ex: https://github.com/kubernetes/charts/tree/master/stable/keycloak
   ##
-  extraContainers: 
-  - name: ca-pemstore
-    mountPath: /etc/ssl/certs/ca-cert.pem
-    subPath: ca-cert.pem
-    readOnly: false
+  extraContainers: |
+    - name: ca-pemstore
+      mountPath: /etc/ssl/certs/ca-cert.pem
+      subPath: ca-cert.pem
+      readOnly: false
 
   ## additional volumes, e. g. for secrets used in an extraContainers.
   ##
-  extraVolumes: 
-  - name: ca-pemstore
-    configMap:
-      name: ca-pemstore
+  extraVolumes: |
+    - name: ca-pemstore
+      configMap:
+        name: ca-pemstore
 
 agent:
   ## Drone agent configuration.
