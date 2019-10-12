@@ -7,4 +7,4 @@ RUN apk add --no-cache ca-certificates \
     && update-ca-certificates \
     && echo "Asia/Chongqing" > /etc/timezone \
     && rm -rf /var/lib/apt/lists/* \
-    && rm /var/cache/apk/*
+    && rm -rf /var/cache/apk/*
