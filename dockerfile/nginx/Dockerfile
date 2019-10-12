@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM nginx:alpine
 
 COPY ./certs/ca.cert.pem /usr/local/share/ca-certificates/ca.crt
 
