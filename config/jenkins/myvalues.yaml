@@ -14,6 +14,59 @@
 clusterZone: "cluster.local"
 
 master:
+  httpsKeyStore:
+    jenkinsHttpsJksSecretName: ''
+    enable: enable
+    httpPort: 8081
+    path: "/var/jenkins_keystore"
+    fileName: "keystore.jks"
+    password: "jenkins"
+    # Convert keystore.jks files content to base64 ( cat keystore.jks | base64 ) and put the output here
+    jenkinsKeyStoreBase64Encoded: |
+        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
   # Used for label app.kubernetes.io/component
   componentName: "jenkins-master"
   image: "containers.ssii.com/jenkins/jenkins"
@@ -28,8 +81,13 @@ master:
   #      - "uname"
   #      - "-a"
   numExecutors: 0
+  customJenkinsLabels: []
   # configAutoReload requires UseSecurity is set to true:
   useSecurity: true
+
+  # enables configuration done directly via XML files
+  # People who want to configure Jenkins via https://github.com/jenkinsci/configuration-as-code-plugin only can set it to false
+  enableXmlConfig: true
   # Allows to configure different SecurityRealm using Jenkins XML
   securityRealm: |-
     <securityRealm class="hudson.security.LegacySecurityRealm"/>
@@ -122,8 +180,8 @@ master:
       enabled: true
       proxyCompatability: true
   cli: false
-  # Kubernetes service type for the JNLP slave service
-  # slaveListenerServiceType is the Kubernetes Service type for the JNLP slave service,
+  # Kubernetes service type for the JNLP agent service
+  # slaveListenerServiceType is the Kubernetes Service type for the JNLP agent service,
   # either 'LoadBalancer', 'NodePort', or 'ClusterIP'
   # Note if you set this to 'LoadBalancer', you *must* define annotations to secure it. By default
   # this will be an external load balancer and allowing inbound 0.0.0.0/0, a HUGE
@@ -132,7 +190,7 @@ master:
   slaveListenerServiceAnnotations: {}
   slaveKubernetesNamespace:
 
-  # Example of 'LoadBalancer' type of slave listener with annotations securing it
+  # Example of 'LoadBalancer' type of agent listener with annotations securing it
   # slaveListenerServiceType: LoadBalancer
   # slaveListenerServiceAnnotations:
   #   service.beta.kubernetes.io/aws-load-balancer-internal: "True"
@@ -152,33 +210,33 @@ master:
   #   -Dcom.sun.management.jmxremote.ssl=false
   # jmxPort: 4000
   # Optionally configure other ports to expose in the master container
-  extraPorts:
+  extraPorts: []
   # - name: BuildInfoProxy
   #   port: 9000
 
   # List of plugins to be install during Jenkins master start
   installPlugins:
-    - kubernetes:1.18.1
-    - workflow-job:2.33
+    - kubernetes:1.19.3
+    - workflow-job:2.36
     - workflow-aggregator:2.6
-    - credentials-binding:1.19
+    - credentials-binding:1.20
     - git:3.11.0
     - matrix-auth:2.4.2
-    - ldap:1.20
-    - blueocean:1.18.1
-    - script-security:1.61
+    - ldap:1.21
+    - blueocean:1.21.0
+    - script-security:1.68
 
   # Enable to always override the installed plugins with the values of 'master.installPlugins' on upgrade or redeployment.
-  overwritePlugins: false
+  # overwritePlugins: true
   # Enable HTML parsing using OWASP Markup Formatter Plugin (antisamy-markup-formatter), useful with ghprb plugin.
   # The plugin is not installed by default, please update master.installPlugins.
   enableRawHtmlMarkupFormatter: false
   # Used to approve a list of groovy functions in pipelines used the script-security plugin. Can be viewed under /scriptApproval
-  scriptApproval:
+  scriptApproval: []
   #  - "method groovy.json.JsonSlurperClassic parseText java.lang.String"
   #  - "new groovy.json.JsonSlurperClassic"
   # List of groovy init scripts to be executed during Jenkins master start
-  initScripts:
+  initScripts: []
   #  - |
   #    print 'adding global pipeline libraries, register properties, bootstrap jobs...'
   # Kubernetes secret that contains a 'credentials.xml' for Jenkins
@@ -188,7 +246,7 @@ master:
   # master.key and hudson.util.Secret)
   # secretsFilesSecret: jenkins-secrets
   # Jenkins XML job configs to provision
-  jobs:
+  jobs: {}
   #  test: |-
   #    <<xml here>>
 
@@ -201,15 +259,15 @@ master:
   # etc.  Best reference is https://<jenkins_url>/configuration-as-code/reference.  The example below creates a welcome message:
   JCasC:
     enabled: false
-    pluginVersion: "1.25"
+    defaultConfig: false
+    pluginVersion: "1.32"
     # it's only used when plugin version is <=1.18 for later version the
     # configuration as code support plugin is no longer needed
     supportPluginVersion: "1.18"
-    configScripts:
-      welcome-message: |
-        jenkins:
-          systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
-
+    configScripts: {}
+    # welcome-message: |
+    #   jenkins:
+    #     systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
   # Optionally specify additional init-containers
   customInitContainers: []
   # - name: custom-init
@@ -224,9 +282,9 @@ master:
       # over SSH to reapply config when changes to the configScripts are detected.  The admin user (or account you specify in
       # master.adminUser) will have a random SSH private key (RSA 4096) assigned unless you specify adminSshKey.  This will be saved to a k8s secret.
       enabled: false
-      image: shadwell/k8s-sidecar:0.0.2
+      image: kiwigrid/k8s-sidecar:0.1.20
       imagePullPolicy: IfNotPresent
-      resources:
+      resources: {}
         #   limits:
         #     cpu: 100m
         #     memory: 100Mi
@@ -247,7 +305,7 @@ master:
       # searchNamespace:
 
     # Allows you to inject additional/other sidecars
-    other:
+    other: []
     ## The example below runs the client for https://smee.io as sidecar container next to Jenkins,
     ## that allows to trigger build behind a secure firewall.
     ## https://jenkins.io/blog/2019/01/07/webhook-firewalls/#triggering-builds-with-webhooks-behind-a-secure-firewall
@@ -266,13 +324,15 @@ master:
   # Node labels and tolerations for pod assignment
   # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
   # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#taints-and-tolerations-beta-feature
-  nodeSelector: 
+  nodeSelector:  
     beta.kubernetes.io/os: linux
   tolerations: []
   # Leverage a priorityClass to ensure your pods survive resource shortages
   # ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
   # priorityClass: system-cluster-critical
   podAnnotations: {}
+  # Add deployment annotation
+  deploymentAnnotations: {}
 
   # The below two configuration-related values are deprecated and replaced by Jenkins Configuration as Code (see above
   # JCasC key).  They will be deleted in an upcoming version.
@@ -289,7 +349,7 @@ master:
   overwriteJobs: false
 
   ingress:
-    enabled: true
+    enabled: false
     # For Kubernetes v1.14+, use 'networking.k8s.io/v1beta1'
     apiVersion: "extensions/v1beta1"
     labels: {}
@@ -306,6 +366,17 @@ master:
     - secretName: ingress-certs
       hosts:
         - jenkins.ssii.com
+
+  # If you're running on GKE and need to configure a backendconfig
+  # to finish ingress setup, use the following values.
+  # Docs: https://cloud.google.com/kubernetes-engine/docs/concepts/backendconfig
+  backendconfig:
+    enabled: false
+    apiVersion: "extensions/v1beta1"
+    name:
+    labels: {}
+    annotations: {}
+    spec: {}
 
   # Openshift route
   route:
@@ -340,6 +411,8 @@ master:
     enabled: false
     # Additional labels to add to the ServiceMonitor object
     serviceMonitorAdditionalLabels: {}
+    # Set a custom namespace where to deploy ServiceMonitor resource
+    # serviceMonitorNamespace: monitoring
     scrapeInterval: 60s
     # This is the default endpoint used by the prometheus plugin
     scrapeEndpoint: /prometheus
@@ -350,11 +423,13 @@ master:
     # The `groups` root object is added by default, simply add the rule entries
     alertingrules: []
 
+  # Can be used to disable rendering master test resources when using helm template
+  testEnabled: true
+
 agent:
   enabled: true
-  image: "containers.ssii.com/jenkins/jnlp-slave"
-  # imageTag: "3.27-1"
-  tag: "alpine"
+  image: "jenkins/jnlp-slave"
+  tag: "3.27-1"
   customJenkinsLabels: []
   # name of the secret to be used for image pulling
   imagePullSecretName: "nexus-docker"
@@ -362,25 +437,25 @@ agent:
   privileged: false
   resources:
     requests:
-      cpu: "400m"
+      cpu: "512m"
       memory: "512Mi"
     limits:
       cpu: "1000m"
       memory: "2048Mi"
   # You may want to change this to true while testing a new image
-  alwaysPullImage: true
-  # Controls how slave pods are retained after the Jenkins build completes
+  alwaysPullImage: false
+  # Controls how agent pods are retained after the Jenkins build completes
   # Possible values: Always, Never, OnFailure
   podRetention: "Never"
   # You can define the volumes that you want to mount for this container
   # Allowed types are: ConfigMap, EmptyDir, HostPath, Nfs, Pod, Secret
   # Configure the attributes as they appear in the corresponding Java class for that type
   # https://github.com/jenkinsci/kubernetes-plugin/tree/master/src/main/java/org/csanchez/jenkins/plugins/kubernetes/volumes
-  # Pod-wide ennvironment, these vars are visible to any container in the slave pod
-  envVars:
+  # Pod-wide ennvironment, these vars are visible to any container in the agent pod
+  envVars: []
   # - name: PATH
   #   value: /usr/local/bin
-  volumes:
+  volumes: []
   # - type: Secret
   #   secretName: mysecret
   #   mountPath: /var/myapp/mysecret
@@ -409,7 +484,7 @@ agent:
   # Raw yaml template for the Pod. For example this allows usage of toleration for agent pods.
   # https://github.com/jenkinsci/kubernetes-plugin#using-yaml-to-define-pod-templates
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-  yamlTemplate:
+  yamlTemplate: ""
   # yamlTemplate: |-
   #   apiVersion: v1
   #   kind: Pod
@@ -418,6 +493,8 @@ agent:
   #     - key: "key"
   #       operator: "Equal"
   #       value: "value"
+  # Timeout in seconds for an agent to be online
+  slaveConnectTimeout: 100
 
 persistence:
   enabled: true
@@ -454,6 +531,7 @@ networkPolicy:
 ## Install Default RBAC roles and bindings
 rbac:
   create: true
+  readSecrets: false
 
 serviceAccount:
   create: true
@@ -470,7 +548,7 @@ serviceAccountAgent:
   annotations: {}
 
 ## Backup cronjob configuration
-## Ref: https://github.com/nuvo/kube-tasks
+## Ref: https://github.com/maorfr/kube-tasks
 backup:
   # Backup must use RBAC
   # So by enabling backup you are enabling RBAC specific for backup
@@ -480,15 +558,16 @@ backup:
   # Schedule to run jobs. Must be in cron time format
   # Ref: https://crontab.guru/
   schedule: "0 2 * * *"
-  annotations:
+  labels: {}
+  annotations: {}
     # Example for authorization to AWS S3 using kube2iam
     # Can also be done using environment variables
-    iam.amazonaws.com/role: "jenkins"
+    # iam.amazonaws.com/role: "jenkins"
   image:
-    repository: "nuvo/kube-tasks"
-    tag: "0.1.2"
+    repository: "maorfr/kube-tasks"
+    tag: "0.2.0"
   # Additional arguments for kube-tasks
-  # Ref: https://github.com/nuvo/kube-tasks#simple-backup
+  # Ref: https://github.com/maorfr/kube-tasks#simple-backup
   extraArgs: []
   # Add existingSecret for AWS credentials
   existingSecret: {}
@@ -499,10 +578,13 @@ backup:
   ## Use this key for AWS secret access key
      # awssecretkey: jenkins_aws_secret_key
   # Add additional environment variables
-  env:
+   # jenkinsgcp:
+  ## Use this key for GCP credentials
+     # gcpcredentials: credentials.json
+  env: []
   # Example environment variable required for AWS credentials chain
-  - name: "AWS_REGION"
-    value: "us-east-1"
+  # - name: "AWS_REGION"
+  #   value: "us-east-1"
   resources:
     requests:
       memory: 1Gi
@@ -511,8 +593,8 @@ backup:
       memory: 1Gi
       cpu: 1
   # Destination to store the backup artifacts
-  # Supported cloud storage services: AWS S3, Minio S3, Azure Blob Storage
+  # Supported cloud storage services: AWS S3, Minio S3, Azure Blob Storage, Google Cloud Storage
   # Additional support can added. Visit this repository for details
-  # Ref: https://github.com/nuvo/skbn
-  destination: "s3://nuvo-jenkins-data/backup"
+  # Ref: https://github.com/maorfr/skbn
+  destination: "s3://jenkins-data/backup"
 checkDeprecation: true
