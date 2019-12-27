@@ -11,7 +11,7 @@ RUN apk add --no-cache ca-certificates \
     && keytool -import -alias stevejenkins.com -file /usr/local/share/ca-certificates/stevejenkins_com.crt -keystore "$JAVA_HOME/jre/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt \
     && echo "Asia/Chongqing" > /etc/timezone \
     && rm -rf /var/lib/apt/lists/* \
-    && rm /var/cache/apk/*
+    && rm -rf /var/cache/*
 
 EXPOSE 8080
 
