@@ -16,7 +16,7 @@ clusterZone: "cluster.local"
 master:
   httpsKeyStore:
     jenkinsHttpsJksSecretName: ''
-    enable: false
+    enable: true
     httpPort: 8081
     path: "/var/jenkins_keystore"
     fileName: "keystore.jks"
@@ -357,7 +357,7 @@ master:
       kubernetes.io/ingress.class: nginx
       certmanager.k8s.io/cluster-issuer: ca-issuer
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
-      # external-dns.alpha.kubernetes.io/hostname: jenkins.ssii.com
+      external-dns.alpha.kubernetes.io/hostname: jenkins.ssii.com
     # kubernetes.io/tls-acme: "true"
     # Set this path to jenkinsUriPrefix above or use annotations to rewrite path
     # path: "/jenkins"
