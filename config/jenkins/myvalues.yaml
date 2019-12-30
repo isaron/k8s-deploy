@@ -16,7 +16,7 @@ clusterZone: "cluster.local"
 master:
   httpsKeyStore:
     jenkinsHttpsJksSecretName: ''
-    enable: true
+    enable: false
     httpPort: 8081
     path: "/var/jenkins_keystore"
     fileName: "keystore.jks"
