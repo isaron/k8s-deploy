@@ -429,8 +429,9 @@ master:
 
 agent:
   enabled: true
-  image: "jenkins/jnlp-slave"
-  tag: "3.27-1"
+  image: "containers.ssii.com/jenkins/jnlp-slave"
+  # tag: "3.27-1"
+  tag: "alpine"
   customJenkinsLabels: []
   # name of the secret to be used for image pulling
   imagePullSecretName: "nexus-docker"
