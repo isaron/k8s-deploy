@@ -363,7 +363,7 @@ master:
     # configures the hostname e.g. jenkins.example.com
     hostName: jenkins.ssii.com
     tls:
-    - secretName: ingress-certs
+    - secretName: jenkins-cert
       hosts:
         - jenkins.ssii.com
 
