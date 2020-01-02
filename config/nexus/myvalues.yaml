@@ -1,12 +1,12 @@
 statefulset:
   enabled: false
-replicaCount: 1
+replicaCount: 2
 # By default deploymentStrategy is set to rollingUpdate with maxSurge of 25% and maxUnavailable of 25% . you can change type to `Recreate` or can uncomment `rollingUpdate` specification and adjust them to your usage.
-deploymentStrategy: {}
-  # rollingUpdate:
-  #   maxSurge: 25%
-  #   maxUnavailable: 25%
-  # type: RollingUpdate
+deploymentStrategy: 
+  rollingUpdate:
+    maxSurge: 25%
+    maxUnavailable: 25%
+  type: RollingUpdate
 
 nexus:
   imageName: sonatype/nexus3
@@ -49,8 +49,8 @@ nexus:
   # loadBalancerSourceRanges:
   #   - 192.168.1.10/32
   # labels: {}
-  # securityContext:
-  #   fsGroup: 2000
+  securityContext:
+    fsGroup: 2000
   podAnnotations: {}
   livenessProbe:
     initialDelaySeconds: 30
