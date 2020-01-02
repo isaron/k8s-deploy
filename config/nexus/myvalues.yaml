@@ -49,8 +49,8 @@ nexus:
   # loadBalancerSourceRanges:
   #   - 192.168.1.10/32
   # labels: {}
-  securityContext:
-    fsGroup: 2000
+  # securityContext:
+  #   fsGroup: 2000
   podAnnotations: {}
   livenessProbe:
     initialDelaySeconds: 30
