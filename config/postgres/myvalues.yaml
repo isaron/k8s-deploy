@@ -306,7 +306,7 @@ persistence:
   # storageClass: "-"
   accessModes:
     - ReadWriteMany
-  size: 1024Gi
+  size: 20Gi
   annotations: {}
 
 ## updateStrategy for PostgreSQL StatefulSet and its slaves StatefulSets
