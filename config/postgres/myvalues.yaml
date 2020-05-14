@@ -79,7 +79,6 @@ volumePermissions:
 ##
 # schedulerName:
 
-
 ## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
@@ -201,6 +200,10 @@ extraEnv: []
 #      #!/bin/sh
 #      echo "Do something."
 
+## Specify the PostgreSQL username and password to execute the initdb scripts
+# initdbUser:
+# initdbPassword:
+
 ## ConfigMap with scripts to be run at first boot
 ## NOTE: This will override initdbScripts
 # initdbScriptsConfigMap:
@@ -208,10 +211,6 @@ extraEnv: []
 ## Secret with scripts to be run at first boot (in case it contains sensitive information)
 ## NOTE: This can work along initdbScripts or initdbScriptsConfigMap
 # initdbScriptsSecret:
-
-## Specify the PostgreSQL username and password to execute the initdb scripts
-# initdbUser:
-# initdbPassword:
 
 ## Optional duration in seconds the pod needs to terminate gracefully.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
@@ -333,11 +332,6 @@ master:
   podLabels: {}
   podAnnotations: {}
   priorityClassName: ""
-  extraInitContainers: |
-    # - name: do-something
-    #   image: busybox
-    #   command: ['do', 'something']
-
   ## Additional PostgreSQL Master Volume mounts
   ##
   extraVolumeMounts: []
@@ -526,4 +520,3 @@ metrics:
     timeoutSeconds: 5
     failureThreshold: 6
     successThreshold: 1
-
