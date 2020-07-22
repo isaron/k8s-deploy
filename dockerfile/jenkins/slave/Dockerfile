@@ -1,4 +1,4 @@
-FROM jenkins/jnlp-slave:alpine
+FROM jenkins/inbound-agent:alpine
 
 USER root
 
@@ -12,9 +12,7 @@ ENV KUBECONFIG /opt/kube/config
 ENV HELM_HOME /opt/helm
 
 COPY ./certs/ca.cert.pem /etc/ssl/certs/ca.crt
-RUN echo 'https://mirrors.aliyun.com/alpine/v3.9/main' > /etc/apk/repositories \
-    && echo 'https://mirrors.aliyun.com/alpine/v3.9/community' >> /etc/apk/repositories \
-    && apk --update upgrade \
+RUN apk --update upgrade \
     && apk add --no-cache ca-certificates \
     && update-ca-certificates \
     && keytool -import -alias ssii.com -file /etc/ssl/certs/ca.crt -keystore "$JAVA_HOME/jre/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt \

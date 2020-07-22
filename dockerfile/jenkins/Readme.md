@@ -4,5 +4,5 @@ docker build -f dockerfile/jenkins/Dockerfile -t containers.ssii.com/jenkins/jen
 ```
 build jnlp-slave image, run:
 ```
-docker build -f dockerfile/jenkins/slave/Dockerfile -t containers.ssii.com/jenkins/jnlp-slave:alpine .
+docker build -f dockerfile/jenkins/slave/Dockerfile -t containers.ssii.com/jenkins/inbound-agent:alpine .
 ```
