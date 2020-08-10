@@ -10,8 +10,8 @@ spec:
   - {name: rdp-mgr4, address: 172.30.80.34, internalAddress: 172.30.80.34, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
   - {name: rdp-mgr5, address: 172.30.80.35, internalAddress: 172.30.80.35, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
   - {name: rdp-mgr6, address: 172.30.80.36, internalAddress: 172.30.80.36, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
-  - {name: rdp-mgr6, address: 172.30.80.37, internalAddress: 172.30.80.37, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
-  - {name: rdp-mgr6, address: 172.30.80.38, internalAddress: 172.30.80.38, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
+  - {name: rdp-mgr7, address: 172.30.80.37, internalAddress: 172.30.80.37, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
+  - {name: rdp-mgr8, address: 172.30.80.38, internalAddress: 172.30.80.38, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
   roleGroups:
     etcd:
      - rdp-mgr[1:3]
