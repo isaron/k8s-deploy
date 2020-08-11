@@ -20,7 +20,7 @@ spec:
     worker:
      - rdp-mgr[4:8]
   controlPlaneEndpoint:
-    domain: lb.kubesphere.local
+    domain: k8s.ssii.com
     address: "172.30.80.30"
     port: "6443"
   kubernetes:
