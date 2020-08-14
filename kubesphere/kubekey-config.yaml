@@ -45,7 +45,7 @@ spec:
     insecureRegistries: []
     privateRegistry: ""
   storage:
-    defaultStorageClass: nfs-client
+    defaultStorageClass: nfsClient
     localVolume:
       storageClassName: local
     nfsClient:
