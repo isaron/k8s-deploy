@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: gitea
-  namespace: env
+  namespace: devops
   labels:
     name: gitea
 spec:

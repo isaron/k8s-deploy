@@ -2,7 +2,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: gitea
-  namespace: env
+  namespace: devops
   annotations:
     volume.beta.kubernetes.io/storage-class: "managed-nfs-storage"
 spec:
