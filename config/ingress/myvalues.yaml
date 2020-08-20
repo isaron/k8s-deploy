@@ -3,9 +3,9 @@
 ##
 controller:
   image:
-    repository: us.gcr.io/k8s-artifacts-prod/ingress-nginx/controller
+    repository: docker.io/arborhuang/nginx-ingress-controller
     tag: "v0.34.1"
-    digest: sha256:0e072dddd1f7f8fc8909a2ca6f65e76c5f0d2fcfb8be47935ae3457e8bbceb20
+    # digest: sha256:0e072dddd1f7f8fc8909a2ca6f65e76c5f0d2fcfb8be47935ae3457e8bbceb20
     pullPolicy: IfNotPresent
     # www-data -> uid 101
     runAsUser: 101
@@ -477,10 +477,10 @@ maxmindLicenseKey: ""
 ##
 defaultBackend:
   ##
-  enabled: false
+  enabled: true
 
   image:
-    repository: k8s.gcr.io/defaultbackend-amd64
+    repository: docker.io/arborhuang/defaultbackend
     tag: "1.5"
     pullPolicy: IfNotPresent
     # nobody user -> uid 65534
