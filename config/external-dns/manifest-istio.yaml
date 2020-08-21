@@ -3,28 +3,25 @@ kind: ServiceAccount
 metadata:
   name: external-dns
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: external-dns
 rules:
 - apiGroups: [""]
-  resources: ["services"]
+  resources: ["services","endpoints","pods"]
   verbs: ["get","watch","list"]
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get","watch","list"]
-- apiGroups: ["extensions"] 
+- apiGroups: ["extensions","networking.k8s.io"]
   resources: ["ingresses"] 
   verbs: ["get","watch","list"]
 - apiGroups: [""]
   resources: ["nodes"]
   verbs: ["list"]
 - apiGroups: ["networking.istio.io"]
-  resources: ["gateways"]
+  resources: ["gateways", "virtualservices"]
   verbs: ["get","watch","list"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: external-dns-viewer
@@ -37,13 +34,16 @@ subjects:
   name: external-dns
   namespace: default
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: external-dns
 spec:
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: external-dns
   template:
     metadata:
       labels:
@@ -53,12 +53,11 @@ spec:
       containers:
       - name: external-dns
         image: registry.opensource.zalan.do/teapot/external-dns:latest
-        imagePullPolicy: IfNotPresent
         args:
         - --source=service
         - --source=ingress
         - --source=istio-gateway
-        - --istio-ingress-gateway=istio-system/istio-ingressgateway # load balancer service to be used; can be specified multiple times. Omit to use the default (istio-system/istio-ingressgateway)
+        - --source=istio-virtualservice
         - --domain-filter=ssii.com # will make ExternalDNS see only the hosted zones matching provided domain, omit to process all available hosted zones
         - --provider=pdns
         # - --policy=upsert-only # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
