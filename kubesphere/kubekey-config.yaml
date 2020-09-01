@@ -41,56 +41,22 @@ spec:
     kubeServiceCIDR: 10.233.0.0/18
   registry:
     registryMirrors: 
-      - http://e24ee5b3.m.daocloud.io
+    - http://e24ee5b3.m.daocloud.io
     insecureRegistries: []
     privateRegistry: ""
-  storage:
-    defaultStorageClass: nfsClient
-    localVolume:
-      storageClassName: local
-    nfsClient:
-      storageClassName: nfs-client
-      # Hostname of the NFS server(ip or hostname)
-      nfsServer: 172.30.80.90
-      # Basepath of the mount point
-      nfsPath: /nfsdata/k8s-nfs
-      nfsVrs3Enabled: false
-      nfsArchiveOnDelete: false
-    rbd:
-      storageClassName: rbd
-      # Ceph rbd monitor endpoints, for example
-      # monitors:
-      #   - 172.25.0.1:6789
-      #   - 172.25.0.2:6789
-      #   - 172.25.0.3:6789
-      monitors:
-      - SHOULD_BE_REPLACED
-      adminID: admin
-      # ceph admin secret, for example,
-      # adminSecret: AQAnwihbXo+uDxAAD0HmWziVgTaAdai90IzZ6Q==
-      adminSecret: TYPE_ADMIN_ACCOUNT_HERE
-      userID: admin
-      # ceph user secret, for example,
-      # userSecret: AQAnwihbXo+uDxAAD0HmWziVgTaAdai90IzZ6Q==
-      userSecret: TYPE_USER_SECRET_HERE
-      pool: rbd
-      fsType: ext4
-      imageFormat: 2
-      imageFeatures: layering
-    glusterfs:
-      storageClassName: glusterfs
-      restAuthEnabled: true
-      # e.g. glusterfs_provisioner_resturl: http://192.168.0.4:8080
-      restUrl: SHOULD_BE_REPLACED
-      # e.g. glusterfs_provisioner_clusterid: 6a6792ed25405eaa6302da99f2f5e24b
-      clusterID: SHOULD_BE_REPLACED
-      restUser: admin
-      secretName: heketi-secret
-      gidMin: 40000
-      gidMax: 50000
-      volumeType: replicate:2
-      # e.g. jwt_admin_key: 123456
-      jwtAdminKey: SHOULD_BE_REPLACED
+  addons: 
+  - name: nfs-client
+    namespace: kube-system
+    sources: 
+      chart: 
+        name: nfs-client-provisioner
+        repo: https://charts.kubesphere.io/main
+        # values: /mycluster/nfs/custom-nfs-client-values.yaml  # or https://raw.githubusercontent.com/kubesphere/helm-charts/master/src/main/nfs-client-provisioner/values.yaml
+        # values also supports parameter lists
+        values:
+        - storageClass.defaultClass=true
+        - nfs.server=172.30.80.90
+        - nfs.path=/nfsdata/k8s-nfs
 
 ---
 apiVersion: installer.kubesphere.io/v1alpha1
@@ -130,9 +96,9 @@ spec:
     enableMultiLogin: false  # enable/disable multiple sing on, it allows an account can be used by different users at the same time.
     port: 30880
   alerting:                # Whether to install KubeSphere alerting system. It enables Users to customize alerting policies to send messages to receivers in time with different time intervals and alerting levels to choose from.
-    enabled: false
+    enabled: true
   auditing:                # Whether to install KubeSphere audit log system. It provides a security-relevant chronological set of records，recording the sequence of activities happened in platform, initiated by different tenants.
-    enabled: false         
+    enabled: true         
   devops:                  # Whether to install KubeSphere DevOps System. It provides out-of-box CI/CD system based on Jenkins, and automated workflow tools including Source-to-Image & Binary-to-Image
     enabled: true
     jenkinsMemoryLim: 2Gi      # Jenkins memory limit
@@ -142,9 +108,9 @@ spec:
     jenkinsJavaOpts_Xmx: 512m
     jenkinsJavaOpts_MaxRAM: 2g
   events:                  # Whether to install KubeSphere events system. It provides a graphical web console for Kubernetes Events exporting, filtering and alerting in multi-tenant Kubernetes clusters.
-    enabled: false
+    enabled: true
   logging:                 # Whether to install KubeSphere logging system. Flexible logging functions are provided for log query, collection and management in a unified console. Additional log collectors can be added, such as Elasticsearch, Kafka and Fluentd.
-    enabled: false
+    enabled: true
     logsidecarReplicas: 2
   metrics_server:                    # Whether to install metrics-server. IT enables HPA (Horizontal Pod Autoscaler).
     enabled: true
@@ -157,11 +123,9 @@ spec:
     clusterRole: host  # host | member | none  # You can install a solo cluster, or specify it as the role of host or member cluster
   networkpolicy:       # Network policies allow network isolation within the same cluster, which means firewalls can be set up between certain instances (Pods).
     enabled: false     
-  notification:        # It supports notification management in multi-tenant Kubernetes clusters. It allows you to set AlertManager as its sender, and receivers include Email, Wechat Work, and Slack.
+  notification:        # Email Notification support for the legacy alerting system, should be enabled/disabled together with the above alerting option
     enabled: false
   openpitrix:          # Whether to install KubeSphere Application Store. It provides an application store for Helm-based applications, and offer application lifecycle management
     enabled: true
   servicemesh:         # Whether to install KubeSphere Service Mesh (Istio-based). It provides fine-grained traffic management, observability and tracing, and offer visualization for traffic topology
     enabled: true
-  telemetry:
-    enabled: false
