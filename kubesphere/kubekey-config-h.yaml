@@ -1,24 +1,21 @@
+
+
 apiVersion: kubekey.kubesphere.io/v1alpha1
 kind: Cluster
 metadata:
-  name: config
+  name: example
 spec:
   hosts:
-  - {name: rdp-mgr1, address: 172.30.80.31, internalAddress: 172.30.80.31, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
-  - {name: rdp-mgr2, address: 172.30.80.32, internalAddress: 172.30.80.32, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
-  - {name: rdp-mgr3, address: 172.30.80.33, internalAddress: 172.30.80.33, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
-  - {name: rdp-mgr4, address: 172.30.80.34, internalAddress: 172.30.80.34, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
-  - {name: rdp-mgr5, address: 172.30.80.35, internalAddress: 172.30.80.35, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
-  - {name: rdp-mgr6, address: 172.30.80.36, internalAddress: 172.30.80.36, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
-  - {name: rdp-mgr7, address: 172.30.80.37, internalAddress: 172.30.80.37, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
-  - {name: rdp-mgr8, address: 172.30.80.38, internalAddress: 172.30.80.38, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
+  - {name: rdp-mgh1, address: 172.30.80.81, internalAddress: 172.30.80.81, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
+  - {name: rdp-mgh2, address: 172.30.80.82, internalAddress: 172.30.80.82, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
+  - {name: rdp-mgh3, address: 172.30.80.83, internalAddress: 172.30.80.83, privateKeyPath: "~/.ssh/id_rsa"} # password-less login with SSH keys
   roleGroups:
     etcd:
-     - rdp-mgr[1:3]
+     - rdp-mgh[1:3]
     master:
-     - rdp-mgr[1:3]
+     - rdp-mgh1
     worker:
-     - rdp-mgr[4:8]
+     - rdp-mgh[1:3]
   controlPlaneEndpoint:
     domain: k8s.ssii.com
     address: ""
@@ -40,8 +37,7 @@ spec:
     kubePodsCIDR: 10.233.64.0/18
     kubeServiceCIDR: 10.233.0.0/18
   registry:
-    registryMirrors: 
-    - http://e24ee5b3.m.daocloud.io
+    registryMirrors: []
     insecureRegistries: []
     privateRegistry: ""
   addons: 
@@ -74,7 +70,7 @@ spec:
     jwtSecret: ""
   etcd:
     monitoring: true        # Whether to install etcd monitoring dashboard
-    endpointIps: 172.30.80.31,172.30.80.32,172.30.80.33  # etcd cluster endpointIps
+    endpointIps: 172.30.80.81,172.30.80.82,172.30.80.83  # etcd cluster endpointIps
     port: 2379              # etcd port
     tlsEnable: true
   common:
@@ -100,7 +96,7 @@ spec:
   auditing:                # Whether to install KubeSphere audit log system. It provides a security-relevant chronological set of records，recording the sequence of activities happened in platform, initiated by different tenants.
     enabled: true         
   devops:                  # Whether to install KubeSphere DevOps System. It provides out-of-box CI/CD system based on Jenkins, and automated workflow tools including Source-to-Image & Binary-to-Image
-    enabled: true
+    enabled: false
     jenkinsMemoryLim: 2Gi      # Jenkins memory limit
     jenkinsMemoryReq: 1500Mi   # Jenkins memory request
     jenkinsVolumeSize: 8Gi     # Jenkins volume size
@@ -126,6 +122,7 @@ spec:
   notification:        # Email Notification support for the legacy alerting system, should be enabled/disabled together with the above alerting option
     enabled: false
   openpitrix:          # Whether to install KubeSphere Application Store. It provides an application store for Helm-based applications, and offer application lifecycle management
-    enabled: true
+    enabled: false
   servicemesh:         # Whether to install KubeSphere Service Mesh (Istio-based). It provides fine-grained traffic management, observability and tracing, and offer visualization for traffic topology
-    enabled: true
+    enabled: false
+
