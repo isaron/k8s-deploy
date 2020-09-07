@@ -20,7 +20,7 @@ spec:
     worker:
      - rdp-mgr[4:8]
   controlPlaneEndpoint:
-    domain: dev.k8s.ssii.com
+    domain: k8s-d.ssii.com
     address: "172.30.80.30"
     port: "6443"
   kubernetes:
