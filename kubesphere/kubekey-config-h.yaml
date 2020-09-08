@@ -92,9 +92,9 @@ spec:
     enableMultiLogin: false  # enable/disable multiple sing on, it allows an account can be used by different users at the same time.
     port: 30880
   alerting:                # Whether to install KubeSphere alerting system. It enables Users to customize alerting policies to send messages to receivers in time with different time intervals and alerting levels to choose from.
-    enabled: true
+    enabled: false
   auditing:                # Whether to install KubeSphere audit log system. It provides a security-relevant chronological set of records，recording the sequence of activities happened in platform, initiated by different tenants.
-    enabled: true         
+    enabled: false         
   devops:                  # Whether to install KubeSphere DevOps System. It provides out-of-box CI/CD system based on Jenkins, and automated workflow tools including Source-to-Image & Binary-to-Image
     enabled: false
     jenkinsMemoryLim: 2Gi      # Jenkins memory limit
@@ -104,9 +104,9 @@ spec:
     jenkinsJavaOpts_Xmx: 512m
     jenkinsJavaOpts_MaxRAM: 2g
   events:                  # Whether to install KubeSphere events system. It provides a graphical web console for Kubernetes Events exporting, filtering and alerting in multi-tenant Kubernetes clusters.
-    enabled: true
+    enabled: false
   logging:                 # Whether to install KubeSphere logging system. Flexible logging functions are provided for log query, collection and management in a unified console. Additional log collectors can be added, such as Elasticsearch, Kafka and Fluentd.
-    enabled: true
+    enabled: false
     logsidecarReplicas: 2
   metrics_server:                    # Whether to install metrics-server. IT enables HPA (Horizontal Pod Autoscaler).
     enabled: true
