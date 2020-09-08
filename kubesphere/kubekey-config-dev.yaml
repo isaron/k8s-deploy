@@ -71,7 +71,7 @@ spec:
   persistence:
     storageClass: ""
   authentication:
-    jwtSecret: ""
+    jwtSecret: "SA0uJpH5ie7MKtUKVVrnWUfUxe38RGUt"
   etcd:
     monitoring: true        # Whether to install etcd monitoring dashboard
     endpointIps: 172.30.80.31,172.30.80.32,172.30.80.33  # etcd cluster endpointIps
