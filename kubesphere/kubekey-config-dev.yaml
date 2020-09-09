@@ -21,7 +21,7 @@ spec:
      - rdp-mgr[4:8]
   controlPlaneEndpoint:
     domain: k8s-d.ssii.com
-    address: "172.30.80.30"
+    address: ""
     port: "6443"
   kubernetes:
     version: v1.18.6
