@@ -13,4 +13,4 @@ data:
     - name: metallb-ips2
       protocol: layer2
       addresses:
-      - 172.30.80.100-172.30.80.150
+      - 172.30.80.100-172.30.80.130
