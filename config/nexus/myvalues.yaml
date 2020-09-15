@@ -77,7 +77,7 @@ deployment:
   annotations: {}
   # # Add init containers. e.g. to be used to give specific permissions for nexus-data.
   # # Add your own init container or uncomment and modify the given example.
-  initContainers:
+  initContainers: {}
   # - name: fmp-volume-permission
     # image: busybox
     # imagePullPolicy: IfNotPresent
@@ -99,7 +99,7 @@ deployment:
 ingress:
   enabled: true
   annotations: 
-    kubernetes.io/ingress.allow-http: true
+  - kubernetes.io/ingress.allow-http: true
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     certmanager.k8s.io/cluster-issuer: ca-issuer
