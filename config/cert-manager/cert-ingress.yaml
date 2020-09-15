@@ -31,4 +31,6 @@ spec:
   - kubeapps.ssii.com
   - gitea.ssii.com
   - kubesphere.ssii.com
+  - registry.ssii.com
+  - repo.ssii.com
   
