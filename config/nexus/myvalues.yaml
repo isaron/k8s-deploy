@@ -109,7 +109,8 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: 0
   hostPath: /
   hostRepo: nexus.ssii.com
-  hostDocker: registry.ssii.com
+  # hostDocker: registry.ssii.com
+  hostDocker: containers.ssii.com
   tls: 
     - secretName: nexus-cert
     #   hosts:
