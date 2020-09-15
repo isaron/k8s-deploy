@@ -106,7 +106,7 @@ ingress:
     # kubernetes.io/ingress.class: gce
     # kubernetes.io/ingress.global-static-ip-name: ""
     # kubernetes.io/tls-acme: true
-    nginx.ingress.kubernetes.io/proxy-body-size: 0
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
   hostPath: /
   hostRepo: nexus.ssii.com
   # hostDocker: registry.ssii.com
