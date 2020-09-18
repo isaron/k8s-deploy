@@ -11,8 +11,9 @@ spec:
     name: ca-issuer
     kind: ClusterIssuer
   commonName: ssii.com
-  organization:
-  - RDP Dev CA
+  subject:
+    organizations:
+    - RDP Dev CA
   isCA: false
   privateKey:
     algorithm: RSA
