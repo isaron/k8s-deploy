@@ -57,7 +57,7 @@ ingress:
   ##
   annotations:
     kubernetes.io/ingress.class: nginx
-    certmanager.k8s.io/cluster-issuer: ca-issuer
+    certmanager.io/cluster-issuer: ca-issuer
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   #   kubernetes.io/tls-acme: 'true'
 

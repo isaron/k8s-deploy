@@ -43,7 +43,7 @@ ingress:
       # path: /sonarqube
   annotations:
     kubernetes.io/ingress.class: nginx
-    certmanager.k8s.io/cluster-issuer: ca-issuer
+    certmanager.io/cluster-issuer: ca-issuer
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   # This property allows for reports up to a certain size to be uploaded to SonarQube
     nginx.ingress.kubernetes.io/proxy-body-size: "8m"
