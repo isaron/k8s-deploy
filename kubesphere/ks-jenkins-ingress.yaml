@@ -13,7 +13,7 @@ spec:
   tls:
   - hosts:
     - jenkins.ssii.com
-    secretName: jenkins-cert
+    secretName: ingress-certs
   rules:
   - host: jenkins.ssii.com
     http:
