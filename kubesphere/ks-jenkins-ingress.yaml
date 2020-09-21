@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ks-jenkins-ingress
+  namespace: kubesphere-devops-system
+  annotations:
+    kubernetes.io/ingress.allow-http: true
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    certmanager.io/cluster-issuer: ca-issuer
+    external-dns.alpha.kubernetes.io/hostname: jenkins.ssii.com
+spec:
+  tls:
+  - hosts:
+    - jenkins.ssii.com
+    secretName: jenkins-cert
+  rules:
+  - host: jenkins.ssii.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ks-jenkins
+          servicePort: 80
