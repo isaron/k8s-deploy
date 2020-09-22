@@ -91,7 +91,7 @@ master:
   useSecurity: true
 
   # enables configuration done directly via XML files
-  enableXmlConfig: true
+  enableXmlConfig: false
   # Allows to configure different SecurityRealm using Jenkins XML
   securityRealm: |-
     <securityRealm class="hudson.security.LegacySecurityRealm"/>
@@ -243,6 +243,11 @@ master:
   # List of plugins to install in addition to those listed in master.installPlugins
   additionalPlugins: []
 
+  # Enable to initialize the Jenkins master only once on initial installation.
+  # Without this, whenever the master gets restarted (Evicted, etc.) it will fetch plugin updates which has the potential to cause breakage.
+  # Note that for this to work, `persistence.enabled` needs to be set to `true`
+  initializeOnce: false
+
   # Enable to always override the installed plugins with the values of 'master.installPlugins' on upgrade or redeployment.
   overwritePlugins: true
 
@@ -281,7 +286,21 @@ master:
   JCasC:
     enabled: true
     defaultConfig: true
-    configScripts: {}
+    configScripts: 
+      ldap-settings: |
+        jenkins:
+          securityRealm:
+            ldap:
+              configurations:
+                - server: ldap.ssii.com
+                  rootDN: dc=rdp,dc=dev
+                  managerPasswordSecret: ${LDAP_PASSWORD}
+                  groupMembershipStrategy:
+                    fromUserRecord:
+                      attributeName: "memberOf"
+    #  welcome-message: |
+    #    jenkins:
+    #      systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
     # Ignored if securityRealm is defined in master.JCasC.configScripts and
     # ignored if master.enableXmlConfig=true as master.securityRealm takes precedence
     securityRealm: |-
@@ -291,9 +310,6 @@ master:
     authorizationStrategy: |-
       loggedInUsersCanDoAnything:
         allowAnonymousRead: false
-    # welcome-message: |
-    #   jenkins:
-    #     systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
   # Optionally specify additional init-containers
   customInitContainers: []
   # - name: custom-init
@@ -307,7 +323,7 @@ master:
       # jcasc changes will cause a reboot and will only be applied at the subsequent start-up.  Auto-reload uses the
       # http://<jenkins_url>/reload-configuration-as-code endpoint to reapply config when changes to the configScripts are detected.
       enabled: true
-      image: kiwigrid/k8s-sidecar:0.1.144
+      image: kiwigrid/k8s-sidecar:0.1.193
       imagePullPolicy: IfNotPresent
       resources: {}
         #   limits:
@@ -473,6 +489,7 @@ master:
 agent:
   enabled: true
   image: "containers.ssii.com/jenkins/inbound-agent"
+  # tag: "4.3-4"
   tag: "alpine"
   workingDir: "/home/jenkins"
   customJenkinsLabels: []
