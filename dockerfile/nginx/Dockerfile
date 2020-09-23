@@ -2,7 +2,8 @@ FROM nginx:alpine
 
 COPY ./certs/ca.cert.pem /usr/local/share/ca-certificates/ca.crt
 
-RUN apk add --no-cache ca-certificates \
+RUN apk --update upgrade \
+    && apk add --no-cache ca-certificates \
     && update-ca-certificates \
     && echo "Asia/Chongqing" > /etc/timezone \
     && rm -rf /var/lib/apt/lists/* \
