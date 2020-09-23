@@ -258,6 +258,7 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: nginx
     certmanager.io/cluster-issuer: ca-issuer
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 #     kubernetes.io/tls-acme: "true"
 
 ## Chartmuseum Ingress hostnames
