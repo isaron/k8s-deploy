@@ -235,10 +235,10 @@ master:
     - credentials-binding:1.23
     - git:4.2.2
     - configuration-as-code:1.41
-    - ldap:1.2.0
+    - ldap:1.26
     # - keycloak:2.3.0
-    # - blueocean:1.23.2
-    - matrix-auth:2.5
+    - blueocean:1.24.0
+    - matrix-auth:2.6.3
 
   # List of plugins to install in addition to those listed in master.installPlugins
   additionalPlugins: []
