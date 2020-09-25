@@ -294,10 +294,15 @@ master:
               configurations:
                 - server: ldap.ssii.com
                   rootDN: dc=rdp,dc=dev
-                  managerPasswordSecret: ${LDAP_PASSWORD}
+                  managerDN: cn=admin
+                  managerPasswordSecret: p@ssw0rd
+                  userSearchBase: ou=users
+                  userSearchFilter: "$(uid={0})"
+                  groupSearchBase: ou=realmRoles
+                  groupSearchFilter: "(& (cn={0}) (objectclass=groupOfNames))"
                   groupMembershipStrategy:
                     fromUserRecord:
-                      attributeName: "member"
+                      attributeName: ""
     #  welcome-message: |
     #    jenkins:
     #      systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
