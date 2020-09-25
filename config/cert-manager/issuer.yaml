@@ -45,5 +45,5 @@ metadata:
 spec:
   ca:
     secretName: ca-key-pair
-    crlDistributionPoints:
-    - "http://ssii.com"
+    # crlDistributionPoints:
+    # - "http://ssii.com"
