@@ -287,25 +287,25 @@ master:
     enabled: true
     defaultConfig: true
     configScripts: 
-      ldap-settings: |
-        jenkins:
-          securityRealm:
-            ldap:
-              configurations:
-                - server: ldap.ssii.com
-                  rootDN: dc=rdp,dc=dev
-                  managerDN: cn=admin
-                  managerPasswordSecret: p@ssw0rd
-                  userSearchBase: ou=users
-                  userSearchFilter: "$(uid={0})"
-                  groupSearchBase: ou=realmRoles
-                  groupSearchFilter: "(& (cn={0}) (objectclass=groupOfNames))"
-                  groupMembershipStrategy:
-                    fromUserRecord:
-                      attributeName: ""
-    #  welcome-message: |
-    #    jenkins:
-    #      systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
+      # ldap-settings: |
+      #   jenkins:
+      #     securityRealm:
+      #       ldap:
+      #         configurations:
+      #           - server: ldap.ssii.com
+      #             rootDN: dc=rdp,dc=dev
+      #             managerDN: cn=admin
+      #             managerPasswordSecret: p@ssw0rd
+      #             userSearchBase: ou=users
+      #             userSearchFilter: "$(uid={0})"
+      #             groupSearchBase: ou=realmRoles
+      #             groupSearchFilter: "(& (cn={0}) (objectclass=groupOfNames))"
+      #             groupMembershipStrategy:
+      #               fromUserRecord:
+      #                 attributeName: ""
+     welcome-message: |
+       jenkins:
+         systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
     # Ignored if securityRealm is defined in master.JCasC.configScripts and
     # ignored if master.enableXmlConfig=true as master.securityRealm takes precedence
     securityRealm: |-
