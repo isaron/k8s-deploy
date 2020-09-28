@@ -21,7 +21,7 @@ RUN apk --update upgrade \
     && rm /var/cache/apk/* \
     # && helm init --client-only \
     && helm plugin install https://github.com/chartmuseum/helm-push \
-    # && helm repo add --username admin --password admin123 chartmuseum https://chartmuseum.ssii.com \
+    && helm repo add --username admin --password admin123 chartmuseum https://chartmuseum.ssii.com \
     # && helm repo add mirror http://172.30.80.33:8080/ \
     # && helm repo add bitnami https://charts.bitnami.com/bitnami \
     # && helm repo remove stable \
