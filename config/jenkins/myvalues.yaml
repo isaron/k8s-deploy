@@ -294,7 +294,7 @@ master:
       #         configurations:
       #           - server: ldap.ssii.com
       #             rootDN: dc=rdp,dc=dev
-      #             managerDN: cn=admin
+      #             managerDN: cn=admin,dc=rdp,dc=dev
       #             managerPasswordSecret: p@ssw0rd
       #             userSearchBase: ou=users
       #             userSearchFilter: "$(uid={0})"
