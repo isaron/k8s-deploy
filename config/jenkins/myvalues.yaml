@@ -13,6 +13,8 @@
 # ref: https://github.com/kubernetes/dns/blob/master/docs/specification.md
 clusterZone: "cluster.local"
 
+renderHelmLabels: true
+
 master:
   httpsKeyStore:
     jenkinsHttpsJksSecretName: ''
@@ -116,6 +118,8 @@ master:
   # This values should not be changed unless you use your custom image of jenkins or any devired from. If you want to use
   # Cloudbees Jenkins Distribution docker, you should set jenkinsRef: "/usr/share/cloudbees-jenkins-distribution/ref"
   jenkinsRef: "/usr/share/jenkins/ref"
+  # Path to the jenkins war file which is used by jenkins-plugin-cli.
+  jenkinsWar: "/usr/share/jenkins/jenkins.war"
   rollingUpdate: {}
   # Ignored if Persistence is enabled
   # maxSurge: 1
@@ -146,6 +150,10 @@ master:
   # When setting runAsUser to a different value than 0 also set fsGroup to the same value:
   runAsUser: 1000
   fsGroup: 1000
+  # If you have PodSecurityPolicies that require dropping of capabilities as suggested by CIS K8s benchmark, put them here
+  securityContextCapabilities: {}
+  #  drop:
+  #    - NET_RAW
   servicePort: 8080
   targetPort: 8080
   # For minikube, set this to NodePort, elsewhere use LoadBalancer
@@ -165,6 +173,7 @@ master:
   # Used to create Ingress record (should used with ServiceType: ClusterIP)
   # nodePort: <to set explicitly, choose port between 30000-32767
   # Enable Kubernetes Liveness and Readiness Probes
+  # if Startup Probe is supported, enable it too
   # ~ 2 minutes to allow Jenkins to restart when upgrading plugins. Set ReadinessTimeout to be shorter than LivenessTimeout.
   healthProbes: true
   healthProbesLivenessTimeout: 5
@@ -175,6 +184,14 @@ master:
   healthProbeReadinessFailureThreshold: 3
   healthProbeLivenessInitialDelay: 90
   healthProbeReadinessInitialDelay: 60
+  probes:
+    startupProbe:
+      httpGet:
+        path: '{{ default "" .Values.master.jenkinsUriPrefix }}/login'
+        port: http
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 12
   slaveListenerPort: 50000
   slaveHostPort:
   disabledAgentProtocols:
@@ -372,6 +389,8 @@ master:
     #     requests:
     #       cpu: 10m
     #       memory: 32Mi
+  # Name of the Kubernetes scheduler to use
+  schedulerName: ""
   # Node labels and tolerations for pod assignment
   # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
   # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#taints-and-tolerations-beta-feature
@@ -381,9 +400,12 @@ master:
   terminationGracePeriodSeconds:
 
   tolerations: []
+
+  affinity: {}
   # Leverage a priorityClass to ensure your pods survive resource shortages
   # ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
   # priorityClass: system-cluster-critical
+  
   podAnnotations: {}
   # Add deployment annotation
   deploymentAnnotations: {}
@@ -510,6 +532,8 @@ master:
     # See here: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
     # The `groups` root object is added by default, simply add the rule entries
     alertingrules: []
+    # Set a custom namespace where to deploy PrometheusRule resource
+    prometheusRuleNamespace: ""
 
   # Can be used to disable rendering master test resources when using helm template
   testEnabled: true
@@ -524,6 +548,7 @@ agent:
   # name of the secret to be used for image pulling
   imagePullSecretName: "nexus-docker"
   componentName: "jenkins-slave"
+  websocket: false
   privileged: false
   runAsUser:
   runAsGroup:
@@ -605,6 +630,8 @@ agent:
   yamlMergeStrategy: "override"
   # Timeout in seconds for an agent to be online
   slaveConnectTimeout: 100
+  # Annotations to apply to the pod.
+  annotations: {}
 
   # Below is the implementation of custom pod templates for the default configured kubernetes cloud.
   # Add a key under podTemplates for each pod template. Each key (prior to | character) is just a label, and can be any value.
@@ -725,9 +752,12 @@ backup:
   schedule: "0 2 * * *"
   labels: {}
   annotations: {}
-    # Example for authorization to AWS S3 using kube2iam
+    # Example for authorization to AWS S3 using kube2iam or IRSA
     # Can also be done using environment variables
     # iam.amazonaws.com/role: "jenkins"
+    # "eks.amazonaws.com/role-arn": "arn:aws:iam::123456789012:role/jenkins-backup"
+  # Set this to terminate the job that is running/failing continously and set the job status to "Failed"
+  activeDeadlineSeconds: ""
   image:
     repository: "maorfr/kube-tasks"
     tag: "0.2.0"
@@ -762,4 +792,12 @@ backup:
   # Additional support can added. Visit this repository for details
   # Ref: https://github.com/maorfr/skbn
   destination: "s3://jenkins-data/backup"
+  # Enable backup pod security context (must be `true` if runAsUser or fsGroup are set)
+  usePodSecurityContext: true
+  # When setting runAsUser to a different value than 0 also set fsGroup to the same value:
+  runAsUser: 1000
+  fsGroup: 1000
+  securityContextCapabilities: {}
+  #  drop:
+  #    - NET_RAW
 checkDeprecation: true
